@@ -1,3 +1,13 @@
+.idea/
+*/__pycache__
+__pycache__
+migrations
+db_repository/
+*.db
+*.so
+venv/
+*.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
