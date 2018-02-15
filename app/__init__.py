@@ -16,7 +16,11 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'signin'
 
 from . import views, models
+from .admin_panel import AdminPanelIndexView, AdminPanelModelView
 
-admin = Admin(app)
+admin = Admin(app, index_view=AdminPanelIndexView())
 
-from . import admin_panel
+admin.add_view(AdminPanelModelView(models.Business, db.session))
+admin.add_view(AdminPanelModelView(models.User, db.session))
+admin.add_view(AdminPanelModelView(models.Service, db.session))
+admin.add_view(AdminPanelModelView(models.Comment, db.session))
