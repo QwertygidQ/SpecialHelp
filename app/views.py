@@ -1,4 +1,4 @@
-from . import app, db, login_manager
+from . import app, db
 from .models import User, ROLE_USER
 from .forms import SignInForm, SignUpForm
 from flask import render_template, redirect, url_for, flash, request, abort
@@ -12,12 +12,12 @@ def role_required(role=ROLE_USER):
         @wraps(func)
         def role_checker(*args, **kwargs):
             if not current_user.is_authenticated:
-                return login_manager.unauthorized()
+                abort(403)
 
             if role == ROLE_USER or current_user.role == role:
                 return func(*args, **kwargs)
             else:
-                return login_manager.unauthorized()
+                abort(403)
 
         return role_checker
     return wrapper
@@ -38,17 +38,16 @@ def signin():
     form = SignInForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is None or not user.check_password(form.password.data):
+        if user is not None and user.check_password(form.password.data):
+            login_user(user, form.remember.data)
+
+            next_page = request.args.get('next')
+            if not next_page or url_parse(next_page).netloc != '':
+                next_page = url_for('index')
+
+            return redirect(next_page)
+        else:
             flash('Неверный Email или пароль')
-            return redirect(url_for('signin'))
-
-        login_user(user, form.remember.data)
-
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
-
-        return redirect(next_page)
 
     return render_template('signin.html',
                            title='Sign in',

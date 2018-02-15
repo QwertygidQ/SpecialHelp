@@ -1,6 +1,7 @@
 from flask_admin.contrib.sqlamodel import ModelView
 from flask_login import current_user
-from . import admin, db, login_manager
+from flask import abort
+from . import admin, db
 from .models import User, Business, Service, Comment, ROLE_ADMIN
 
 class AdminModelView(ModelView):
@@ -8,7 +9,7 @@ class AdminModelView(ModelView):
         return current_user.is_authenticated and current_user.role == ROLE_ADMIN
 
     def inaccessible_callback(self, name, **kwargs):
-        return login_manager.unauthorized()
+        abort(403)
 
 admin.add_view(AdminModelView(Business, db.session))
 admin.add_view(AdminModelView(User, db.session))
