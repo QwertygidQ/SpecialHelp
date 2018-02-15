@@ -4,6 +4,7 @@ from flask_login import UserMixin
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(50), index=True, unique=True)
@@ -27,21 +28,25 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
 
+
 @login_manager.user_loader
 def loader(user_id):
     return User.query.get(int(user_id))
+
 
 business_service_table = db.Table('business-service',
                                   db.Column('business_id', db.Integer, db.ForeignKey('business.id')),
                                   db.Column('service_id', db.Integer, db.ForeignKey('service.id'))
                                   )
 
-class Service(db.Model): # essentially, tags
+
+class Service(db.Model):  # essentially, tags
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), index=True, unique=True)
 
     def __repr__(self):
         return '<Tag {}>'.format(self.name)
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -55,12 +60,12 @@ class Comment(db.Model):
         return '<Comment by {} on {}: {}>'.format(self.author.username, self.business.name, self.text)
 
 
-class Business(db.Model): # company/event
+class Business(db.Model):  # company/event
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), index=True, unique=True)
     # image ??
-    address = db.Column(db.String(300)) # is this enough for map APIs??
-    time = db.Column(db.String(200)) # reserved for really big schedules; should change for searching???
+    address = db.Column(db.String(300))  # is this enough for map APIs??
+    time = db.Column(db.String(200))  # reserved for really big schedules; should change for searching???
     contacts = db.Column(db.String(200))
     services = db.relationship('Service', secondary=business_service_table, backref='businesses', lazy='dynamic')
     rating = db.Column(db.SmallInteger, default=0)
