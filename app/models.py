@@ -1,6 +1,10 @@
-from app import db, bcrypt
+from app import db, bcrypt, login_manager
+from flask_login import UserMixin
 
-class User(db.Model):
+ROLE_USER = 0
+ROLE_ADMIN = 1
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(50), index=True, unique=True)
     # avatar ??
@@ -12,6 +16,8 @@ class User(db.Model):
 
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
 
+    role = db.Column(db.SmallInteger, default=ROLE_USER)
+
     def __repr__(self):
         return '<User {}; {}>'.format(self.username, self.email)
 
@@ -20,6 +26,10 @@ class User(db.Model):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
+
+@login_manager.user_loader
+def loader(user_id):
+    return User.query.get(int(user_id))
 
 business_service_table = db.Table('business-service',
                                   db.Column('business_id', db.Integer, db.ForeignKey('business.id')),

@@ -6,9 +6,19 @@
 
     <body>
         <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('signin') }}">Sign in</a>
-        <a href="{{ url_for('signup') }}">Sign up</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('signout') }}">Sign out</a>
+        {% else %}
+            <a href="{{ url_for('signin') }}">Sign in</a>
+            <a href="{{ url_for('signup') }}">Sign up</a>
+        {% endif %}
         <hr>
+
+        {% with flashes = get_flashed_messages() %}
+        {% for f in flashes %}
+            <p style="color: red;">New message: {{ f }}</p>
+        {% endfor %}
+        {% endwith %}
 
         {% block content %}{% endblock %}
     </body>

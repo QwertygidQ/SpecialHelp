@@ -1,7 +1,27 @@
-from . import app, db
-from .models import User
+from . import app, db, login_manager
+from .models import User, ROLE_USER
 from .forms import SignInForm, SignUpForm
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash, request, abort
+from flask_login import current_user, login_user, logout_user, login_required
+from werkzeug.urls import url_parse
+from functools import wraps
+
+
+def role_required(role=ROLE_USER):
+    def wrapper(func):
+        @wraps(func)
+        def role_checker(*args, **kwargs):
+            if not current_user.is_authenticated:
+                return login_manager.unauthorized()
+
+            if role == ROLE_USER or current_user.role == role:
+                return func(*args, **kwargs)
+            else:
+                return login_manager.unauthorized()
+
+        return role_checker
+    return wrapper
+
 
 
 @app.route('/')
@@ -12,9 +32,23 @@ def index():
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
     form = SignInForm()
     if form.validate_on_submit():
-        return redirect(url_for('index'))
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Неверный Email или пароль')
+            return redirect(url_for('signin'))
+
+        login_user(user, form.remember.data)
+
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+
+        return redirect(next_page)
 
     return render_template('signin.html',
                            title='Sign in',
@@ -36,3 +70,11 @@ def signup():
     return render_template('signup.html',
                            title='Sign up',
                            form=form)
+
+@app.route('/signout')
+def signout():
+    if current_user.is_authenticated:
+        logout_user()
+        return redirect(url_for('index')) # redirect to next TODO??
+    else:
+        abort(401)
