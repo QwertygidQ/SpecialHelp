@@ -1,8 +1,8 @@
 from . import app, db
 from .models import User, ROLE_USER
-from .forms import SignInForm, SignUpForm
+from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm
 from flask import render_template, redirect, url_for, flash, request, abort
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from functools import wraps
 
@@ -86,3 +86,56 @@ def signout():
         return redirect(get_next_page(default='index'))
     else:
         abort(401)
+
+
+@app.route('/user/<username>')
+def profile(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+
+    return render_template('profile.html',
+                           title='Профиль пользователя {}'.format(username),
+                           user=user)
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    userform = UserUpdateForm()
+    profileform = ProfileUpdateForm()
+
+    if userform.user_update_submit.data and userform.validate_on_submit():
+        if current_user.check_password(userform.current_password.data):
+            if userform.email.data != '':
+                current_user.email = userform.email.data
+
+            if userform.username.data != '':
+                current_user.username = userform.username.data
+
+            if userform.password.data != '':
+                current_user.set_password(userform.password.data)
+
+            db.session.commit()
+
+            return redirect(url_for('profile', username=current_user.username))
+        else:
+            flash('Неверный текущий пароль')
+    elif profileform.profile_update_submit.data and profileform.validate_on_submit():
+        if current_user.check_password(userform.current_password.data):
+            if profileform.about != '':
+                current_user.about = profileform.about.data
+
+            if profileform.contacts != '':
+                current_user.contacts = profileform.contacts.data
+
+            db.session.commit()
+
+            return redirect(url_for('profile', username=current_user.username))
+        else:
+            flash('Неверный текущий пароль')
+
+    return render_template('edit_profile.html',
+                           userform=userform,
+                           profileform=profileform,
+                           user=current_user)

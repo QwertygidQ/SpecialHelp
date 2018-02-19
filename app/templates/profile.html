@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Профиль пользователя {{ user.username }}</h1>
+<h2>О себе</h2>
+<p>{{ user.about }}</p>
+<h2>Контакты</h2>
+<p>{{ user.contacts }}</p>
+{% endblock %}

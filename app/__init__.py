@@ -15,7 +15,7 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'signin'
 
-from . import views, models
+from . import views, models, nl2br
 from .admin_panel import AdminPanelIndexView, AdminPanelModelView
 
 admin = Admin(app, index_view=AdminPanelIndexView())
