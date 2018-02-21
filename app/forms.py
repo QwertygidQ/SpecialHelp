@@ -12,7 +12,19 @@ class SignInForm(FlaskForm):
     submit = SubmitField('Войти')
 
 
-class SignUpForm(FlaskForm):
+class EmailUsernameForm(FlaskForm):
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Этот Email уже занят, пожалуйста, выберите другой')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError('Этот псевдоним уже занят, пожалуйста, выберите другой')
+
+
+class SignUpForm(EmailUsernameForm):
     email = StringField('Email', validators=[DataRequired(), Email(), Length(max=254)])
     username = StringField('Псевдоним', validators=[DataRequired(), Length(max=50)])
     password = PasswordField('Пароль', validators=[DataRequired(), EqualTo('repeat_password')])
@@ -20,13 +32,8 @@ class SignUpForm(FlaskForm):
     # captcha TODO
     submit = SubmitField('Зарегистрироваться')
 
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user is not None:
-            raise ValidationError('Этот Email уже занят, пожалуйста, выберите другой')
 
-
-class UserUpdateForm(FlaskForm):
+class UserUpdateForm(EmailUsernameForm):
     email = StringField('Новый Email', validators=[Optional(), Email(), Length(max=254)])
     username = StringField('Новый псевдоним', validators=[Optional(), Length(max=50)])
     password = PasswordField('Новый пароль', validators=[Optional(), EqualTo('repeat_password')])

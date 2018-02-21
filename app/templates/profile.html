@@ -2,8 +2,11 @@
 
 {% block content %}
 <h1>Профиль пользователя {{ user.username }}</h1>
+{% if current_user.username == user.username %}
+    <a href="{{ url_for('edit_profile') }}">Изменить профиль</a>
+{% endif %}
 <h2>О себе</h2>
-<p>{{ user.about }}</p>
+<p>{{ user.about | nl2br }}</p>
 <h2>Контакты</h2>
-<p>{{ user.contacts }}</p>
+<p>{{ user.contacts | nl2br }}</p>
 {% endblock %}
