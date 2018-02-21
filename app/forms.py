@@ -5,8 +5,24 @@ from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Le
 from .models import User
 
 
+class StrippedStringField(StringField):
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist[0].strip()
+        else:
+            self.data = ''
+
+
+class StrippedTextAreaField(TextAreaField):
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist[0].strip()
+        else:
+            self.data = ''
+
+
 class SignInForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email(), Length(max=254)])
+    email = StrippedStringField('Email', validators=[DataRequired(), Email(), Length(max=254)])
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
@@ -25,8 +41,8 @@ class EmailUsernameForm(FlaskForm):
 
 
 class SignUpForm(EmailUsernameForm):
-    email = StringField('Email', validators=[DataRequired(), Email(), Length(max=254)])
-    username = StringField('Псевдоним', validators=[DataRequired(), Length(max=50)])
+    email = StrippedStringField('Email', validators=[DataRequired(), Email(), Length(max=254)])
+    username = StrippedStringField('Псевдоним', validators=[DataRequired(), Length(max=50)])
     password = PasswordField('Пароль', validators=[DataRequired(), EqualTo('repeat_password')])
     repeat_password = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')])
     # captcha TODO
@@ -34,8 +50,8 @@ class SignUpForm(EmailUsernameForm):
 
 
 class UserUpdateForm(EmailUsernameForm):
-    email = StringField('Новый Email', validators=[Optional(), Email(), Length(max=254)])
-    username = StringField('Новый псевдоним', validators=[Optional(), Length(max=50)])
+    email = StrippedStringField('Новый Email', validators=[Optional(), Email(), Length(max=254)])
+    username = StrippedStringField('Новый псевдоним', validators=[Optional(), Length(max=50)])
     password = PasswordField('Новый пароль', validators=[Optional(), EqualTo('repeat_password')])
     repeat_password = PasswordField('Повторите новый пароль', validators=[Optional(), EqualTo('password')])
 
@@ -45,8 +61,8 @@ class UserUpdateForm(EmailUsernameForm):
 
 
 class ProfileUpdateForm(FlaskForm):
-    about = TextAreaField('О себе', validators=[Optional(), Length(max=500)])
-    contacts = TextAreaField('Контакты', validators=[Optional(), Length(max=200)])
+    about = StrippedTextAreaField('О себе', validators=[Optional(), Length(max=500)])
+    contacts = StrippedTextAreaField('Контакты', validators=[Optional(), Length(max=200)])
 
     current_password = PasswordField('Текущий пароль', validators=[DataRequired()])
 
