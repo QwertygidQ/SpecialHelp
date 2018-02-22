@@ -8,17 +8,13 @@
     <p>
         {{ form.email.label }}<br>
         {{ form.email() }}
-        {% for err in form.email.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(form.email) }}
     </p>
 
     <p>
         {{ form.password.label }}<br>
         {{ form.password() }}
-        {% for err in form.password.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(form.password) }}
     </p>
 
     <p>

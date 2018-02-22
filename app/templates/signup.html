@@ -8,33 +8,25 @@
     <p>
         {{ form.email.label }}<br>
         {{ form.email() }}
-        {% for err in form.email.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(form.email) }}
     </p>
 
     <p>
         {{ form.username.label }}<br>
         {{ form.username() }}
-        {% for err in form.username.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(form.username) }}
     </p>
 
     <p>
         {{ form.password.label }}<br>
         {{ form.password() }}
-        {% for err in form.password.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(form.password) }}
     </p>
 
     <p>
         {{ form.repeat_password.label }}<br>
         {{ form.repeat_password() }}
-        {% for err in form.repeat_password.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(form.repeat_password) }}
     </p>
 
     {{ form.submit() }}

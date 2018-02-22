@@ -8,41 +8,31 @@
     <p>
         {{ userform.email.label }}<br>
         {{ userform.email() }}
-        {% for err in userform.email.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(userform.email) }}
     </p>
 
     <p>
         {{ userform.username.label }}<br>
         {{ userform.username() }}
-        {% for err in userform.username.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(userform.username) }}
     </p>
 
     <p>
         {{ userform.password.label }}<br>
         {{ userform.password() }}
-        {% for err in userform.password.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(userform.password) }}
     </p>
 
     <p>
         {{ userform.repeat_password.label }}<br>
         {{ userform.repeat_password() }}
-        {% for err in userform.repeat_password.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(userform.repeat_password) }}
     </p>
 
     <p>
         {{ userform.current_password.label }}<br>
         {{ userform.current_password() }}
-        {% for err in userform.current_password.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(userform.current_password) }}
     </p>
 
     {{ userform.user_update_submit() }}
@@ -56,25 +46,19 @@
     <p>
         {{ profileform.about.label }}<br>
         {{ profileform.about() }}
-        {% for err in profileform.about.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(profileform.about) }}
     </p>
 
     <p>
         {{ profileform.contacts.label }}<br>
         {{ profileform.contacts() }}
-        {% for err in profileform.contacts.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(profileform.contacts) }}
     </p>
 
     <p>
         {{ profileform.current_password.label }}<br>
         {{ profileform.current_password() }}
-        {% for err in profileform.current_password.errors %}
-            <span style="color: red;">{{ err }}</span>
-        {% endfor %}
+        {{ error_macro.print_errors(profileform.current_password) }}
     </p>
 
     {{ profileform.profile_update_submit() }}
