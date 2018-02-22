@@ -19,6 +19,8 @@ def msg_Length(min=-1, max=-1):
         message = 'Длина поля должна быть не меньше {} символов'.format(min)
     elif max >= 1:
         message = 'Длина поля должна быть не больше {} символов'.format(max)
+    else:
+        message = None  # an error condition anyway (assertion fails in __init__ of Length)
 
     return Length(min=min, max=max, message=message)
 
