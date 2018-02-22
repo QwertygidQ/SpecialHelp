@@ -45,7 +45,7 @@ class Service(db.Model):  # essentially, tags
     name = db.Column(db.String(50), index=True, unique=True)
 
     def __repr__(self):
-        return '<Tag {}>'.format(self.name)
+        return '<Service {}>'.format(self.name)
 
 
 class Comment(db.Model):
