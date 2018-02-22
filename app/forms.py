@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, Optional
-
+from sqlalchemy import func
 from .models import User
 
 
@@ -37,7 +37,7 @@ def unique_email():
     message = 'Этот Email уже занят, пожалуйста, выберите другой'
 
     def _unique_email(_, field):
-        user = User.query.filter_by(email=field.data).first()
+        user = User.query.filter(func.lower(User.email) == field.data.lower()).first()
         if user is not None:
             raise ValidationError(message)
 

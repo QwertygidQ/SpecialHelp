@@ -3,6 +3,7 @@ from .models import User, ROLE_USER
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import current_user, login_user, logout_user, login_required
+from sqlalchemy import func
 from werkzeug.urls import url_parse
 from functools import wraps
 
@@ -50,7 +51,7 @@ def signin():
 
     form = SignInForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter(func.lower(User.email) == form.email.data.lower()).first()
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember.data)
             return redirect(get_next_page(default='index'))
