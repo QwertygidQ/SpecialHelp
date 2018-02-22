@@ -123,10 +123,10 @@ def edit_profile():
             flash('Неверный текущий пароль')
     elif profileform.profile_update_submit.data and profileform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
-            if profileform.about != '':
+            if profileform.about.data != '':
                 current_user.about = profileform.about.data
 
-            if profileform.contacts != '':
+            if profileform.contacts.data != '':
                 current_user.contacts = profileform.contacts.data
 
             db.session.commit()
