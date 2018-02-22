@@ -58,7 +58,7 @@ def unique_username():
 # ======================= Stripped fields =======================
 
 
-class StrippedStringField(StringField):
+class StrippedField:
     def process_formdata(self, valuelist):
         if valuelist:
             self.data = valuelist[0].strip()
@@ -66,12 +66,12 @@ class StrippedStringField(StringField):
             self.data = ''
 
 
-class StrippedTextAreaField(TextAreaField):
-    def process_formdata(self, valuelist):
-        if valuelist:
-            self.data = valuelist[0].strip()
-        else:
-            self.data = ''
+class StrippedStringField(StrippedField, StringField):
+    pass
+
+
+class StrippedTextAreaField(StrippedField, TextAreaField):
+    pass
 
 
 # ======================= Forms =======================
