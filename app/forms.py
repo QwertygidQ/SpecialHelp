@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Le
 from .models import User
 
 
-# Customized validators
+# ======================= Customized validators =======================
 
 def msg_DataRequired():
     return DataRequired(message='Это обязательное поле')
@@ -30,6 +30,8 @@ def msg_password_EqualTo(field):
     return EqualTo(field, message='Пароли должны совпадать')
 
 
+# ======================= Stripped fields =======================
+
 class StrippedStringField(StringField):
     def process_formdata(self, valuelist):
         if valuelist:
@@ -45,6 +47,8 @@ class StrippedTextAreaField(TextAreaField):
         else:
             self.data = ''
 
+
+# ======================= Forms =======================
 
 class SignInForm(FlaskForm):
     email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), msg_Length(max=254)])
