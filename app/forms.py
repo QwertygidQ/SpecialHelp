@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, Optional
+from wtforms.validators import DataRequired, InputRequired, Email, EqualTo, ValidationError, Length, Optional
 from sqlalchemy import func
 from .models import User
 
@@ -10,6 +10,10 @@ from .models import User
 
 def msg_DataRequired():
     return DataRequired(message='Это обязательное поле')
+
+
+def msg_InputRequired():
+    return InputRequired(message='Это обязательное поле')
 
 
 def msg_Length(min=-1, max=-1):
@@ -79,7 +83,7 @@ class StrippedTextAreaField(StrippedField, TextAreaField):
 
 class SignInForm(FlaskForm):
     email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), msg_Length(max=254)])
-    password = PasswordField('Пароль', validators=[msg_DataRequired()])
+    password = PasswordField('Пароль', validators=[msg_InputRequired()])
     remember = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
 
@@ -88,8 +92,8 @@ class SignUpForm(FlaskForm):
     email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), unique_email(),
                                                      msg_Length(max=254)])
     username = StrippedStringField('Псевдоним', validators=[msg_DataRequired(), msg_Length(max=50), unique_username()])
-    password = PasswordField('Пароль', validators=[msg_DataRequired(), msg_password_EqualTo('repeat_password')])
-    repeat_password = PasswordField('Повторите пароль', validators=[msg_DataRequired(),
+    password = PasswordField('Пароль', validators=[msg_InputRequired(), msg_password_EqualTo('repeat_password')])
+    repeat_password = PasswordField('Повторите пароль', validators=[msg_InputRequired(),
                                                                     msg_password_EqualTo('password')])
     # captcha TODO
     submit = SubmitField('Зарегистрироваться')
@@ -102,7 +106,7 @@ class UserUpdateForm(FlaskForm):
     password = PasswordField('Новый пароль', validators=[Optional(), msg_password_EqualTo('repeat_password')])
     repeat_password = PasswordField('Повторите новый пароль', validators=[Optional(), msg_password_EqualTo('password')])
 
-    current_password = PasswordField('Текущий пароль', validators=[msg_DataRequired()])
+    current_password = PasswordField('Текущий пароль', validators=[msg_InputRequired()])
 
     user_update_submit = SubmitField('Обновить информацию')
 
@@ -111,6 +115,6 @@ class ProfileUpdateForm(FlaskForm):
     about = StrippedTextAreaField('О себе', validators=[Optional(), msg_Length(max=500)])
     contacts = StrippedTextAreaField('Контакты', validators=[Optional(), msg_Length(max=200)])
 
-    current_password = PasswordField('Текущий пароль', validators=[msg_DataRequired()])
+    current_password = PasswordField('Текущий пароль', validators=[msg_InputRequired()])
 
     profile_update_submit = SubmitField('Обновить информацию')
