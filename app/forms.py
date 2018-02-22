@@ -8,11 +8,11 @@ from .models import User
 # ======================= Customized validators =======================
 
 
-def msg_DataRequired():
+def msg_DataRequired():  # for use with stripped fields
     return DataRequired(message='Это обязательное поле')
 
 
-def msg_InputRequired():
+def msg_InputRequired():  # for use with everything else (password fields, etc.)
     return InputRequired(message='Это обязательное поле')
 
 
@@ -31,6 +31,12 @@ def msg_Length(min=-1, max=-1):
 
 def msg_Email():
     return Email(message='Указан невалидный Email адрес')
+
+
+def msg_password_Length():
+    min = 6
+    message = 'Длина пароля не может быть меньше {} символов'.format(min)
+    return Length(min=min, message=message)
 
 
 def msg_password_EqualTo(field):
@@ -82,39 +88,89 @@ class StrippedTextAreaField(StrippedField, TextAreaField):
 
 
 class SignInForm(FlaskForm):
-    email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), msg_Length(max=254)])
-    password = PasswordField('Пароль', validators=[msg_InputRequired()])
+    email = StrippedStringField('Email', validators=[
+        msg_DataRequired(),
+        msg_Email(),
+        msg_Length(max=254)
+    ])
+    password = PasswordField('Пароль', validators=[
+        msg_InputRequired(),
+        msg_password_Length()
+    ])
     remember = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
 
 
 class SignUpForm(FlaskForm):
-    email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), unique_email(),
-                                                     msg_Length(max=254)])
-    username = StrippedStringField('Псевдоним', validators=[msg_DataRequired(), msg_Length(max=50), unique_username()])
-    password = PasswordField('Пароль', validators=[msg_InputRequired(), msg_password_EqualTo('repeat_password')])
-    repeat_password = PasswordField('Повторите пароль', validators=[msg_InputRequired(),
-                                                                    msg_password_EqualTo('password')])
+    email = StrippedStringField('Email', validators=[
+        msg_DataRequired(),
+        msg_Email(),
+        unique_email(),
+        msg_Length(max=254)
+    ])
+    username = StrippedStringField('Псевдоним', validators=[
+        msg_DataRequired(),
+        msg_Length(max=50),
+        unique_username()
+    ])
+    password = PasswordField('Пароль', validators=[
+        msg_InputRequired(),
+        msg_password_EqualTo('repeat_password'),
+        msg_password_Length()
+    ])
+    repeat_password = PasswordField('Повторите пароль', validators=[
+        msg_InputRequired(),
+        msg_password_EqualTo('password'),
+        msg_password_Length()
+    ])
     # captcha TODO
     submit = SubmitField('Зарегистрироваться')
 
 
 class UserUpdateForm(FlaskForm):
-    email = StrippedStringField('Новый Email', validators=[Optional(), msg_Email(), unique_email(),
-                                                           msg_Length(max=254)])
-    username = StrippedStringField('Новый псевдоним', validators=[Optional(), msg_Length(max=50), unique_username()])
-    password = PasswordField('Новый пароль', validators=[Optional(), msg_password_EqualTo('repeat_password')])
-    repeat_password = PasswordField('Повторите новый пароль', validators=[Optional(), msg_password_EqualTo('password')])
+    email = StrippedStringField('Новый Email', validators=[
+        Optional(),
+        msg_Email(),
+        unique_email(),
+        msg_Length(max=254)
+    ])
+    username = StrippedStringField('Новый псевдоним', validators=[
+        Optional(),
+        msg_Length(max=50),
+        unique_username()
+    ])
+    password = PasswordField('Новый пароль', validators=[
+        Optional(strip_whitespace=False),
+        msg_password_EqualTo('repeat_password'),
+        msg_password_Length()
+    ])
+    repeat_password = PasswordField('Повторите новый пароль', validators=[
+        Optional(strip_whitespace=False),
+        msg_password_EqualTo('password'),
+        msg_password_Length()
+    ])
 
-    current_password = PasswordField('Текущий пароль', validators=[msg_InputRequired()])
+    current_password = PasswordField('Текущий пароль', validators=[
+        msg_InputRequired(),
+        msg_password_Length()
+    ])
 
     user_update_submit = SubmitField('Обновить информацию')
 
 
 class ProfileUpdateForm(FlaskForm):
-    about = StrippedTextAreaField('О себе', validators=[Optional(), msg_Length(max=500)])
-    contacts = StrippedTextAreaField('Контакты', validators=[Optional(), msg_Length(max=200)])
+    about = StrippedTextAreaField('О себе', validators=[
+        Optional(),
+        msg_Length(max=500)
+    ])
+    contacts = StrippedTextAreaField('Контакты', validators=[
+        Optional(),
+        msg_Length(max=200)
+    ])
 
-    current_password = PasswordField('Текущий пароль', validators=[msg_InputRequired()])
+    current_password = PasswordField('Текущий пароль', validators=[
+        msg_InputRequired(),
+        msg_password_Length()
+    ])
 
     profile_update_submit = SubmitField('Обновить информацию')
