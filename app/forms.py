@@ -7,6 +7,7 @@ from .models import User
 
 # ======================= Customized validators =======================
 
+
 def msg_DataRequired():
     return DataRequired(message='Это обязательное поле')
 
@@ -30,7 +31,30 @@ def msg_password_EqualTo(field):
     return EqualTo(field, message='Пароли должны совпадать')
 
 
+def unique_email():
+    message = 'Этот Email уже занят, пожалуйста, выберите другой'
+
+    def _unique_email(_, field):
+        user = User.query.filter_by(email=field.data).first()
+        if user is not None:
+            raise ValidationError(message)
+
+    return _unique_email
+
+
+def unique_username():
+    message = 'Этот псевдоним уже занят, пожалуйста, выберите другой'
+
+    def _unique_username(_, field):
+        user = User.query.filter_by(username=field.data).first()
+        if user is not None:
+            raise ValidationError(message)
+
+    return _unique_username
+
+
 # ======================= Stripped fields =======================
+
 
 class StrippedStringField(StringField):
     def process_formdata(self, valuelist):
@@ -50,6 +74,7 @@ class StrippedTextAreaField(TextAreaField):
 
 # ======================= Forms =======================
 
+
 class SignInForm(FlaskForm):
     email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), msg_Length(max=254)])
     password = PasswordField('Пароль', validators=[msg_DataRequired()])
@@ -57,21 +82,10 @@ class SignInForm(FlaskForm):
     submit = SubmitField('Войти')
 
 
-class EmailUsernameForm(FlaskForm):
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user is not None:
-            raise ValidationError('Этот Email уже занят, пожалуйста, выберите другой')
-
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user is not None:
-            raise ValidationError('Этот псевдоним уже занят, пожалуйста, выберите другой')
-
-
-class SignUpForm(EmailUsernameForm):
-    email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), msg_Length(max=254)])
-    username = StrippedStringField('Псевдоним', validators=[msg_DataRequired(), msg_Length(max=50)])
+class SignUpForm(FlaskForm):
+    email = StrippedStringField('Email', validators=[msg_DataRequired(), msg_Email(), unique_email(),
+                                                     msg_Length(max=254)])
+    username = StrippedStringField('Псевдоним', validators=[msg_DataRequired(), msg_Length(max=50), unique_username()])
     password = PasswordField('Пароль', validators=[msg_DataRequired(), msg_password_EqualTo('repeat_password')])
     repeat_password = PasswordField('Повторите пароль', validators=[msg_DataRequired(),
                                                                     msg_password_EqualTo('password')])
@@ -79,9 +93,10 @@ class SignUpForm(EmailUsernameForm):
     submit = SubmitField('Зарегистрироваться')
 
 
-class UserUpdateForm(EmailUsernameForm):
-    email = StrippedStringField('Новый Email', validators=[Optional(), msg_Email(), msg_Length(max=254)])
-    username = StrippedStringField('Новый псевдоним', validators=[Optional(), msg_Length(max=50)])
+class UserUpdateForm(FlaskForm):
+    email = StrippedStringField('Новый Email', validators=[Optional(), msg_Email(), unique_email(),
+                                                           msg_Length(max=254)])
+    username = StrippedStringField('Новый псевдоним', validators=[Optional(), msg_Length(max=50), unique_username()])
     password = PasswordField('Новый пароль', validators=[Optional(), msg_password_EqualTo('repeat_password')])
     repeat_password = PasswordField('Повторите новый пароль', validators=[Optional(), msg_password_EqualTo('password')])
 
