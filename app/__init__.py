@@ -16,11 +16,12 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'signin'
 
 from . import views, models, nl2br
-from .admin_panel import AdminPanelIndexView, AdminPanelModelView
+from .admin_panel import AdminPanelIndexView, AdminPanelModelView, BusinessCreationView,\
+    UserCreationView, CommentCreationView
 
 admin = Admin(app, index_view=AdminPanelIndexView())
 
-admin.add_view(AdminPanelModelView(models.Business, db.session))
-admin.add_view(AdminPanelModelView(models.User, db.session))
+admin.add_view(BusinessCreationView(models.Business, db.session))
+admin.add_view(UserCreationView(models.User, db.session))
 admin.add_view(AdminPanelModelView(models.Service, db.session))
-admin.add_view(AdminPanelModelView(models.Comment, db.session))
+admin.add_view(CommentCreationView(models.Comment, db.session))
