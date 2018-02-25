@@ -1,5 +1,8 @@
 from app import db, bcrypt, login_manager
 from flask_login import UserMixin
+from time import time
+import jwt
+from app import app
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -27,6 +30,21 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
+
+    def create_reset_password_token(self, expires_in=600):
+        return jwt.encode({
+            'reset-password': self.id,
+            'exp': time() + expires_in
+        }, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset-password']
+        except:
+            return None
+
+        return id
 
 
 @login_manager.user_loader

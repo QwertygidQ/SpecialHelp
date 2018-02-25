@@ -1,11 +1,12 @@
 from . import app, db
 from .models import User, ROLE_USER
-from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm
+from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, PasswordResetForm, NewPasswordForm
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy import func
 from werkzeug.urls import url_parse
 from functools import wraps
+from . import email
 
 
 def role_required(role=ROLE_USER):
@@ -41,7 +42,7 @@ def get_next_page(default='index'):
 @app.route('/')
 def index():
     return render_template('index.html',
-                           title='Main Page')
+                           title='Главная Страница')
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -59,7 +60,7 @@ def signin():
             flash('Неверный Email или пароль')
 
     return render_template('signin.html',
-                           title='Sign in',
+                           title='Вход',
                            form=form)
 
 
@@ -76,7 +77,7 @@ def signup():
         return redirect(url_for('index'))
 
     return render_template('signup.html',
-                           title='Sign up',
+                           title='Регистрация',
                            form=form)
 
 
@@ -137,6 +138,51 @@ def edit_profile():
             flash('Неверный текущий пароль')
 
     return render_template('edit_profile.html',
+                           title='Изменение настроек профиля',
                            userform=userform,
                            profileform=profileform,
                            user=current_user)
+
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    form = PasswordResetForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter(func.lower(User.email) == form.email.data.lower()).first()
+        if user is not None:
+            email.send_reset_password_email(user)
+            flash('Письмо с ссылкой для сброса пароля было отправлено Вам на почту')
+
+            return redirect(url_for('signin'))
+        else:
+            flash('Пользователя с таким Email не существует')
+
+    return render_template('reset_password.html',
+                           title='Сброс пароля',
+                           form=form)
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password_confirmed(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('signin'))
+
+    form = NewPasswordForm()
+
+    if form.validate_on_submit():
+        User.query.get(user).set_password(form.password.data)
+        db.session.commit()
+        flash('Ваш пароль был изменен')
+        return redirect(url_for('signin'))
+
+    return render_template('reset_password_confirmed.html',
+                           title='Новый пароль',
+                           form=form)

@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_admin import Admin
+from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -15,7 +15,11 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'signin'
 
+mail = Mail(app)
+
 from . import views, models, nl2br
+
+from flask_admin import Admin
 from .admin_panel import AdminPanelIndexView, AdminPanelModelView, BusinessCreationView,\
     UserCreationView, CommentCreationView
 

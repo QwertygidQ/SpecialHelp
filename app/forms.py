@@ -174,3 +174,29 @@ class ProfileUpdateForm(FlaskForm):
     ])
 
     profile_update_submit = SubmitField('Обновить информацию')
+
+
+class PasswordResetForm(FlaskForm):
+    email = StrippedStringField('Email', validators=[
+        msg_DataRequired(),
+        msg_Email(),
+        msg_Length(max=254)
+    ])
+
+    submit = SubmitField('Сбросить пароль')
+
+
+class NewPasswordForm(FlaskForm):
+    password = PasswordField('Новый пароль', validators=[
+        Optional(strip_whitespace=False),
+        msg_password_EqualTo('repeat_password'),
+        msg_password_Length()
+    ])
+
+    repeat_password = PasswordField('Повторите новый пароль', validators=[
+        Optional(strip_whitespace=False),
+        msg_password_EqualTo('password'),
+        msg_password_Length()
+    ])
+
+    submit = SubmitField('Сбросить пароль')
