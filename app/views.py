@@ -1,5 +1,5 @@
 from . import app, db
-from .models import User, ROLE_USER
+from .models import User
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, PasswordResetForm, NewPasswordForm
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import current_user, login_user, logout_user, login_required
