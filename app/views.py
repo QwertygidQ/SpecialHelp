@@ -1,5 +1,5 @@
 from . import app, db, email
-from .models import User
+from .models import User, Business
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, PasswordResetForm, NewPasswordForm
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import current_user, login_user, logout_user, login_required
@@ -180,4 +180,9 @@ def reset_password_confirmed(token):
 
 @app.route('/business/<business>', methods=['GET', 'POST'])
 def business_page(business):
-    pass
+    business = Business.query.filter(func.lower(Business.link) == business.lower()).first()
+    if business is not None:
+        return render_template('business.html',
+                               business=business)
+    else:
+        abort(404)

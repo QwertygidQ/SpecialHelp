@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ business.name }}</h1>
+<p>
+    <strong>Адрес:</strong><br>
+    {{ business.address | nl2br }}
+</p>
+<p>
+    <strong>Время работы:</strong><br>
+    {{ business.time | nl2br }}
+</p>
+<p>
+    <strong>Контакты:</strong><br>
+    {{ business.contacts | nl2br }}
+</p>
+{% endblock %}

@@ -81,6 +81,7 @@ class Comment(db.Model):
 class Business(db.Model):  # company/event
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), index=True, unique=True)
+    link = db.Column(db.String(50), index=True, unique=True)
     # image ??
     address = db.Column(db.String(300))  # is this enough for map APIs??
     time = db.Column(db.String(200))  # reserved for really big schedules; should change for searching???
