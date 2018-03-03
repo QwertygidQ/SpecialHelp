@@ -50,7 +50,7 @@ def signin():
         user = User.query.filter(func.lower(User.email) == form.email.data.lower()).first()
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember.data)
-            return redirect(get_next_page(default='index'))
+            return redirect(get_next_page())
         else:
             flash('Неверный Email или пароль')
 
@@ -80,7 +80,7 @@ def signup():
 def signout():
     if current_user.is_authenticated:
         logout_user()
-        return redirect(get_next_page(default='index'))
+        return redirect(get_next_page())
     else:
         abort(401)
 
