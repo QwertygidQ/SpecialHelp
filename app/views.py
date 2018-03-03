@@ -11,23 +11,6 @@ from . import email
 
 # ======================= Decorators/helper functions =======================
 
-def role_required(role=ROLE_USER):
-    def wrapper(f):
-        @wraps(f)
-        def role_checker(*args, **kwargs):
-            if not current_user.is_authenticated:
-                abort(403)
-
-            if role == ROLE_USER or current_user.role == role:
-                return f(*args, **kwargs)
-            else:
-                abort(403)
-
-        return role_checker
-
-    return wrapper
-
-
 def unauthenticated_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
