@@ -9,6 +9,8 @@ from functools import wraps
 from . import email
 
 
+# ======================= Decorators/helper functions =======================
+
 def role_required(role=ROLE_USER):
     def wrapper(f):
         @wraps(f)
@@ -48,6 +50,8 @@ def get_next_page(default='index'):
 
     return url_for(default)
 
+
+# ======================= View functions =======================
 
 @app.route('/')
 def index():
