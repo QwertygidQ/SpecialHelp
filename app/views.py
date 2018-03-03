@@ -10,18 +10,28 @@ from . import email
 
 
 def role_required(role=ROLE_USER):
-    def wrapper(func):
-        @wraps(func)
+    def wrapper(f):
+        @wraps(f)
         def role_checker(*args, **kwargs):
             if not current_user.is_authenticated:
                 abort(403)
 
             if role == ROLE_USER or current_user.role == role:
-                return func(*args, **kwargs)
+                return f(*args, **kwargs)
             else:
                 abort(403)
 
         return role_checker
+
+    return wrapper
+
+
+def unauthenticated_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return f(*args, **kwargs)
+        return redirect(url_for('index'))
 
     return wrapper
 
@@ -46,10 +56,8 @@ def index():
 
 
 @app.route('/signin', methods=['GET', 'POST'])
+@unauthenticated_required
 def signin():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-
     form = SignInForm()
     if form.validate_on_submit():
         user = User.query.filter(func.lower(User.email) == form.email.data.lower()).first()
@@ -145,10 +153,8 @@ def edit_profile():
 
 
 @app.route('/reset_password', methods=['GET', 'POST'])
+@unauthenticated_required
 def reset_password():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-
     form = PasswordResetForm()
 
     if form.validate_on_submit():
@@ -167,10 +173,8 @@ def reset_password():
 
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
+@unauthenticated_required
 def reset_password_confirmed(token):
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-
     user = User.verify_reset_password_token(token)
     if not user:
         return redirect(url_for('signin'))
@@ -186,3 +190,8 @@ def reset_password_confirmed(token):
     return render_template('reset_password_confirmed.html',
                            title='Новый пароль',
                            form=form)
+
+
+@app.route('/business/<business>', methods=['GET', 'POST'])
+def business_page(business):
+    pass
