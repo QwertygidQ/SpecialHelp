@@ -1,4 +1,4 @@
-from . import app, db
+from . import app, db, email
 from .models import User
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, PasswordResetForm, NewPasswordForm
 from flask import render_template, redirect, url_for, flash, request, abort
@@ -6,7 +6,6 @@ from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy import func
 from werkzeug.urls import url_parse
 from functools import wraps
-from . import email
 
 
 # ======================= Decorators/helper functions =======================
