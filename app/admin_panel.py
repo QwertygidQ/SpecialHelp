@@ -57,5 +57,5 @@ class CommentCreationView(AdminPanelModelView):
     )
 
     form_choices = dict(
-        rating=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+        rating=[(str(x), str(x)) for x in range(6)]
     )
