@@ -91,5 +91,9 @@ class Business(db.Model):  # company/event
     desc = db.Column(db.String(5000))
     comments = db.relationship('Comment', backref='business', lazy='dynamic')
 
+    def recalculate_rating(self):
+        self.rating = sum(comment.rating for comment in self.comments) // len(self.comments.all())
+        db.session.commit()
+
     def __repr__(self):
         return '<Business {}>'.format(self.name)

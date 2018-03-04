@@ -28,4 +28,30 @@
     <strong>Описание:</strong><br>
     {{ business.desc }}
 </p>
+{% if has_not_commented %}
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.rating.label }}<br>
+            {{ form.rating() }}
+            {{ error_macro.print_errors(form.rating) }}
+        </p>
+        <p>
+            {{ form.comment.label }}<br>
+            {{ form.comment() }}
+            {{ error_macro.print_errors(form.comment) }}
+        </p>
+
+        {{ form.submit() }}
+    </form>
+{% elif current_user.is_authenticated %} {# Authenticated user has already commented on this business #}
+    <p>
+        Ваш комментарий был учтен!
+    </p>
+{% else %}
+    <p>
+        <a href="{{ url_for('signin') }}">Войдите</a> или <a href="{{ url_for('signup') }}">зарегистрируйтесь</a> для того чтобы оставить комментарий!
+    </p>
+{% endif %}
 {% endblock %}

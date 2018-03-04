@@ -1,6 +1,7 @@
 from . import app, db, email
-from .models import User, Business
-from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, PasswordResetForm, NewPasswordForm
+from .models import User, Business, Comment
+from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm,\
+    PasswordResetForm, NewPasswordForm, CommentForm
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy import func
@@ -178,11 +179,33 @@ def reset_password_confirmed(token):
                            form=form)
 
 
-@app.route('/business/<business>', methods=['GET', 'POST'])
-def business_page(business):
-    business = Business.query.filter(func.lower(Business.link) == business.lower()).first()
+@app.route('/business/<business_name>', methods=['GET', 'POST'])
+def business_page(business_name):
+    business = Business.query.filter(func.lower(Business.link) == business_name.lower()).first()
     if business is not None:
+        form = None
+        has_not_commented = current_user.is_authenticated and\
+            current_user not in [comment.author for comment in business.comments]
+
+        if has_not_commented:
+            form = CommentForm()
+            if form.validate_on_submit():
+                rating = form.rating.data
+                text = form.comment.data
+                comment = Comment(rating=rating, text=text, business=business, author=current_user)
+                db.session.add(comment)
+                db.session.commit()
+
+                business.recalculate_rating()
+
+                flash('Ваш комментарий был отправлен')
+
+                return redirect(url_for('business_page', business_name=business_name))
+
         return render_template('business.html',
-                               business=business)
+                               title=business.name,
+                               business=business,
+                               has_not_commented=has_not_commented,
+                               form=form)
     else:
         abort(404)
