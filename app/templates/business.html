@@ -14,4 +14,18 @@
     <strong>Контакты:</strong><br>
     {{ business.contacts | nl2br }}
 </p>
+<p>
+    <strong>Услуги:</strong><br>
+    {% for service in business.services %}
+        {{ service.name }}&nbsp;
+    {% endfor %}
+</p>
+<p>
+    <strong>Рейтинг:</strong><br>
+    {{ business.rating }}
+</p>
+<p>
+    <strong>Описание:</strong><br>
+    {{ business.desc }}
+</p>
 {% endblock %}
