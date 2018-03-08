@@ -54,4 +54,13 @@
         <a href="{{ url_for('signin') }}">Войдите</a> или <a href="{{ url_for('signup') }}">зарегистрируйтесь</a> для того чтобы оставить комментарий!
     </p>
 {% endif %}
+
+{% for comment in business.comments %}
+    <hr>
+    <p>
+        <strong><h3>{{ comment.author.username }}</h3></strong>
+        <i>Оценка: {{ comment.rating }}</i>
+        {{ comment.text | nl2br }}
+    </p>
+{% endfor %}
 {% endblock %}
