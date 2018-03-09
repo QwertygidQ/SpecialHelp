@@ -69,7 +69,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return redirect(url_for('signin'))
 
     return render_template('signup.html',
                            title='Регистрация',
