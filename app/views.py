@@ -85,7 +85,7 @@ def signout():
         abort(401)
 
 
-@app.route('/user/<username>')
+@app.route('/u/<username>')
 def profile(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
@@ -179,7 +179,7 @@ def reset_password_confirmed(token):
                            form=form)
 
 
-@app.route('/business/<business_name>', methods=['GET', 'POST'])
+@app.route('/b/<business_name>', methods=['GET', 'POST'])
 def business_page(business_name):
     business = Business.query.filter(func.lower(Business.link) == business_name.lower()).first()
     if business is not None:
