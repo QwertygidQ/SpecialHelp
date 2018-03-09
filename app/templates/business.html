@@ -15,9 +15,9 @@
     {{ business.contacts | nl2br }}
 </p>
 <p>
-    <strong>Услуги:</strong><br>
-    {% for service in business.services %}
-        {{ service.name }}&nbsp;
+    <strong>Теги:</strong><br>
+    {% for tag in business.tags %}
+        {{ tag.name }}&nbsp;
     {% endfor %}
 </p>
 <p>
@@ -26,7 +26,7 @@
 </p>
 <p>
     <strong>Описание:</strong><br>
-    {{ business.desc }}
+    {{ business.desc | nl2br }}
 </p>
 {% if has_not_commented %}
     <form method="post">

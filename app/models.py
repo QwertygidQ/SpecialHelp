@@ -52,18 +52,18 @@ def loader(user_id):
     return User.query.get(int(user_id))
 
 
-business_service_table = db.Table('business-service',
-                                  db.Column('business_id', db.Integer, db.ForeignKey('business.id')),
-                                  db.Column('service_id', db.Integer, db.ForeignKey('service.id'))
-                                  )
+business_tag_table = db.Table('business-tag',
+                              db.Column('business_id', db.Integer, db.ForeignKey('business.id')),
+                              db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+                              )
 
 
-class Service(db.Model):  # essentially, tags
+class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), index=True, unique=True)
 
     def __repr__(self):
-        return '<Service {}>'.format(self.name)
+        return '<Tag {}>'.format(self.name)
 
 
 class Comment(db.Model):
@@ -86,7 +86,7 @@ class Business(db.Model):  # company/event
     address = db.Column(db.String(300))  # is this enough for map APIs??
     time = db.Column(db.String(200))  # reserved for really big schedules; should change for searching???
     contacts = db.Column(db.String(200))
-    services = db.relationship('Service', secondary=business_service_table, backref='businesses', lazy='dynamic')
+    tags = db.relationship('Tag', secondary=business_tag_table, backref='businesses', lazy='dynamic')
     rating = db.Column(db.SmallInteger, default=0)
     desc = db.Column(db.String(5000))
     comments = db.relationship('Comment', backref='business', lazy='dynamic')
