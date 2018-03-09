@@ -179,9 +179,9 @@ def reset_password_confirmed(token):
                            form=form)
 
 
-@app.route('/b/<business_name>', methods=['GET', 'POST'])
-def business_page(business_name):
-    business = Business.query.filter(func.lower(Business.link) == business_name.lower()).first()
+@app.route('/b/<business_link>', methods=['GET', 'POST'])
+def business_page(business_link):
+    business = Business.query.filter(func.lower(Business.link) == business_link.lower()).first()
     if business is not None:
         form = None
         has_not_commented = current_user.is_authenticated and\
@@ -200,7 +200,7 @@ def business_page(business_name):
 
                 flash('Ваш комментарий был отправлен')
 
-                return redirect(url_for('business_page', business_name=business_name))
+                return redirect(url_for('business_page', business_link=business_link))
 
         return render_template('business.html',
                                title=business.name,
