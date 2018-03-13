@@ -3,7 +3,7 @@
 {% block content %}
 <table>
     {% for b in businesses %}
-    <tr><a href="/b/{{ b.link }}">{{ b.name }}</a></tr>
+    <tr><a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a></tr>
     {% endfor %}
 </table>
 
