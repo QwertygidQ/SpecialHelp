@@ -17,7 +17,7 @@
 <p>
     <strong>Теги:</strong><br>
     {% for tag in business.tags %}
-        {{ tag.name }}&nbsp;
+        <a href="/t/{{ tag.name }}">{{ tag.name }}</a>&nbsp;
     {% endfor %}
 </p>
 <p>
