@@ -2,4 +2,16 @@
 
 {% block content %}
 <h1>Добро пожаловать!</h1>
+<pre>организации, емана:</pre>
+<div class="ui pagination menu">
+    {% for i in range(1, pages_count + 1) %}
+    <a class="item" href="{{ url_for('index', pagination_page=i) }}">{{ i }}</a>
+    {% endfor %}
+</div>
+
+<div class="ui divided attached list">
+    {% for b in businesses %}
+    <div class="item"><a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a></div>
+    {% endfor %}
+</div>
 {% endblock %}
