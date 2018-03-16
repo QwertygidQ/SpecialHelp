@@ -11,7 +11,10 @@
 
 <div class="ui divided attached list">
     {% for b in businesses %}
-    <div class="item"><a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a></div>
+    <div class="item">
+        <a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a>
+        <p>{{ b.address }}</p>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
