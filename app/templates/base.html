@@ -13,41 +13,37 @@
 
     <body>
         <div class="ui container">
-            <div class="ui stackable menu">
-                <a class="item" href="{{ url_for('index') }}">Главная страница</a>
-                {% if current_user.is_authenticated %}
-                    <a class="item" href="{{ url_for('profile', username=current_user.username) }}">Профиль</a>
-                    <a class="item" href="{{ url_for('signout') }}">Выйти</a>
-                {% else %}
-                    <a class="item" href="{{ url_for('signin') }}">Войти</a>
-                    <a class="item" href="{{ url_for('signup') }}">Зарегистрироваться</a>
-                {% endif %}
-            </div>
-        </div>
+			<div class="ui stackable menu">
+				<a class="item" href="{{ url_for('index') }}">Главная страница</a>
+				{% if current_user.is_authenticated %}
+					<a class="item" href="{{ url_for('profile', username=current_user.username) }}">Профиль</a>
+					<a class="item" href="{{ url_for('signout') }}">Выйти</a>
+				{% else %}
+					<a class="item" href="{{ url_for('signin') }}">Войти</a>
+					<a class="item" href="{{ url_for('signup') }}">Зарегистрироваться</a>
+				{% endif %}
+			</div>
 
-        {% with flashes = get_flashed_messages() %}
-            {% if flashes %}
-                <div class="ui container">
-                    <div class="ui info message">
-                        <div class="header">
-                            {% if flashes|length > 1 %}
-                                Новые уведомления
-                            {% else %}
-                                Новое уведомление
-                            {% endif %}
-                        </div>
-                        <ul class="list">
-                            {% for f in flashes %}
-                                <li>{{ f }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            {% endif %}
-        {% endwith %}
+			{% with flashes = get_flashed_messages() %}
+				{% if flashes %}
+					<div class="ui info message">
+						<div class="header">
+							{% if flashes|length > 1 %}
+								Новые уведомления
+							{% else %}
+								Новое уведомление
+							{% endif %}
+						</div>
+						<ul class="list">
+							{% for f in flashes %}
+								<li>{{ f }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+			{% endwith %}
 
-        <div class="ui container">
-            {% block content %}{% endblock %}
-        </div>
+			{% block content %}{% endblock %}
+		</div>
     </body>
 </html>
