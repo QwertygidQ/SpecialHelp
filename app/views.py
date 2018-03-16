@@ -1,5 +1,5 @@
 from . import app, db, email
-from .models import User, Business, Comment
+from .models import User, Business, Comment, Tag
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm,\
     PasswordResetForm, NewPasswordForm, CommentForm
 from flask import render_template, redirect, url_for, flash, request, abort
@@ -209,3 +209,12 @@ def business_page(business_link):
                                form=form)
     else:
         abort(404)
+
+@app.route('/t/<tag_name>')
+def tag_list_page(tag_name):
+    tag = Tag.query.filter_by(name=tag_name).first()
+
+    if tag is None:
+        abort(404)
+
+    return render_template('tag_list.html', businesses=tag.businesses)
