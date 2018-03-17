@@ -4,26 +4,14 @@
 <h1>Изменение настроек профиля</h1>
 <form class="ui two column grid form" method="post">
     {{ userform.hidden_tag() }}
-
-    <div class="row">
-        <div class="column">
-            <div class="field">
-                {{ userform.email.label }}
-                {{ userform.email() }}
-                {{ error_macro.print_errors(userform.email) }}
-            </div>
-        </div>
-        
-        <div class="column">
-            <div class="field">
-                {{ userform.current_password.label }}
-                {{ userform.current_password() }}
-                {{ error_macro.print_errors(userform.current_password) }}
-            </div>
-        </div>
-    </div>
     
     <div class="column">
+        <div class="field">
+            {{ userform.email.label }}
+            {{ userform.email() }}
+            {{ error_macro.print_errors(userform.email) }}
+        </div>
+    
         <div class="field">
             {{ userform.username.label }}
             {{ userform.username() }}
@@ -44,6 +32,14 @@
         
          {{ userform.user_update_submit(class_="ui button") }}
     </div>
+    
+    <div class="column">
+        <div class="field">
+            {{ userform.current_password.label }}
+            {{ userform.current_password() }}
+            {{ error_macro.print_errors(userform.current_password) }}
+        </div>
+    </div>
 </form>
 
 <hr>
@@ -51,25 +47,15 @@
 <form class="ui two column grid form" method="post">
     {{ profileform.hidden_tag() }}
 
-    <div class="row">
-        <div class="column">
-            <div class="field">
-                {{ profileform.about.label }}
-                {{ profileform.about() }}
-                {{ error_macro.print_errors(profileform.about) }}
-            </div>
-        </div>
-        
-        <div class="column">
-            <div class="field">
-                {{ profileform.current_password.label }}
-                {{ profileform.current_password() }}
-                {{ error_macro.print_errors(profileform.current_password) }}
-            </div>
-        </div>
-    </div>
+    
     
     <div class="column">
+        <div class="field">
+            {{ profileform.about.label }}
+            {{ profileform.about() }}
+            {{ error_macro.print_errors(profileform.about) }}
+        </div>
+
         <div class="field">
             {{ profileform.contacts.label }}
             {{ profileform.contacts() }}
@@ -77,6 +63,14 @@
         </div>
 
         {{ profileform.profile_update_submit(class_="ui button") }}
+    </div>
+    
+    <div class="column">
+        <div class="field">
+            {{ profileform.current_password.label }}
+            {{ profileform.current_password() }}
+            {{ error_macro.print_errors(profileform.current_password) }}
+        </div>
     </div>
 </form>
 {% endblock %}
