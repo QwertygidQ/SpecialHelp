@@ -2,33 +2,33 @@
 
 {% block content %}
 <h1>Регистрация</h1>
-<form method="post">
+<form class="ui form" method="post">
     {{ form.hidden_tag() }}
 
-    <p>
-        {{ form.email.label }}<br>
+    <div class="field">
+        {{ form.email.label }}
         {{ form.email() }}
         {{ error_macro.print_errors(form.email) }}
-    </p>
+    </div>
 
-    <p>
-        {{ form.username.label }}<br>
+    <div class="field">
+        {{ form.username.label }}
         {{ form.username() }}
         {{ error_macro.print_errors(form.username) }}
-    </p>
+    </div>
 
-    <p>
-        {{ form.password.label }}<br>
+    <div class="field">
+        {{ form.password.label }}
         {{ form.password() }}
         {{ error_macro.print_errors(form.password) }}
-    </p>
+    </div>
 
-    <p>
-        {{ form.repeat_password.label }}<br>
+    <div class="field">
+        {{ form.repeat_password.label }}
         {{ form.repeat_password() }}
         {{ error_macro.print_errors(form.repeat_password) }}
-    </p>
+    </div>
 
-    {{ form.submit() }}
+    {{ form.submit(class_="ui button") }}
 </form>
 {% endblock %}

@@ -1,5 +1,7 @@
 {% macro print_errors(field) -%}
-    {% for err in field.errors %}
-        <span style="color: red;">[{{ err }}]</span>
-    {% endfor %}
+    <small style="color: red;">
+        {% for err in field.errors %}
+            [ {{ err }} ]&nbsp;
+        {% endfor %}
+    </small>
 {%- endmacro %}

@@ -2,29 +2,31 @@
 
 {% block content %}
 <h1>Вход</h1>
-<form method="post">
+<form class="ui form" method="post">
     {{ form.hidden_tag() }}
 
-    <p>
-        {{ form.email.label }}<br>
+    <div class="field">
+        {{ form.email.label }}
         {{ form.email() }}
         {{ error_macro.print_errors(form.email) }}
-    </p>
+    </div>
 
-    <p>
-        {{ form.password.label }}<br>
+    <div class="field">
+        {{ form.password.label }}
         {{ form.password() }}
         {{ error_macro.print_errors(form.password) }}
-    </p>
+    </div>
 
     <p>
         <a href="{{ url_for('reset_password') }}">Забыли пароль?</a>
     </p>
 
-    <p>
-        {{ form.remember() }} {{ form.remember.label }}
-    </p>
+    <div class="field">
+        <div class="ui checkbox">
+            {{ form.remember() }} {{ form.remember.label }}
+        </div>
+    </div>
 
-    {{ form.submit() }}
+    {{ form.submit(class_="ui button") }}
 </form>
 {% endblock %}
