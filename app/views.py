@@ -38,7 +38,10 @@ def get_next_page(default='index'):
 
 @app.route('/')
 @app.route('/<pagination_page>')
-def index(pagination_page=1):
+def index(pagination_page=None):
+    if pagination_page is None:
+        return redirect(url_for('index', pagination_page='1'))
+
     pagination_page = int(pagination_page)
     businesses = Business.query.all()
 
