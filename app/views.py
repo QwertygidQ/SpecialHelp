@@ -37,14 +37,14 @@ def get_next_page(default='index'):
 def get_info_for_tag_and_validate(tag=None, page='1'):
     page = int(page)
     if page < 1:
-        raise ValueError('non positive page')
+        abort(404)
     if tag is None:
         items = Business.query.all()
     else:
         items = Tag.query.filter_by(name=tag).first().businesses
 
     if (page - 1) * 10 > len(items):
-        raise ValueError('invalid page')
+        abort(404)
 
     pages = len(items) // 10 + 1
     if page * 10 <= len(items):
