@@ -238,6 +238,7 @@ def tag_list_page(tag_name, page=1):
         items = tag.businesses[(page - 1) * 10:len(tag.businesses)]
 
     return render_template('tag_list.html',
+                            title='Организации по тегу ' + tag_name,
                             businesses=items,
                             pages_count = pages,
                             tag_name=tag_name)
