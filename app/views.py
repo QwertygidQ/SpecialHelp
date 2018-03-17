@@ -37,9 +37,21 @@ def get_next_page(default='index'):
 # ======================= View functions =======================
 
 @app.route('/')
-def index():
+@app.route('/<pagination_page>')
+def index(pagination_page=1):
+    pagination_page = int(pagination_page)
+    businesses = Business.query.all()
+
+    pages = len(businesses) // 10 + 1
+    if pagination_page * 10 <= len(businesses):
+        items = businesses[(pagination_page - 1) * 10:pagination_page * 10]
+    else:
+        items = businesses[(pagination_page - 1) * 10:len(businesses)]
+
     return render_template('index.html',
-                           title='Главная Страница')
+                           title='Главная Страница',
+                           pages_count=pages,
+                           businesses=items)
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -210,11 +222,23 @@ def business_page(business_link):
     else:
         abort(404)
 
-@app.route('/t/<tag_name>')
-def tag_list_page(tag_name):
-    tag = Tag.query.filter_by(name=tag_name).first()
 
-    if tag is None:
+@app.route('/t/<tag_name>')
+@app.route('/t/<tag_name>/<page>')
+def tag_list_page(tag_name, page=1):
+    page = int(page)
+    if tag_name is None:
         abort(404)
 
-    return render_template('tag_list.html', businesses=tag.businesses)
+    tag = Tag.query.filter_by(name=tag_name).first()
+    pages = len(tag.businesses) // 10 + 1
+    if page * 10 <= len(tag.businesses):
+        items = tag.businesses[(page - 1) * 10:page * 10]
+    else:
+        items = tag.businesses[(page - 1) * 10:len(tag.businesses)]
+
+    return render_template('tag_list.html',
+                            title='Организации по тегу ' + tag_name,
+                            businesses=items,
+                            pages_count = pages,
+                            tag_name=tag_name)
