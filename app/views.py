@@ -34,24 +34,44 @@ def get_next_page(default='index'):
     return url_for(default)
 
 
+def get_info_for_tag_and_validate(tag=None, page='1'):
+    page = int(page)
+    if page < 1:
+        abort(404)
+    if tag is None:
+        items = Business.query.all()
+    else:
+        items = Tag.query.filter_by(name=tag).first().businesses
+
+    if (page - 1) * 10 > len(items):
+        abort(404)
+
+    pages = len(items) // 10 + 1
+    if page * 10 <= len(items):
+        items = items[(page - 1) * 10:page * 10]
+    else:
+        items = items[(page - 1) * 10:len(items)]
+
+    return pages, items
+
+
 # ======================= View functions =======================
 
 @app.route('/')
-@app.route('/<pagination_page>')
-def index(pagination_page=1):
-    pagination_page = int(pagination_page)
-    businesses = Business.query.all()
+def index():
+    pagination_page = request.args.get('page')
+    if pagination_page is None:
+        return redirect(url_for('index', page='1'))
 
-    pages = len(businesses) // 10 + 1
-    if pagination_page * 10 <= len(businesses):
-        items = businesses[(pagination_page - 1) * 10:pagination_page * 10]
-    else:
-        items = businesses[(pagination_page - 1) * 10:len(businesses)]
+    try:
+        pages, items = get_info_for_tag_and_validate(page=pagination_page)
 
-    return render_template('index.html',
-                           title='Главная Страница',
-                           pages_count=pages,
-                           businesses=items)
+        return render_template('index.html',
+                               title='Главная Страница',
+                               pages_count=pages,
+                               businesses=items)
+    except ValueError:
+        abort(400)
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -224,21 +244,21 @@ def business_page(business_link):
 
 
 @app.route('/t/<tag_name>')
-@app.route('/t/<tag_name>/<page>')
-def tag_list_page(tag_name, page=1):
-    page = int(page)
+def tag_list_page(tag_name):
     if tag_name is None:
         abort(404)
 
-    tag = Tag.query.filter_by(name=tag_name).first()
-    pages = len(tag.businesses) // 10 + 1
-    if page * 10 <= len(tag.businesses):
-        items = tag.businesses[(page - 1) * 10:page * 10]
-    else:
-        items = tag.businesses[(page - 1) * 10:len(tag.businesses)]
+    page = request.args.get('page')
+    if page is None:
+        return redirect(url_for('tag_list_page', tag_name=tag_name, page='1'))
 
-    return render_template('tag_list.html',
-                            title='Организации по тегу ' + tag_name,
-                            businesses=items,
-                            pages_count = pages,
-                            tag_name=tag_name)
+    try:
+        pages, items = get_info_for_tag_and_validate(tag_name, page)
+
+        return render_template('tag_list.html',
+                               title='Организации по тегу ' + tag_name,
+                               businesses=items,
+                               pages_count=pages,
+                               tag_name=tag_name)
+    except ValueError:
+        abort(400)

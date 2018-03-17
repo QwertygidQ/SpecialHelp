@@ -17,7 +17,7 @@
 <p>
     <strong>Теги:</strong><br>
     {% for tag in business.tags %}
-        <a href="{{ url_for('tag_list_page', tag_name=tag.name) }}">{{ tag.name }}</a>&nbsp;
+        <a href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}">{{ tag.name }}</a>&nbsp;
     {% endfor %}
 </p>
 <p>
