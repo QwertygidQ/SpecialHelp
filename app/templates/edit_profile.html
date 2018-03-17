@@ -2,65 +2,81 @@
 
 {% block content %}
 <h1>Изменение настроек профиля</h1>
-<form class="ui form" method="post">
+<form class="ui two column grid form" method="post">
     {{ userform.hidden_tag() }}
 
-    <div class="field">
-        {{ userform.email.label }}
-        {{ userform.email() }}
-        {{ error_macro.print_errors(userform.email) }}
+    <div class="row">
+        <div class="column">
+            <div class="field">
+                {{ userform.email.label }}
+                {{ userform.email() }}
+                {{ error_macro.print_errors(userform.email) }}
+            </div>
+        </div>
+        
+        <div class="column">
+            <div class="field">
+                {{ userform.current_password.label }}
+                {{ userform.current_password() }}
+                {{ error_macro.print_errors(userform.current_password) }}
+            </div>
+        </div>
     </div>
+    
+    <div class="column">
+        <div class="field">
+            {{ userform.username.label }}
+            {{ userform.username() }}
+            {{ error_macro.print_errors(userform.username) }}
+        </div>
+        
+        <div class="field">
+            {{ userform.password.label }}
+            {{ userform.password() }}
+            {{ error_macro.print_errors(userform.password) }}
+        </div>
 
-    <div class="field">
-        {{ userform.username.label }}
-        {{ userform.username() }}
-        {{ error_macro.print_errors(userform.username) }}
+        <div class="field">
+            {{ userform.repeat_password.label }}
+            {{ userform.repeat_password() }}
+            {{ error_macro.print_errors(userform.repeat_password) }}
+        </div>
+        
+         {{ userform.user_update_submit(class_="ui button") }}
     </div>
-
-    <div class="field">
-        {{ userform.password.label }}
-        {{ userform.password() }}
-        {{ error_macro.print_errors(userform.password) }}
-    </div>
-
-    <div class="field">
-        {{ userform.repeat_password.label }}
-        {{ userform.repeat_password() }}
-        {{ error_macro.print_errors(userform.repeat_password) }}
-    </div>
-
-    <div class="field">
-        {{ userform.current_password.label }}
-        {{ userform.current_password() }}
-        {{ error_macro.print_errors(userform.current_password) }}
-    </div>
-
-    {{ userform.user_update_submit(class_="ui button") }}
 </form>
 
 <hr>
 
-<form class="ui form" method="post">
+<form class="ui two column grid form" method="post">
     {{ profileform.hidden_tag() }}
 
-    <div class="field">
-        {{ profileform.about.label }}
-        {{ profileform.about() }}
-        {{ error_macro.print_errors(profileform.about) }}
+    <div class="row">
+        <div class="column">
+            <div class="field">
+                {{ profileform.about.label }}
+                {{ profileform.about() }}
+                {{ error_macro.print_errors(profileform.about) }}
+            </div>
+        </div>
+        
+        <div class="column">
+            <div class="field">
+                {{ profileform.current_password.label }}
+                {{ profileform.current_password() }}
+                {{ error_macro.print_errors(profileform.current_password) }}
+            </div>
+        </div>
     </div>
+    
+    <div class="column">
+        <div class="field">
+            {{ profileform.contacts.label }}
+            {{ profileform.contacts() }}
+            {{ error_macro.print_errors(profileform.contacts) }}
+        </div>
 
-    <div class="field">
-        {{ profileform.contacts.label }}
-        {{ profileform.contacts() }}
-        {{ error_macro.print_errors(profileform.contacts) }}
+        {{ profileform.profile_update_submit(class_="ui button") }}
     </div>
-
-    <div class="field">
-        {{ profileform.current_password.label }}
-        {{ profileform.current_password() }}
-        {{ error_macro.print_errors(profileform.current_password) }}
-    </div>
-
-    {{ profileform.profile_update_submit(class_="ui button") }}
 </form>
 {% endblock %}
