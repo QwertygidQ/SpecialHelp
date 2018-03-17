@@ -188,13 +188,13 @@ class PasswordResetForm(FlaskForm):
 
 class NewPasswordForm(FlaskForm):
     password = PasswordField('Новый пароль', validators=[
-        Optional(strip_whitespace=False),
+        msg_InputRequired(),
         msg_password_EqualTo('repeat_password'),
         msg_password_Length()
     ])
 
     repeat_password = PasswordField('Повторите новый пароль', validators=[
-        Optional(strip_whitespace=False),
+        msg_InputRequired(),
         msg_password_EqualTo('password'),
         msg_password_Length()
     ])

@@ -2,65 +2,65 @@
 
 {% block content %}
 <h1>Изменение настроек профиля</h1>
-<form method="post">
+<form class="ui form" method="post">
     {{ userform.hidden_tag() }}
 
-    <p>
-        {{ userform.email.label }}<br>
+    <div class="field">
+        {{ userform.email.label }}
         {{ userform.email() }}
         {{ error_macro.print_errors(userform.email) }}
-    </p>
+    </div>
 
-    <p>
-        {{ userform.username.label }}<br>
+    <div class="field">
+        {{ userform.username.label }}
         {{ userform.username() }}
         {{ error_macro.print_errors(userform.username) }}
-    </p>
+    </div>
 
-    <p>
-        {{ userform.password.label }}<br>
+    <div class="field">
+        {{ userform.password.label }}
         {{ userform.password() }}
         {{ error_macro.print_errors(userform.password) }}
-    </p>
+    </div>
 
-    <p>
-        {{ userform.repeat_password.label }}<br>
+    <div class="field">
+        {{ userform.repeat_password.label }}
         {{ userform.repeat_password() }}
         {{ error_macro.print_errors(userform.repeat_password) }}
-    </p>
+    </div>
 
-    <p>
-        {{ userform.current_password.label }}<br>
+    <div class="field">
+        {{ userform.current_password.label }}
         {{ userform.current_password() }}
         {{ error_macro.print_errors(userform.current_password) }}
-    </p>
+    </div>
 
-    {{ userform.user_update_submit() }}
+    {{ userform.user_update_submit(class_="ui button") }}
 </form>
 
 <hr>
 
-<form method="post">
+<form class="ui form" method="post">
     {{ profileform.hidden_tag() }}
 
-    <p>
-        {{ profileform.about.label }}<br>
+    <div class="field">
+        {{ profileform.about.label }}
         {{ profileform.about() }}
         {{ error_macro.print_errors(profileform.about) }}
-    </p>
+    </div>
 
-    <p>
-        {{ profileform.contacts.label }}<br>
+    <div class="field">
+        {{ profileform.contacts.label }}
         {{ profileform.contacts() }}
         {{ error_macro.print_errors(profileform.contacts) }}
-    </p>
+    </div>
 
-    <p>
-        {{ profileform.current_password.label }}<br>
+    <div class="field">
+        {{ profileform.current_password.label }}
         {{ profileform.current_password() }}
         {{ error_macro.print_errors(profileform.current_password) }}
-    </p>
+    </div>
 
-    {{ profileform.profile_update_submit() }}
+    {{ profileform.profile_update_submit(class_="ui button") }}
 </form>
 {% endblock %}
