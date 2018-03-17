@@ -4,16 +4,16 @@
 <h1>Добро пожаловать!</h1>
 <div class="ui pagination menu">
     {% for i in range(1, pages_count + 1) %}
-    <a class="item" href="{{ url_for('index', pagination_page=i) }}">{{ i }}</a>
+        <a class="item" href="{{ url_for('index', page=i) }}">{{ i }}</a>
     {% endfor %}
 </div>
 
 <div class="ui divided attached list">
     {% for b in businesses %}
-    <div class="item">
-        <a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a>
-        <p>{{ b.address }}</p>
-    </div>
+        <div class="item">
+            <a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a>
+            <p>{{ b.address }}</p>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}
