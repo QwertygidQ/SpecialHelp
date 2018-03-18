@@ -38,14 +38,14 @@ def get_next_page(default='index'):
 def get_info_for_tag_and_validate(tag=None, page='1'):
     page = int(page)
     if page < 1:
-        raise ValueError('non positive page')
+        abort(404)
     if tag is None:
         items = Business.query.all()
     else:
         items = Tag.query.filter_by(name=tag).first().businesses
 
-    if ((page - 1) * 10 > len(items)):
-        raise ValueError('invalid page')
+    if (page - 1) * 10 > len(items):
+        abort(404)
 
     pages = math.ceil(len(items) / 10)
     if page * 10 <= len(items):
@@ -59,20 +59,20 @@ def get_info_for_tag_and_validate(tag=None, page='1'):
 # ======================= View functions =======================
 
 @app.route('/')
-@app.route('/<pagination_page>')
-def index(pagination_page=None):
+def index():
+    pagination_page = request.args.get('page')
     if pagination_page is None:
-        return redirect(url_for('index', pagination_page='1'))
+        return redirect(url_for('index', page='1'))
 
     try:
         pages, items = get_info_for_tag_and_validate(page=pagination_page)
+
+        return render_template('index.html',
+                               title='Главная Страница',
+                               pages_count=pages,
+                               businesses=items)
     except ValueError:
         abort(400)
-
-    return render_template('index.html',
-                           title='Главная Страница',
-                           pages_count=pages,
-                           businesses=items)
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -245,18 +245,21 @@ def business_page(business_link):
 
 
 @app.route('/t/<tag_name>')
-@app.route('/t/<tag_name>/<page>')
-def tag_list_page(tag_name, page=1):
+def tag_list_page(tag_name):
     if tag_name is None:
         abort(404)
 
+    page = request.args.get('page')
+    if page is None:
+        return redirect(url_for('tag_list_page', tag_name=tag_name, page='1'))
+
     try:
         pages, items = get_info_for_tag_and_validate(tag_name, page)
+
+        return render_template('tag_list.html',
+                               title='Организации по тегу ' + tag_name,
+                               businesses=items,
+                               pages_count=pages,
+                               tag_name=tag_name)
     except ValueError:
         abort(400)
-
-    return render_template('tag_list.html',
-                            title='Организации по тегу ' + tag_name,
-                            businesses=items,
-                            pages_count = pages,
-                            tag_name=tag_name)
