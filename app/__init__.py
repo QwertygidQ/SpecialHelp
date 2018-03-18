@@ -20,7 +20,7 @@ mail = Mail(app)
 from . import views, models, nl2br
 
 from flask_admin import Admin
-from .admin_panel import AdminPanelIndexView, AdminPanelModelView, BusinessCreationView,\
+from .admin_panel import AdminPanelIndexView, AdminPanelModelView, BusinessCreationView, \
     UserCreationView, CommentCreationView
 
 admin = Admin(app, index_view=AdminPanelIndexView())

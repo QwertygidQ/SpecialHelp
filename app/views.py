@@ -1,6 +1,6 @@
 from . import app, db, email
 from .models import User, Business, Comment, Tag
-from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm,\
+from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
     PasswordResetForm, NewPasswordForm, CommentForm
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import current_user, login_user, logout_user, login_required
@@ -216,8 +216,8 @@ def business_page(business_link):
     business = Business.query.filter(func.lower(Business.link) == business_link.lower()).first()
     if business is not None:
         form = None
-        has_not_commented = current_user.is_authenticated and\
-            current_user not in [comment.author for comment in business.comments]
+        has_not_commented = current_user.is_authenticated and \
+                            current_user not in [comment.author for comment in business.comments]
 
         if has_not_commented:
             form = CommentForm()

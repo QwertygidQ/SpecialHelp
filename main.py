@@ -3,6 +3,7 @@ from app.models import User, Tag, Comment, Business
 import config
 import sys
 
+
 @app.shell_context_processor
 def shell_cont():
     return {'db': db, 'User': User, 'Tag': Tag, 'Comment': Comment, 'Business': Business}
