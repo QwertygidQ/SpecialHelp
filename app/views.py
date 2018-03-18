@@ -7,6 +7,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy import func
 from werkzeug.urls import url_parse
 from functools import wraps
+import math
 
 
 # ======================= Decorators/helper functions =======================
@@ -46,7 +47,7 @@ def get_info_for_tag_and_validate(tag=None, page='1'):
     if ((page - 1) * 10 > len(items)):
         raise ValueError('invalid page')
 
-    pages = len(items) // 10 + 1
+    pages = math.ceil(len(items) / 10)
     if page * 10 <= len(items):
         items = items[(page - 1) * 10:page * 10]
     else:
