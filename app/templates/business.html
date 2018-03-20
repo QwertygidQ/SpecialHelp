@@ -29,21 +29,21 @@
     {{ business.desc | nl2br }}
 </p>
 {% if has_not_commented %}
-    <form method="post">
+    <form class="ui form" method="post">
         {{ form.hidden_tag() }}
 
-        <p>
-            {{ form.rating.label }}<br>
+        <div class="field">
+            {{ form.rating.label }}
             {{ form.rating() }}
             {{ error_macro.print_errors(form.rating) }}
-        </p>
-        <p>
-            {{ form.comment.label }}<br>
+        </div>
+        <div class="field">
+            {{ form.comment.label }}
             {{ form.comment() }}
             {{ error_macro.print_errors(form.comment) }}
-        </p>
+        </div>
 
-        {{ form.submit() }}
+        {{ form.submit(class_="ui button") }}
     </form>
 {% elif current_user.is_authenticated %} {# Authenticated user has already commented on this business #}
     <p>
