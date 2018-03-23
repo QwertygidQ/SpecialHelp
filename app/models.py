@@ -22,6 +22,8 @@ class User(db.Model, UserMixin):
 
     role = db.Column(db.SmallInteger, default=ROLE_USER)
 
+    image = db.relationship('Photo', backref='user', lazy='dynamic')
+
     def __repr__(self):
         return '<User {}; {}>'.format(self.username, self.email)
 
@@ -91,9 +93,37 @@ class Business(db.Model):  # company/event
     desc = db.Column(db.String(5000))
     comments = db.relationship('Comment', backref='business', lazy='dynamic')
 
+    image = db.relationship('Photo', backref='to_business', lazy='dynamic')
+
     def recalculate_rating(self):
         self.rating = round(sum(comment.rating for comment in self.comments) / len(self.comments.all()), 1)
         db.session.commit()
 
     def __repr__(self):
         return '<Business {}>'.format(self.name)
+
+
+from PIL import Image
+
+class Photo(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    filename = db.Column(db.String(64), unique=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    business_id = db.Column(db.Integer, db.ForeignKey('business.id'))
+
+    def clear_meta (self):
+        ''' https://stackoverflow.com/a/23249933 '''
+        image_file = open(os.path.join('uploads', self.filename))
+        image = Image.open(image_file)
+
+        # next 3 lines strip exif
+        data = list(image.getdata())
+        image_without_exif = Image.new(image.mode, image.size)
+        image_without_exif.putdata(data)
+
+        image_without_exif.save(os.path.join('uploads', self.filename))
+
+    def __repr__(self):
+        return '<Photo #{0} at {1:.4}..{1:.4}>'.format(self.id, self.filename)
+

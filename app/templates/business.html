@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>{{ business.name }}</h1>
+<img src={{ url_for('uploads', filename=business.image[0].filename) }}></img>
 <p>
     <strong>Адрес:</strong><br>
     {{ business.address | nl2br }}

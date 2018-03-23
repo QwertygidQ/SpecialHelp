@@ -3,6 +3,7 @@ from .models import User, Business, Comment, Tag
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
     PasswordResetForm, NewPasswordForm, CommentForm
 from flask import render_template, redirect, url_for, flash, request, abort
+from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy import func
 from werkzeug.urls import url_parse
@@ -263,3 +264,9 @@ def tag_list_page(tag_name):
                                tag_name=tag_name)
     except ValueError:
         abort(400)
+
+
+@app.route('/uploads/<path:filename>')
+def uploads(filename):
+    return send_from_directory('uploads', filename)
+
