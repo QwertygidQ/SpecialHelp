@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
 
     role = db.Column(db.SmallInteger, default=ROLE_USER)
 
-    image = db.relationship('Photo', backref='user', lazy='dynamic')
+    image = db.relationship('Photo', uselist=False, back_populates='user')
 
     def __repr__(self):
         return '<User {}; {}>'.format(self.username, self.email)
@@ -94,7 +94,7 @@ class Business(db.Model):  # company/event
     desc = db.Column(db.String(5000))
     comments = db.relationship('Comment', backref='business', lazy='dynamic')
 
-    image = db.relationship('Photo', backref='to_business', lazy='dynamic')
+    image = db.relationship('Photo', uselist=False, back_populates='business')
 
     def recalculate_rating(self):
         if len(self.comments.all()) == 0:
@@ -112,7 +112,10 @@ class Photo(db.Model):
     filename = db.Column(db.String(64), unique=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', back_populates='image')
+
     business_id = db.Column(db.Integer, db.ForeignKey('business.id'))
+    business = db.relationship('Business', back_populates='image')
 
     def clear_meta(self):
         ''' https://stackoverflow.com/a/23249933 '''
