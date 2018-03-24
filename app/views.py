@@ -268,5 +268,4 @@ def tag_list_page(tag_name):
 
 @app.route('/uploads/<path:filename>')
 def uploads(filename):
-    return send_from_directory('uploads', filename)
-
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)

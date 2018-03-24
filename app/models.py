@@ -1,8 +1,9 @@
-from app import db, bcrypt, login_manager
+from app import db, bcrypt, login_manager, app
 from flask_login import UserMixin
 from time import time
 import jwt
-from app import app
+import os
+from PIL import Image
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -106,8 +107,6 @@ class Business(db.Model):  # company/event
         return '<Business {}>'.format(self.name)
 
 
-from PIL import Image
-
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     filename = db.Column(db.String(64), unique=True)
@@ -115,9 +114,9 @@ class Photo(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     business_id = db.Column(db.Integer, db.ForeignKey('business.id'))
 
-    def clear_meta (self):
+    def clear_meta(self):
         ''' https://stackoverflow.com/a/23249933 '''
-        image_file = open(os.path.join('uploads', self.filename))
+        image_file = open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
         image = Image.open(image_file)
 
         # next 3 lines strip exif
@@ -125,8 +124,7 @@ class Photo(db.Model):
         image_without_exif = Image.new(image.mode, image.size)
         image_without_exif.putdata(data)
 
-        image_without_exif.save(os.path.join('uploads', self.filename))
+        image_without_exif.save(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
 
     def __repr__(self):
         return '<Photo #{0} at {1:.4}..{1:.4}>'.format(self.id, self.filename)
-

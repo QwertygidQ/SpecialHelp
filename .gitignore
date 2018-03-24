@@ -112,5 +112,5 @@ ENV/
 
 
 # project tmp files
-app/uploads
-app/uploads/*
+uploads/
+uploads/*

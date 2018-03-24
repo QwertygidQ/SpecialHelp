@@ -6,7 +6,7 @@
     <a href="{{ url_for('edit_profile') }}">Изменить профиль</a>
 {% endif %}
 <h2>О себе</h2>
-<img src={{ url_for('uploads', filename=user.image[0].filename) }}></img>
+<img src="{{ url_for('uploads', filename=user.image[0].filename) }}"/>
 {% if user.about is not none %}
     <p>{{ user.about | nl2br }}</p>
 {% else %}
