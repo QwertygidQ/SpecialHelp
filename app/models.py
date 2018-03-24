@@ -96,7 +96,10 @@ class Business(db.Model):  # company/event
     image = db.relationship('Photo', backref='to_business', lazy='dynamic')
 
     def recalculate_rating(self):
-        self.rating = round(sum(comment.rating for comment in self.comments) / len(self.comments.all()), 1)
+        if len(self.comments.all()) == 0:
+            self.rating = 0
+        else:
+            self.rating = round(sum(comment.rating for comment in self.comments) / len(self.comments.all()), 1)
         db.session.commit()
 
     def __repr__(self):
