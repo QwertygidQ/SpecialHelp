@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from time import time
 import jwt
 import os
-from PIL import Image
+from PIL import Image, ImageOps
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -117,17 +117,26 @@ class Photo(db.Model):
     business_id = db.Column(db.Integer, db.ForeignKey('business.id'))
     business = db.relationship('Business', back_populates='image')
 
+    def resize(self, new_size=(500, 500)):
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], self.filename)
+
+        image = Image.open(filename)
+
+        new_image = ImageOps.fit(image, new_size, Image.ANTIALIAS)
+        new_image.save(filename)
+
     def clear_meta(self):
         ''' https://stackoverflow.com/a/23249933 '''
-        image_file = open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
-        image = Image.open(image_file)
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], self.filename)
+
+        image = Image.open(filename)
 
         # next 3 lines strip exif
         data = list(image.getdata())
         image_without_exif = Image.new(image.mode, image.size)
         image_without_exif.putdata(data)
 
-        image_without_exif.save(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
+        image_without_exif.save(filename)
 
     def __repr__(self):
         return '<Photo #{0} at {1:.4}..{1:.4}>'.format(self.id, self.filename)
