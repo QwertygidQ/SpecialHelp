@@ -7,7 +7,12 @@
     {{ pictureform.hidden_tag() }}
 
     <div class="column">
-        <img src="{{ url_for('uploads', filename=user.image.filename) }}" />
+        <div class="ui medium bordered circular image">
+            <img src="{{ url_for('uploads', filename=user.image.filename) }}" />
+        </div>
+    </div>
+    
+    <div class="column">
         <div class="field">
             {{ pictureform.picture() }}
             {{ error_macro.print_errors(pictureform.picture) }}
@@ -15,6 +20,9 @@
         {{ pictureform.picture_update_submit(class_="ui button") }}
     </div>
 </form>
+
+<hr>
+
 <form class="ui two column grid form" method="post">
     {{ userform.hidden_tag() }}
 
