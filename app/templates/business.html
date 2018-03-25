@@ -2,29 +2,46 @@
 
 {% block content %}
 <h1>{{ business.name }}</h1>
-<img src="{{ url_for('uploads', filename=business.image.filename) }}"/>
-<p>
-    <strong>Адрес:</strong><br>
-    {{ business.address | nl2br }}
-</p>
-<p>
-    <strong>Время работы:</strong><br>
-    {{ business.time | nl2br }}
-</p>
-<p>
-    <strong>Контакты:</strong><br>
-    {{ business.contacts | nl2br }}
-</p>
-<p>
-    <strong>Теги:</strong><br>
-    {% for tag in business.tags %}
-        <a href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}">{{ tag.name }}</a>&nbsp;
-    {% endfor %}
-</p>
-<p>
-    <strong>Оценка:</strong><br>
-    {{ business.rating }}
-</p>
+
+<div class="ui three column grid">
+    <div class="ui column">
+        <div class="ui medium bordered circular image">
+            <img src="{{ url_for('uploads', filename=business.image.filename) }}"/>
+        </div>
+    </div>
+    
+    <div class="ui column">
+        <div class="ui segment">
+            <strong>Адрес:</strong><br>
+            {{ business.address | nl2br }}
+        </div>
+        
+        <div class="ui segment">
+            <strong>Время работы:</strong><br>
+            {{ business.time | nl2br }}
+        </div>
+        
+        <div class="ui segment">
+            <strong>Контакты:</strong><br>
+            {{ business.contacts | nl2br }}
+        </div>
+    </div>
+    
+    <div class="ui column">
+        <div class="ui segment">
+            <strong>Теги:</strong><br>
+            {% for tag in business.tags %}
+                <a href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}">{{ tag.name }}</a>&nbsp;
+            {% endfor %}
+        </div>
+        
+        <div class="ui segment">
+            <strong>Оценка:</strong><br>
+            {{ business.rating }}
+        </div>
+    </div>
+</div>
+
 <p>
     <strong>Описание:</strong><br>
     {{ business.desc | nl2br }}
