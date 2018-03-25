@@ -58,10 +58,8 @@
 
 {% for comment in business.comments %}
     <hr>
-    <p>
-        <strong><h3>{{ comment.author.username }}</h3></strong>
-        <i>Оценка: {{ comment.rating }}</i><br>
-        {{ comment.text | nl2br }}
-    </p>
+    <strong><h3>{{ comment.author.username }}</h3></strong>
+    <i>Оценка: {{ comment.rating }}</i><br>
+    <p class="user-input">{{ comment.text | nl2br }}</p>
 {% endfor %}
 {% endblock %}
