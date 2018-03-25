@@ -60,7 +60,7 @@
     <hr>
     <p>
         <strong><h3>{{ comment.author.username }}</h3></strong>
-        <i>Оценка: {{ comment.rating }}</i>
+        <i>Оценка: {{ comment.rating }}</i><br>
         {{ comment.text | nl2br }}
     </p>
 {% endfor %}
