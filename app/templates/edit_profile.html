@@ -9,7 +9,6 @@
     <div class="column">
         <img src="{{ url_for('uploads', filename=user.image.filename) }}" />
         <div class="field">
-            {{ pictureform.picture.label }}
             {{ pictureform.picture() }}
             {{ error_macro.print_errors(pictureform.picture) }}
         </div>

@@ -144,7 +144,7 @@ def edit_profile():
         filename = picture.filename
 
         if filename == '' or filename is None:
-            flash('Invalid filename')
+            flash('Неверное название файла')
             # goto end
         else:
 
@@ -152,7 +152,7 @@ def edit_profile():
             extension = filename[-1].lower()
 
             if extension not in app.config['ALLOWED_IMG_FORMATS']:
-                flash('Invalid format')
+                flash('Неверный формат файла')
                 # goto end
             else:
                 # get appropriate filename
@@ -173,7 +173,7 @@ def edit_profile():
                     current_user.image.filename = new_filename
 
                 else:
-                    current_user.image = models.Photo(filename=new_filename)
+                    current_user.image = Photo(filename=new_filename)
 
                 db.session.add(current_user)
                 db.session.commit()

@@ -13,6 +13,10 @@ def msg_DataRequired():  # for use with stripped fields
     return DataRequired(message='Это обязательное поле')
 
 
+def msg_FileRequired():  # for use with file upload fields
+    return FileRequired(message='Это обязательное поле')
+
+
 def msg_InputRequired():  # for use with everything else (password fields, etc.)
     return InputRequired(message='Это обязательное поле')
 
@@ -129,11 +133,12 @@ class SignUpForm(FlaskForm):
 
 
 class UserPictureUpdateForm(FlaskForm):
-    picture = FileField('picture', validators=[
-        FileRequired()
+    picture = FileField('Фотография', validators=[
+        msg_FileRequired()
     ])
 
-    picture_update_submit = SubmitField('Upload photo')
+    picture_update_submit = SubmitField('Загрузить новую фотографию')
+
 
 class UserUpdateForm(FlaskForm):
     email = StrippedStringField('Новый Email', validators=[
