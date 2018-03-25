@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, InputRequired, Email, EqualTo, ValidationError, Length, Optional
 from sqlalchemy import func
@@ -126,6 +127,13 @@ class SignUpForm(FlaskForm):
     # captcha TODO
     submit = SubmitField('Зарегистрироваться')
 
+
+class UserPictureUpdateForm(FlaskForm):
+    picture = FileField('picture', validators=[
+        FileRequired()
+    ])
+
+    picture_update_submit = SubmitField('Upload photo')
 
 class UserUpdateForm(FlaskForm):
     email = StrippedStringField('Новый Email', validators=[

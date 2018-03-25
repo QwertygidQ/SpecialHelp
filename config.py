@@ -26,6 +26,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')  #
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
+ALLOWED_IMG_FORMATS = ['jpg', 'jpeg', 'png']
 
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
