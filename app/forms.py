@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, InputRequired, Email, EqualTo, ValidationError, Length, Optional
 from sqlalchemy import func
 from .models import User
@@ -203,7 +203,7 @@ class NewPasswordForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    rating = SelectField('Оценка', choices=[(str(x), str(x)) for x in range(1, 6)])
+    rating = HiddenField('Оценка', default='4')
 
     comment = StrippedTextAreaField('Комментарий', validators=[
         msg_DataRequired(),

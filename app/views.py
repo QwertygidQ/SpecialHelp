@@ -223,7 +223,7 @@ def business_page(business_link):
         if has_not_commented:
             form = CommentForm()
             if form.validate_on_submit():
-                rating = form.rating.data
+                rating = int(form.rating.data)
                 text = form.comment.data
                 comment = Comment(rating=rating, text=text, business=business, author=current_user)
                 db.session.add(comment)
