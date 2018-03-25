@@ -2,19 +2,38 @@
 
 {% block content %}
 <h1>Профиль пользователя {{ user.username }}</h1>
-{% if current_user.username == user.username %}
-    <a href="{{ url_for('edit_profile') }}">Изменить профиль</a>
-{% endif %}
-<h2>О себе</h2>
-{% if user.about is not none %}
-    <p>{{ user.about | nl2br }}</p>
-{% else %}
-    <p>Пока что здесь ничего нет...</p>
-{% endif %}
-<h2>Контакты</h2>
-{% if user.contacts is not none %}
-    <p>{{ user.contacts | nl2br }}</p>
-{% else %}
-    <p>Пока что здесь ничего нет...</p>
-{% endif %}
+
+<div class="ui three column grid">
+    <div class="ui column">
+        <div class="ui medium bordered circular image">
+            <img src="{{ url_for('uploads', filename=user.image.filename) }}"/>
+        </div>
+    </div>
+    
+    <div class="ui column">
+        <div class="ui segment">
+            <h2>О себе</h2>
+            {% if user.about is not none %}
+                {{ user.about | nl2br }}
+            {% else %}
+                <i>Пока что здесь ничего нет...</i>
+            {% endif %}
+        </div>
+        
+        <div class="ui segment">
+            <h2>Контакты</h2>
+            {% if user.contacts is not none %}
+                {{ user.contacts | nl2br }}
+            {% else %}
+                <i>Пока что здесь ничего нет...</i>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="ui column">
+        {% if current_user.username == user.username %}
+            <a href="{{ url_for('edit_profile') }}">Изменить профиль</a>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
