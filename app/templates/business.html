@@ -46,6 +46,7 @@
     <strong>Описание:</strong><br>
     {{ business.desc | nl2br }}
 </div>
+
 {% if has_not_commented %}
     <form class="ui form" method="post">
         {{ form.hidden_tag() }}

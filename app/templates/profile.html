@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Профиль пользователя {{ user.username }}</h1>
 
-<div class="ui three column grid">
+<div class="ui stackable three column grid">
     <div class="ui column">
         <div class="ui medium bordered circular image">
             <img src="{{ url_for('uploads', filename=user.image.filename) }}"/>
