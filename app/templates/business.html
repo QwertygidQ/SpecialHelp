@@ -6,7 +6,7 @@
 <div class="ui three column grid">
     <div class="ui column">
         <div class="ui medium bordered circular image">
-            <img src="{{ url_for('uploads', filename=business.image.filename) }}"/>
+            <img src="{{ url_for('uploads', filename=business.image.filename) if business.image is not none else '../static/images/default.png' }}"/>
         </div>
     </div>
     
