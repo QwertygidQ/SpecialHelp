@@ -2,22 +2,43 @@
 
 {% block content %}
 <h1>Изменение настроек профиля</h1>
+
+<form class="ui stackable two column grid form" enctype="multipart/form-data" method="post">
+    {{ pictureform.hidden_tag() }}
+
+    <div class="column">
+        <div class="ui medium bordered circular image">
+            <img src="{{ url_for('uploads', filename=user.image.filename) }}" />
+        </div>
+    </div>
+    
+    <div class="column">
+        <div class="field">
+            {{ pictureform.picture() }}
+            {{ error_macro.print_errors(pictureform.picture) }}
+        </div>
+        {{ pictureform.picture_update_submit(class_="ui button") }}
+    </div>
+</form>
+
+<div class="ui divider"></div>
+
 <form class="ui two column grid form" method="post">
     {{ userform.hidden_tag() }}
-    
+
     <div class="column">
         <div class="field">
             {{ userform.email.label }}
             {{ userform.email() }}
             {{ error_macro.print_errors(userform.email) }}
         </div>
-    
+
         <div class="field">
             {{ userform.username.label }}
             {{ userform.username() }}
             {{ error_macro.print_errors(userform.username) }}
         </div>
-        
+
         <div class="field">
             {{ userform.password.label }}
             {{ userform.password() }}
@@ -29,10 +50,10 @@
             {{ userform.repeat_password() }}
             {{ error_macro.print_errors(userform.repeat_password) }}
         </div>
-        
+
          {{ userform.user_update_submit(class_="ui button") }}
     </div>
-    
+
     <div class="column">
         <div class="field">
             {{ userform.current_password.label }}
@@ -42,7 +63,7 @@
     </div>
 </form>
 
-<hr>
+<div class="ui divider"></div>
 
 <form class="ui two column grid form" method="post">
     {{ profileform.hidden_tag() }}
@@ -62,7 +83,7 @@
 
         {{ profileform.profile_update_submit(class_="ui button") }}
     </div>
-    
+
     <div class="column">
         <div class="field">
             {{ profileform.current_password.label }}

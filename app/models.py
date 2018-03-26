@@ -1,8 +1,9 @@
-from app import db, bcrypt, login_manager
+from app import db, bcrypt, login_manager, app
 from flask_login import UserMixin
 from time import time
 import jwt
-from app import app
+import os
+from PIL import Image
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -21,6 +22,8 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
 
     role = db.Column(db.SmallInteger, default=ROLE_USER)
+
+    image = db.relationship('Photo', uselist=False, back_populates='user')
 
     def __repr__(self):
         return '<User {}; {}>'.format(self.username, self.email)
@@ -91,6 +94,8 @@ class Business(db.Model):  # company/event
     desc = db.Column(db.String(5000))
     comments = db.relationship('Comment', backref='business', lazy='dynamic')
 
+    image = db.relationship('Photo', uselist=False, back_populates='business')
+
     def recalculate_rating(self):
         if len(self.comments.all()) == 0:
             self.rating = 0
@@ -100,3 +105,29 @@ class Business(db.Model):  # company/event
 
     def __repr__(self):
         return '<Business {}>'.format(self.name)
+
+
+class Photo(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    filename = db.Column(db.String(64), unique=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', back_populates='image')
+
+    business_id = db.Column(db.Integer, db.ForeignKey('business.id'))
+    business = db.relationship('Business', back_populates='image')
+
+    def clear_meta(self):
+        ''' https://stackoverflow.com/a/23249933 '''
+        image_file = open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
+        image = Image.open(image_file)
+
+        # next 3 lines strip exif
+        data = list(image.getdata())
+        image_without_exif = Image.new(image.mode, image.size)
+        image_without_exif.putdata(data)
+
+        image_without_exif.save(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
+
+    def __repr__(self):
+        return '<Photo #{0} at {1:.4}..{1:.4}>'.format(self.id, self.filename)

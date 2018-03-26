@@ -1,13 +1,16 @@
 from . import app, db, email
-from .models import User, Business, Comment, Tag
+from .models import User, Business, Comment, Tag, Photo
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
-    PasswordResetForm, NewPasswordForm, CommentForm
+    PasswordResetForm, NewPasswordForm, CommentForm, UserPictureUpdateForm
 from flask import render_template, redirect, url_for, flash, request, abort
+from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy import func
 from werkzeug.urls import url_parse
 from functools import wraps
 import math
+from uuid import uuid4
+import os
 
 
 # ======================= Decorators/helper functions =======================
@@ -134,8 +137,48 @@ def profile(username):
 def edit_profile():
     userform = UserUpdateForm()
     profileform = ProfileUpdateForm()
+    pictureform = UserPictureUpdateForm()
 
-    if userform.user_update_submit.data and userform.validate_on_submit():
+    if pictureform.validate_on_submit():
+        picture = pictureform.picture.data
+        filename = picture.filename
+
+        if filename == '' or filename is None:
+            flash('Неверное название файла')
+            # goto end
+        else:
+
+            filename = filename.split('.')
+            extension = filename[-1].lower()
+
+            if extension not in app.config['ALLOWED_IMG_FORMATS']:
+                flash('Неверный формат файла')
+                # goto end
+            else:
+                # get appropriate filename
+                while True:
+                    filename = str(uuid4())
+                    if Photo.query.filter_by(filename=filename).first() is None:
+                        break
+
+                new_filename = filename + '.' + extension
+                picture.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
+
+                if current_user.image is not None:
+                    old_picture = os.path.join(app.config['UPLOAD_FOLDER'], current_user.image.filename)
+                    try:
+                        os.remove(old_picture)
+                    except FileNotFoundError:
+                        pass
+                    current_user.image.filename = new_filename
+
+                else:
+                    current_user.image = Photo(filename=new_filename)
+
+                db.session.add(current_user)
+                db.session.commit()
+
+    elif userform.user_update_submit.data and userform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
             if userform.email.data != '':
                 current_user.email = userform.email.data
@@ -169,6 +212,7 @@ def edit_profile():
                            title='Изменение настроек профиля',
                            userform=userform,
                            profileform=profileform,
+                           pictureform=pictureform,
                            user=current_user)
 
 
@@ -263,3 +307,8 @@ def tag_list_page(tag_name):
                                tag_name=tag_name)
     except ValueError:
         abort(400)
+
+
+@app.route('/uploads/<path:filename>')
+def uploads(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)

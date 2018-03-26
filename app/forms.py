@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, InputRequired, Email, EqualTo, ValidationError, Length, Optional
 from sqlalchemy import func
@@ -10,6 +11,10 @@ from .models import User
 
 def msg_DataRequired():  # for use with stripped fields
     return DataRequired(message='Это обязательное поле')
+
+
+def msg_FileRequired():  # for use with file upload fields
+    return FileRequired(message='Это обязательное поле')
 
 
 def msg_InputRequired():  # for use with everything else (password fields, etc.)
@@ -125,6 +130,14 @@ class SignUpForm(FlaskForm):
     ])
     # captcha TODO
     submit = SubmitField('Зарегистрироваться')
+
+
+class UserPictureUpdateForm(FlaskForm):
+    picture = FileField('Фотография', validators=[
+        msg_FileRequired()
+    ])
+
+    picture_update_submit = SubmitField('Загрузить новую фотографию')
 
 
 class UserUpdateForm(FlaskForm):
