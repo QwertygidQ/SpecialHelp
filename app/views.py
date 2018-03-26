@@ -139,7 +139,7 @@ def edit_profile():
     profileform = ProfileUpdateForm()
     pictureform = UserPictureUpdateForm()
 
-    if pictureform.validate_on_submit():
+    if pictureform.picture_update_submit.data and pictureform.validate_on_submit():
         picture = pictureform.picture.data
         filename = picture.filename
 
