@@ -2,7 +2,8 @@
 
 {% block content %}
 <h1>Регистрация</h1>
-<form class="ui form" method="post">
+<div>
+<form class="ui bottom-padded form" method="post">
     {{ form.hidden_tag() }}
 
     <div class="field">
@@ -31,4 +32,5 @@
 
     {{ form.submit(class_="ui button") }}
 </form>
+</div>
 {% endblock %}

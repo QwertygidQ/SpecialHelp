@@ -1,3 +1,7 @@
+.bottom-padded.form {
+    padding-bottom: 1rem;
+}
+
 p.user-input {
     word-wrap: break-word;
 }
