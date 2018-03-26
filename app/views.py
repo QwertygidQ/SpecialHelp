@@ -147,7 +147,6 @@ def edit_profile():
             flash('Неверное название файла')
             # goto end
         else:
-
             filename = filename.split('.')
             extension = filename[-1].lower()
 
@@ -175,8 +174,15 @@ def edit_profile():
                 else:
                     current_user.image = Photo(filename=new_filename)
 
-                db.session.add(current_user)
                 db.session.commit()
+
+                current_user.image.resize()
+                current_user.image.clear_meta()
+
+                # do we need a password check here??
+
+                flash('Профиль успешно сохранен')
+                return redirect(url_for('profile', username=current_user.username))
 
     elif userform.user_update_submit.data and userform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
@@ -191,6 +197,7 @@ def edit_profile():
 
             db.session.commit()
 
+            flash('Профиль успешно сохранен')
             return redirect(url_for('profile', username=current_user.username))
         else:
             flash('Неверный текущий пароль')
@@ -204,6 +211,7 @@ def edit_profile():
 
             db.session.commit()
 
+            flash('Профиль успешно сохранен')
             return redirect(url_for('profile', username=current_user.username))
         else:
             flash('Неверный текущий пароль')
