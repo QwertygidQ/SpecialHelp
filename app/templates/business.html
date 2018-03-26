@@ -42,10 +42,10 @@
     </div>
 </div>
 
-<p>
+<div class="ui segment">
     <strong>Описание:</strong><br>
     {{ business.desc | nl2br }}
-</p>
+</div>
 {% if has_not_commented %}
     <form class="ui form" method="post">
         {{ form.hidden_tag() }}
