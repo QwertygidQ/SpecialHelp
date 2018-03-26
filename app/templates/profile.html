@@ -14,7 +14,7 @@
         <div class="ui segment">
             <h2>О себе</h2>
             {% if user.about is not none %}
-                {{ user.about | nl2br }}
+                <p class="user-input">{{ user.about | nl2br }}</p>
             {% else %}
                 <i>Пока что здесь ничего нет...</i>
             {% endif %}
@@ -23,7 +23,7 @@
         <div class="ui segment">
             <h2>Контакты</h2>
             {% if user.contacts is not none %}
-                {{ user.contacts | nl2br }}
+                <p class="user-input">{{ user.contacts | nl2br }}</p>
             {% else %}
                 <i>Пока что здесь ничего нет...</i>
             {% endif %}
