@@ -52,6 +52,9 @@ class UserCreationView(AdminPanelModelView):
 
 
 class CommentCreationView(AdminPanelModelView):
+    can_create = False
+    can_edit = False
+
     form_overrides = dict(
         text=TextAreaField
     )
