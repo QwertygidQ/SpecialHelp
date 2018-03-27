@@ -1,10 +1,7 @@
 $(document).ready(function(){
-    $('.rating').rating({
-        initialRating: 4,
-        maxRating: 5
-    });
+    $('.input-disallowed.rating').rating('disable');
 
-    $('.rating').rating(
+    $('.input-allowed.ui.rating').rating(
         'setting', 'onRate', function(value){
             $('#rating').val(value);
         }

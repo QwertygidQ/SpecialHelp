@@ -287,8 +287,6 @@ def business_page(business_link):
 
                 return redirect(url_for('business_page', business_link=business_link))
 
-            form.rating.data = form.rating.default
-
         return render_template('business.html',
                                title=business.name,
                                business=business,

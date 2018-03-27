@@ -100,7 +100,8 @@ class Business(db.Model):  # company/event
         if len(self.comments.all()) == 0:
             self.rating = 0
         else:
-            self.rating = round(sum(comment.rating for comment in self.comments) / len(self.comments.all()), 1)
+            self.rating = int(sum(comment.rating for comment in self.comments) / len(self.comments.all()) + .5)
+
         db.session.commit()
 
     def __repr__(self):
