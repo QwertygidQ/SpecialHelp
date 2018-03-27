@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    console.log($('.rating'))
     $('.rating').rating({
         initialRating: 4,
         maxRating: 5
