@@ -16,7 +16,7 @@ class AdminPanelIndexView(AdminIndexView):
         if is_admin():
             return self.render('admin/index.html')
         else:
-            abort(403)
+            abort(404)
 
 
 class AdminPanelModelView(ModelView):
@@ -24,7 +24,7 @@ class AdminPanelModelView(ModelView):
         return is_admin()
 
     def inaccessible_callback(self, name, **kwargs):
-        abort(403)
+        abort(404)
 
 
 class BusinessCreationView(AdminPanelModelView):

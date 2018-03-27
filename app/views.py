@@ -139,7 +139,7 @@ def edit_profile():
     profileform = ProfileUpdateForm()
     pictureform = UserPictureUpdateForm()
 
-    if pictureform.validate_on_submit():
+    if pictureform.picture_update_submit.data and pictureform.validate_on_submit():
         picture = pictureform.picture.data
         filename = picture.filename
 
@@ -275,7 +275,7 @@ def business_page(business_link):
         if has_not_commented:
             form = CommentForm()
             if form.validate_on_submit():
-                rating = form.rating.data
+                rating = int(form.rating.data)
                 text = form.comment.data
                 comment = Comment(rating=rating, text=text, business=business, author=current_user)
                 db.session.add(comment)
@@ -286,6 +286,8 @@ def business_page(business_link):
                 flash('Ваш комментарий был отправлен')
 
                 return redirect(url_for('business_page', business_link=business_link))
+
+            form.rating.data = form.rating.default
 
         return render_template('business.html',
                                title=business.name,
