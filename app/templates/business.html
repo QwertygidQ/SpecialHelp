@@ -53,7 +53,7 @@
 
         <div class="field">
             {{ form.rating.label }}
-            <div class="input-allowed ui large star rating" data-rating="4" data-max-rating="5"></div>
+            <div class="input-allowed ui large star rating" data-rating="{{ form.rating.data }}" data-max-rating="5"></div>
             {{ error_macro.print_errors(form.rating) }}
         </div>
         <div class="field">
