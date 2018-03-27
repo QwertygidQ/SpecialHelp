@@ -74,6 +74,10 @@
     </p>
 {% endif %}
 
+{% if business.comments.all() %}
+    <h2>Комментарии</h2>
+{% endif %}
+
 {% for comment in business.comments %}
     <div class="ui raised segment">
         <div class="ui stackable grid">
@@ -91,4 +95,6 @@
         </div>
     </div>
 {% endfor %}
+
+<div class="ui bottom-padded"></div>
 {% endblock %}
