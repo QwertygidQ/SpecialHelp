@@ -40,6 +40,7 @@ class BusinessCreationView(AdminPanelModelView):
 
 class UserCreationView(AdminPanelModelView):
     form_excluded_columns = 'password_hash'
+    can_create = False
 
     form_overrides = dict(
         contacts=TextAreaField,
