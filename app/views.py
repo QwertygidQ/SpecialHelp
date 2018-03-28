@@ -11,6 +11,7 @@ from functools import wraps
 import math
 from uuid import uuid4
 import os
+import datetime
 
 
 # ======================= Decorators/helper functions =======================
@@ -277,7 +278,8 @@ def business_page(business_link):
             if form.validate_on_submit():
                 rating = int(form.rating.data)
                 text = form.comment.data
-                comment = Comment(rating=rating, text=text, business=business, author=current_user)
+                comment = Comment(rating=rating, text=text, business=business, author=current_user,
+                                  date_created=datetime.datetime.utcnow())
                 db.session.add(comment)
                 db.session.commit()
 
