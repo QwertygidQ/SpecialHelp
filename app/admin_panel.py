@@ -55,14 +55,6 @@ class CommentCreationView(AdminPanelModelView):
     can_create = False
     can_edit = False
 
-    form_overrides = dict(
-        text=TextAreaField
-    )
-
-    form_choices = dict(
-        rating=[(str(x), str(x)) for x in range(6)]
-    )
-
     def delete_model(self, model):
         if model.__class__.__name__ != 'Comment':
             raise ValueError('Tried to delete ' + model.__class__.__name__ + ' in CommentCreationView, somehow')
@@ -70,3 +62,7 @@ class CommentCreationView(AdminPanelModelView):
         model_business = model.business
         super(CommentCreationView, self).delete_model(model)
         model_business.recalculate_rating()
+
+
+class PhotoCreationView(AdminPanelModelView):
+    pass

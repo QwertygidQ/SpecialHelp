@@ -21,11 +21,12 @@ from . import views, models, nl2br
 
 from flask_admin import Admin
 from .admin_panel import AdminPanelIndexView, AdminPanelModelView, BusinessCreationView, \
-    UserCreationView, CommentCreationView
+    UserCreationView, CommentCreationView, PhotoCreationView
 
 admin = Admin(app, index_view=AdminPanelIndexView())
 
 admin.add_view(BusinessCreationView(models.Business, db.session))
-admin.add_view(UserCreationView(models.User, db.session))
 admin.add_view(AdminPanelModelView(models.Tag, db.session))
+admin.add_view(PhotoCreationView(models.Photo, db.session))
+admin.add_view(UserCreationView(models.User, db.session))
 admin.add_view(CommentCreationView(models.Comment, db.session))
