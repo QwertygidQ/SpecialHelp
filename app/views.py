@@ -1,66 +1,16 @@
 from . import app, db, email
-from .models import User, Business, Comment, Tag, Photo
+from .models import User, Business, Comment
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
     PasswordResetForm, NewPasswordForm, CommentForm, UserPictureUpdateForm
+from .helpers import unauthenticated_required, get_next_page, get_info_for_tag_and_validate
+from . import image_upload
+
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy import func
-from werkzeug.urls import url_parse
-from functools import wraps
-import math
-from uuid import uuid4
-import os
 import datetime
 
-
-# ======================= Decorators/helper functions =======================
-
-def unauthenticated_required(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        if not current_user.is_authenticated:
-            return f(*args, **kwargs)
-        return redirect(url_for('index'))
-
-    return wrapper
-
-
-def is_safe(url):
-    return url and url_parse(url).netloc == ''
-
-
-def get_next_page(default='index'):
-    pages = [request.args.get('next'), request.referrer]
-    for page in pages:
-        if is_safe(page):
-            return page
-
-    return url_for(default)
-
-
-def get_info_for_tag_and_validate(tag=None, page='1'):
-    page = int(page)
-    if page < 1:
-        abort(404)
-    if tag is None:
-        items = Business.query.all()
-    else:
-        items = Tag.query.filter_by(name=tag).first().businesses
-
-    if (page - 1) * 10 > len(items):
-        abort(404)
-
-    pages = math.ceil(len(items) / 10)
-    if page * 10 <= len(items):
-        items = items[(page - 1) * 10:page * 10]
-    else:
-        items = items[(page - 1) * 10:len(items)]
-
-    return pages, items
-
-
-# ======================= View functions =======================
 
 @app.route('/')
 def index():
@@ -141,49 +91,15 @@ def edit_profile():
     pictureform = UserPictureUpdateForm()
 
     if pictureform.picture_update_submit.data and pictureform.validate_on_submit():
-        picture = pictureform.picture.data
-        filename = picture.filename
-
-        if filename == '' or filename is None:
+        return_code = image_upload.save_photo(pictureform.picture.data,
+                                              current_user)  # do we need a password check here??
+        if return_code == image_upload.SUCCESS:
+            flash('Профиль успешно сохранен')
+            return redirect(url_for('profile', username=current_user.username))
+        elif return_code == image_upload.INVALID_FORMAT:
+            flash('Неверный формат файла')
+        elif return_code == image_upload.INVALID_FILENAME:
             flash('Неверное название файла')
-            # goto end
-        else:
-            filename = filename.split('.')
-            extension = filename[-1].lower()
-
-            if extension not in app.config['ALLOWED_IMG_FORMATS']:
-                flash('Неверный формат файла')
-                # goto end
-            else:
-                # get appropriate filename
-                while True:
-                    filename = str(uuid4())
-                    if Photo.query.filter_by(filename=filename).first() is None:
-                        break
-
-                new_filename = filename + '.' + extension
-                picture.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
-
-                if current_user.image is not None:
-                    old_picture = os.path.join(app.config['UPLOAD_FOLDER'], current_user.image.filename)
-                    try:
-                        os.remove(old_picture)
-                    except FileNotFoundError:
-                        pass
-                    current_user.image.filename = new_filename
-
-                else:
-                    current_user.image = Photo(filename=new_filename)
-
-                db.session.commit()
-
-                current_user.image.resize()
-                current_user.image.clear_meta()
-
-                # do we need a password check here??
-
-                flash('Профиль успешно сохранен')
-                return redirect(url_for('profile', username=current_user.username))
 
     elif userform.user_update_submit.data and userform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
