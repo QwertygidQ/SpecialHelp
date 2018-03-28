@@ -3,9 +3,9 @@ from .models import Photo
 import os
 from uuid import uuid4
 
-SUCCESS = 0
-INVALID_FILENAME = 1
-INVALID_FORMAT = 2
+SUCCESS = 'SUCCESS'
+INVALID_FILENAME = 'INVALID_FILENAME'
+INVALID_FORMAT = 'INVALID_FORMAT'
 
 
 def save_photo(picture_data, owner_model):

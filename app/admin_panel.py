@@ -1,8 +1,12 @@
-from flask_admin import AdminIndexView, expose
+import logging
+
+from flask import flash
+from flask_admin import AdminIndexView, expose, form
 from flask_admin.contrib.sqlamodel import ModelView
 from flask_login import current_user
 from flask import abort
-from wtforms import TextAreaField
+from wtforms import TextAreaField, FileField
+from . import image_upload
 from .models import ROLE_ADMIN, ROLE_USER
 
 
@@ -65,4 +69,38 @@ class CommentCreationView(AdminPanelModelView):
 
 
 class PhotoCreationView(AdminPanelModelView):
-    pass
+    form_excluded_columns = 'filename'
+    form_extra_fields = dict(
+        image=FileField()
+    )
+
+    def create_model(self, form):
+        log = logging.getLogger("flask-admin.sqla")
+
+        if form.user.data is not None and form.business.data is not None:
+            flash('Failed to create record. Photo cannot be linked to both a user and a business.')
+            log.error('Failed to create record. Photo cannot be linked to both a user and a business.')
+            return False
+        elif form.user.data is not None:
+            owner_model = form.user.data
+        elif form.business.data is not None:
+            owner_model = form.business.data
+        else:
+            flash('Failed to create record. No user or business specified.')
+            log.error('Failed to create record. No user or business specified.')
+            return False
+
+        if form.image.data is None:
+            flash('Failed to create record. Image is not specified.')
+            log.exception('Failed to create record. Image is not specified.')
+            return False
+
+        print(form.image, form.image.data)
+
+        return_code = image_upload.save_photo(form.image.data, owner_model)
+        if return_code != image_upload.SUCCESS:
+            flash('Failed to create record. Error code: {}'.format(return_code), 'error')
+            log.exception('Failed to create record. Error code: {}'.format(return_code))
+            return False
+
+        return owner_model.image
