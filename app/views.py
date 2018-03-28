@@ -11,6 +11,7 @@ from functools import wraps
 import math
 from uuid import uuid4
 import os
+import datetime
 
 
 # ======================= Decorators/helper functions =======================
@@ -139,7 +140,7 @@ def edit_profile():
     profileform = ProfileUpdateForm()
     pictureform = UserPictureUpdateForm()
 
-    if pictureform.validate_on_submit():
+    if pictureform.picture_update_submit.data and pictureform.validate_on_submit():
         picture = pictureform.picture.data
         filename = picture.filename
 
@@ -275,9 +276,10 @@ def business_page(business_link):
         if has_not_commented:
             form = CommentForm()
             if form.validate_on_submit():
-                rating = form.rating.data
+                rating = int(form.rating.data)
                 text = form.comment.data
-                comment = Comment(rating=rating, text=text, business=business, author=current_user)
+                comment = Comment(rating=rating, text=text, business=business, author=current_user,
+                                  date_created=datetime.datetime.utcnow())
                 db.session.add(comment)
                 db.session.commit()
 

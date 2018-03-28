@@ -3,10 +3,10 @@
 {% block content %}
 <h1>{{ business.name }}</h1>
 
-<div class="ui three column grid">
+<div class="ui stackable three column grid">
     <div class="ui column">
         <div class="ui medium bordered circular image">
-            <img src="{{ url_for('uploads', filename=business.image.filename) }}"/>
+            <img src="{{ url_for('uploads', filename=business.image.filename) if business.image is not none else '../static/images/default.png' }}"/>
         </div>
     </div>
     
@@ -37,22 +37,23 @@
         
         <div class="ui segment">
             <strong>Оценка:</strong><br>
-            {{ business.rating }}
+            <div class="input-disallowed ui large star rating" data-rating="{{ business.rating }}" data-max-rating="5"></div>
         </div>
     </div>
 </div>
 
-<p>
+<div class="ui segment">
     <strong>Описание:</strong><br>
     {{ business.desc | nl2br }}
-</p>
+</div>
+
 {% if has_not_commented %}
-    <form class="ui form" method="post">
+    <form class="ui bottom-padded form" method="post">
         {{ form.hidden_tag() }}
 
         <div class="field">
             {{ form.rating.label }}
-            {{ form.rating() }}
+            <div class="input-allowed ui large star rating" data-rating="{{ form.rating.data }}" data-max-rating="5"></div>
             {{ error_macro.print_errors(form.rating) }}
         </div>
         <div class="field">
@@ -73,10 +74,27 @@
     </p>
 {% endif %}
 
+{% if business.comments.all() %}
+    <h2>Комментарии</h2>
+{% endif %}
+
 {% for comment in business.comments %}
-    <hr>
-    <strong><h3>{{ comment.author.username }}</h3></strong>
-    <i>Оценка: {{ comment.rating }}</i><br>
-    <p class="user-input">{{ comment.text | nl2br }}</p>
+    <div class="ui raised segment">
+        <div class="ui stackable grid">
+            <div class="three wide center aligned column">
+                <div class="ui small bordered circular image">
+                    <img src="{{ url_for('uploads', filename=comment.author.image.filename) if comment.author.image is not none else '../static/images/default.png' }}"/>
+                </div>
+            </div>
+            
+            <div class="thirteen wide column">
+                <h2><a href="{{ url_for('profile', username=comment.author.username) }}">{{ comment.author.username }}</a></h2>
+                <div class="input-disallowed ui large star rating" data-rating="{{ comment.rating }}" data-max-rating="5"></div>
+                <p class="user-input">{{ comment.text | nl2br }}</p>
+            </div>
+        </div>
+    </div>
 {% endfor %}
+
+<div class="ui bottom-padded"></div>
 {% endblock %}

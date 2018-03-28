@@ -74,6 +74,7 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     rating = db.Column(db.SmallInteger)
     text = db.Column(db.String(1000))
+    date_created = db.Column(db.DateTime)
 
     business_id = db.Column(db.Integer, db.ForeignKey('business.id'))
 
@@ -92,7 +93,7 @@ class Business(db.Model):  # company/event
     tags = db.relationship('Tag', secondary=business_tag_table, backref='businesses', lazy='dynamic')
     rating = db.Column(db.SmallInteger, default=0)
     desc = db.Column(db.String(5000))
-    comments = db.relationship('Comment', backref='business', lazy='dynamic')
+    comments = db.relationship('Comment', backref='business', lazy='dynamic', order_by='desc(Comment.date_created)')
 
     image = db.relationship('Photo', uselist=False, back_populates='business')
 
@@ -100,7 +101,8 @@ class Business(db.Model):  # company/event
         if len(self.comments.all()) == 0:
             self.rating = 0
         else:
-            self.rating = round(sum(comment.rating for comment in self.comments) / len(self.comments.all()), 1)
+            self.rating = int(sum(comment.rating for comment in self.comments) / len(self.comments.all()) + .5)
+
         db.session.commit()
 
     def __repr__(self):

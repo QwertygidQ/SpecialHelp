@@ -1,3 +1,7 @@
+.ui.bottom-padded {
+    padding-bottom: 1rem;
+}
+
 p.user-input {
     word-wrap: break-word;
 }
