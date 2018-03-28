@@ -77,6 +77,8 @@ class PhotoCreationView(AdminPanelModelView):
         image=FileField()
     )
 
+    can_edit = False
+
     def create_model(self, form):
         if form.user.data is not None and form.business.data is not None:
             flash('Failed to create record. Photo cannot be linked to both a user and a business.')
