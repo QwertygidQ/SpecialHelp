@@ -100,6 +100,8 @@ def edit_profile():
             flash('Неверный формат файла')
         elif return_code == image_upload.INVALID_FILENAME:
             flash('Неверное название файла')
+        elif return_code == image_upload.INVALID_SIZE:
+            flash('Слишком большой файл')
 
     elif userform.user_update_submit.data and userform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):

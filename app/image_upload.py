@@ -2,10 +2,12 @@ from . import app, db
 from .models import Photo
 import os
 from uuid import uuid4
+from PIL import Image
 
 SUCCESS = 'SUCCESS'
 INVALID_FILENAME = 'INVALID_FILENAME'
 INVALID_FORMAT = 'INVALID_FORMAT'
+INVALID_SIZE = 'INVALID SIZE'
 
 
 def save_photo(picture_data, owner_model):
@@ -26,6 +28,14 @@ def save_photo(picture_data, owner_model):
                     break
 
             new_filename = filename + '.' + extension
+
+            // --Beautiful-- trick getting size of image
+            picture_data.seek(0, os.SEEK_END)
+            the_size = picture_data.tell()
+            if (the_size > app.config['ALLOWED_IMG_SIZE']):
+                return INVALID_SIZE
+            picture_data.seek(0)
+
             picture_data.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
 
             if owner_model.image is not None:
