@@ -7,7 +7,7 @@ from PIL import Image
 SUCCESS = 'SUCCESS'
 INVALID_FILENAME = 'INVALID_FILENAME'
 INVALID_FORMAT = 'INVALID_FORMAT'
-INVALID_SIZE = 'INVALID SIZE'
+INVALID_SIZE = 'INVALID_SIZE'
 
 
 def save_photo(picture_data, owner_model):
@@ -29,10 +29,10 @@ def save_photo(picture_data, owner_model):
 
             new_filename = filename + '.' + extension
 
-            // --Beautiful-- trick getting size of image
+            # --Beautiful-- trick getting size of image
             picture_data.seek(0, os.SEEK_END)
-            the_size = picture_data.tell()
-            if (the_size > app.config['ALLOWED_IMG_SIZE']):
+            size = picture_data.tell()
+            if size > app.config['ALLOWED_IMG_SIZE']:
                 return INVALID_SIZE
             picture_data.seek(0)
 
