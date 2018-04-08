@@ -12,7 +12,6 @@ ROLE_ADMIN = 1
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(50), index=True, unique=True)
-    # avatar ??
     email = db.Column(db.String(254), index=True, unique=True)
     password_hash = db.Column(db.String(60))
 
@@ -86,9 +85,8 @@ class Business(db.Model):  # company/event
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), index=True, unique=True)
     link = db.Column(db.String(50), index=True, unique=True)
-    # image ??
     address = db.Column(db.String(300))  # is this enough for map APIs??
-    time = db.Column(db.String(200))  # reserved for really big schedules; should change for searching???
+    time = db.Column(db.String(200))  # should change for searching???
     contacts = db.Column(db.String(200))
     tags = db.relationship('Tag', secondary=business_tag_table, backref='businesses', lazy='dynamic')
     rating = db.Column(db.SmallInteger, default=0)
