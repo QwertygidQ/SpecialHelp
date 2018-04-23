@@ -1,4 +1,4 @@
-from . import app, db, email
+from . import app, db, email, babel
 from .models import User, Business, Comment
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
     PasswordResetForm, NewPasswordForm, CommentForm, UserPictureUpdateForm
@@ -8,8 +8,16 @@ from . import image_upload
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_babel import _ as gettext
+from flask_babel import lazy_gettext
 from sqlalchemy import func
 import datetime
+
+@babel.localeselector
+def get_locale():
+    if hasattr(current_user, 'locale') and current_user.locale != 'NONE':
+        return current_user.locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/')
@@ -22,7 +30,7 @@ def index():
         pages, items = get_info_for_tag_and_validate(page=pagination_page)
 
         return render_template('index.html',
-                               title='Главная Страница',
+                               title=gettext('Main page'),
                                pages_count=pages,
                                businesses=items)
     except ValueError:
@@ -39,10 +47,10 @@ def signin():
             login_user(user, form.remember.data)
             return redirect(get_next_page())
         else:
-            flash('Неверный Email или пароль')
+            flash(gettext('Invalid email or password'))
 
     return render_template('signin.html',
-                           title='Вход',
+                           title=gettext('Login'),
                            form=form)
 
 
@@ -59,7 +67,7 @@ def signup():
         return redirect(url_for('signin'))
 
     return render_template('signup.html',
-                           title='Регистрация',
+                           title=gettext('Registration'),
                            form=form)
 
 
@@ -79,7 +87,7 @@ def profile(username):
         abort(404)
 
     return render_template('profile.html',
-                           title='Профиль пользователя {}'.format(username),
+                           title=gettext("%(username)s's profile", username=username),
                            user=user)
 
 
@@ -94,14 +102,14 @@ def edit_profile():
         return_code = image_upload.save_photo(pictureform.picture.data,
                                               current_user)  # do we need a password check here??
         if return_code == image_upload.SUCCESS:
-            flash('Профиль успешно сохранен')
+            flash(gettext('Profile saved'))
             return redirect(url_for('profile', username=current_user.username))
         elif return_code == image_upload.INVALID_FORMAT:
-            flash('Неверный формат файла')
+            flash(gettext('Invalid file format'))
         elif return_code == image_upload.INVALID_FILENAME:
-            flash('Неверное название файла')
+            flash(gettext('Invalid filename'))
         elif return_code == image_upload.INVALID_SIZE:
-            flash('Слишком большой файл')
+            flash(gettext('Too big file'))
 
     elif userform.user_update_submit.data and userform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
@@ -116,10 +124,10 @@ def edit_profile():
 
             db.session.commit()
 
-            flash('Профиль успешно сохранен')
+            flash(gettext('Profile saved'))
             return redirect(url_for('profile', username=current_user.username))
         else:
-            flash('Неверный текущий пароль')
+            flash(gettext('Invalid current password'))
     elif profileform.profile_update_submit.data and profileform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
             if profileform.about.data != '':
@@ -130,13 +138,13 @@ def edit_profile():
 
             db.session.commit()
 
-            flash('Профиль успешно сохранен')
+            flash(gettext('Profile saved'))
             return redirect(url_for('profile', username=current_user.username))
         else:
-            flash('Неверный текущий пароль')
+            flash(gettext('Invalid current password'))
 
     return render_template('edit_profile.html',
-                           title='Изменение настроек профиля',
+                           title=gettext('Change profile settings'),
                            userform=userform,
                            profileform=profileform,
                            pictureform=pictureform,
@@ -152,14 +160,14 @@ def reset_password():
         user = User.query.filter(func.lower(User.email) == form.email.data.lower()).first()
         if user is not None:
             email.send_reset_password_email(user)
-            flash('Письмо с ссылкой для сброса пароля было отправлено Вам на почту')
+            flash(gettext('Mail with link to reset your password has been sent to Your email'))
 
             return redirect(url_for('signin'))
         else:
-            flash('Пользователя с таким Email не существует')
+            flash(gettext('There is no user with this email'))
 
     return render_template('reset_password.html',
-                           title='Сброс пароля',
+                           title=gettext('Reset password'),
                            form=form)
 
 
@@ -175,11 +183,11 @@ def reset_password_confirmed(token):
     if form.validate_on_submit():
         User.query.get(user).set_password(form.password.data)
         db.session.commit()
-        flash('Ваш пароль был изменен')
+        flash(gettext('Your password has been changed'))
         return redirect(url_for('signin'))
 
     return render_template('reset_password_confirmed.html',
-                           title='Новый пароль',
+                           title=gettext('New password'),
                            form=form)
 
 
@@ -203,7 +211,7 @@ def business_page(business_link):
 
                 business.recalculate_rating()
 
-                flash('Ваш комментарий был отправлен')
+                flash(gettext('Your comment has been sent'))
 
                 return redirect(url_for('business_page', business_link=business_link))
 
@@ -229,7 +237,7 @@ def tag_list_page(tag_name):
         pages, items = get_info_for_tag_and_validate(tag_name, page)
 
         return render_template('tag_list.html',
-                               title='Организации по тегу ' + tag_name,
+                               title=gettext('Businesses for tag %(tag)s', tag_name),
                                businesses=items,
                                pages_count=pages,
                                tag_name=tag_name)
