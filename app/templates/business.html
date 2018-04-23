@@ -9,24 +9,24 @@
             <img src="{{ url_for('uploads', filename=business.image.filename) if business.image is not none else '../static/images/default.png' }}"/>
         </div>
     </div>
-    
+
     <div class="ui column">
         <div class="ui segment">
             <strong>Адрес:</strong><br>
-            {{ business.address | nl2br }}
+            {{ business.address }}
         </div>
-        
+
         <div class="ui segment">
             <strong>Время работы:</strong><br>
-            {{ business.time | nl2br }}
+            {{ business.time }}
         </div>
-        
+
         <div class="ui segment">
             <strong>Контакты:</strong><br>
-            {{ business.contacts | nl2br }}
+            {{ business.contacts }}
         </div>
     </div>
-    
+
     <div class="ui column">
         <div class="ui segment">
             <strong>Теги:</strong><br>
@@ -34,7 +34,7 @@
                 <a href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}">{{ tag.name }}</a>&nbsp;
             {% endfor %}
         </div>
-        
+
         <div class="ui segment">
             <strong>Оценка:</strong><br>
             <div class="input-disallowed ui large star rating" data-rating="{{ business.rating }}" data-max-rating="5"></div>
@@ -44,7 +44,7 @@
 
 <div class="ui segment">
     <strong>Описание:</strong><br>
-    {{ business.desc | nl2br }}
+    {{ business.desc }}
 </div>
 
 {% if has_not_commented %}
@@ -86,11 +86,11 @@
                     <img src="{{ url_for('uploads', filename=comment.author.image.filename) if comment.author.image is not none else '../static/images/default.png' }}"/>
                 </div>
             </div>
-            
+
             <div class="thirteen wide column">
                 <h2><a href="{{ url_for('profile', username=comment.author.username) }}">{{ comment.author.username }}</a></h2>
                 <div class="input-disallowed ui large star rating" data-rating="{{ comment.rating }}" data-max-rating="5"></div>
-                <p class="user-input">{{ comment.text | nl2br }}</p>
+                <p class="user-input">{{ comment.text }}</p>
             </div>
         </div>
     </div>

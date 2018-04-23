@@ -17,7 +17,7 @@ login_manager.login_view = 'signin'
 
 mail = Mail(app)
 
-from . import views, models, nl2br
+from . import views, models
 
 from flask_admin import Admin
 from .admin_panel import AdminPanelIndexView, AdminPanelModelView, BusinessCreationView, \

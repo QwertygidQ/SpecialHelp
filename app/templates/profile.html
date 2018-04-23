@@ -9,27 +9,27 @@
             <img src="{{ url_for('uploads', filename=user.image.filename) if user.image is not none else '../static/images/default.png' }}"/>
         </div>
     </div>
-    
+
     <div class="ui column">
         <div class="ui segment">
             <h2>О себе</h2>
             {% if user.about is not none %}
-                <p class="user-input">{{ user.about | nl2br }}</p>
+                <p class="user-input">{{ user.about }}</p>
             {% else %}
                 <i>Пока что здесь ничего нет...</i>
             {% endif %}
         </div>
-        
+
         <div class="ui segment">
             <h2>Контакты</h2>
             {% if user.contacts is not none %}
-                <p class="user-input">{{ user.contacts | nl2br }}</p>
+                <p class="user-input">{{ user.contacts }}</p>
             {% else %}
                 <i>Пока что здесь ничего нет...</i>
             {% endif %}
         </div>
     </div>
-    
+
     <div class="ui column">
         {% if current_user.username == user.username %}
             <a href="{{ url_for('edit_profile') }}">Изменить профиль</a>
