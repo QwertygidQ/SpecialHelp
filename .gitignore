@@ -114,3 +114,7 @@ ENV/
 # project tmp files
 uploads/
 uploads/*
+
+# private connection settings
+db_config.yml
+
