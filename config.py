@@ -21,13 +21,20 @@ if SECRET_KEY == '-g0(m1l!@ew2pj8unyrf*s37pnkr&(+u0-^0_twic8v@5l6u3h' and not de
     print('\x1b[31;1mIF YOU SEE THIS IN PRODUCTION - IMMEDIATELY CHANGE `SECRET_KEY`!!!\x1b[0m')
 # SECRET_KEY = get_random_key()
 
-basedir = os.path.abspath(os.path.dirname(__name__))
+
+if not os.path.isfile('db_config.yml'):
+    import sys
+    print('You definitely need `db_config.yml`')
+    sys.exit(-1)
+
 uri = '{backend}://{username}:{passwd}@{server}:{port}/{dbname}'
 with open('db_config.yml') as db_config:
     SQLALCHEMY_DATABASE_URI = uri.format(**yaml.load(db_config.read()))
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
+basedir = os.path.abspath(os.path.dirname(__name__))
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
 ALLOWED_IMG_FORMATS = ['jpg', 'jpeg', 'png']
 ALLOWED_IMG_SIZE = 500 * 1024
