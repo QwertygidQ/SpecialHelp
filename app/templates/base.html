@@ -4,9 +4,9 @@
 <html>
     <head>
         <title>{{ title }}</title>
-        <meta charset="UTF-8"> 
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="../static/css/text_break.css"/>
-        
+
         <!-- Should use downloaded libs instead of CDNs, temporary solution -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
@@ -17,13 +17,13 @@
     <body>
         <div class="ui container">
 			<div class="ui stackable menu">
-				<a class="item" href="{{ url_for('index') }}">Главная страница</a>
+				<a class="item" href="{{ url_for('index') }}">{{ _('Main page') }}</a>
 				{% if current_user.is_authenticated %}
-					<a class="item" href="{{ url_for('profile', username=current_user.username) }}">Профиль</a>
-					<a class="item" href="{{ url_for('signout') }}">Выйти</a>
+					<a class="item" href="{{ url_for('profile', username=current_user.username) }}">{{ _('Profile') }}</a>
+					<a class="item" href="{{ url_for('signout') }}">{{ _('Logout') }}</a>
 				{% else %}
-					<a class="item" href="{{ url_for('signin') }}">Войти</a>
-					<a class="item" href="{{ url_for('signup') }}">Зарегистрироваться</a>
+					<a class="item" href="{{ url_for('signin') }}">{{ _('Login') }}</a>
+					<a class="item" href="{{ url_for('signup') }}">{{ _('Register') }}</a>
 				{% endif %}
 			</div>
 
@@ -32,9 +32,9 @@
 					<div class="ui info message">
 						<div class="header">
 							{% if flashes|length > 1 %}
-								Новые уведомления
+								{{ _('New notifications') }}
 							{% else %}
-								Новое уведомление
+								{{ _('New notification') }}
 							{% endif %}
 						</div>
 						<ul class="list">

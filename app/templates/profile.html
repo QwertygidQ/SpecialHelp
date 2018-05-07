@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Профиль пользователя {{ user.username }}</h1>
+<h1> {{ _("%(username)s's profile", username=user.username) }}</h1>
 
 <div class="ui stackable three column grid">
     <div class="ui column">
@@ -12,27 +12,27 @@
 
     <div class="ui column">
         <div class="ui segment">
-            <h2>О себе</h2>
+            <h2>{{ _('About me') }}</h2>
             {% if user.about is not none %}
                 <p class="user-input">{{ user.about }}</p>
             {% else %}
-                <i>Пока что здесь ничего нет...</i>
+                <i>{{ _('Nothing here yet...') }}</i>
             {% endif %}
         </div>
 
         <div class="ui segment">
-            <h2>Контакты</h2>
+            <h2>{{ _('Contacts') }}</h2>
             {% if user.contacts is not none %}
                 <p class="user-input">{{ user.contacts }}</p>
             {% else %}
-                <i>Пока что здесь ничего нет...</i>
+                <i>{{ _('Nothing here yet...') }}</i>
             {% endif %}
         </div>
     </div>
 
     <div class="ui column">
         {% if current_user.username == user.username %}
-            <a href="{{ url_for('edit_profile') }}">Изменить профиль</a>
+            <a href="{{ url_for('edit_profile') }}">{{ _('Change profile') }}</a>
         {% endif %}
     </div>
 </div>
