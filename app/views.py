@@ -13,6 +13,7 @@ from flask_babel import lazy_gettext
 from sqlalchemy import func
 import datetime
 
+
 @babel.localeselector
 def get_locale():
     if hasattr(current_user, 'locale') and current_user.locale != 'NONE':
@@ -202,7 +203,14 @@ def business_page(business_link):
         if has_not_commented:
             form = CommentForm()
             if form.validate_on_submit():
-                rating = int(form.rating.data)
+                try:
+                    rating = int(form.rating.data)
+                except ValueError:
+                    abort(400)
+
+                if rating < 1 or rating > 5:
+                    abort(400)
+
                 text = form.comment.data
                 comment = Comment(rating=rating, text=text, business=business, author=current_user,
                                   date_created=datetime.datetime.utcnow())
