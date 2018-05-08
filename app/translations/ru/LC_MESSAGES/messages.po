@@ -227,7 +227,7 @@ msgid "Address:"
 msgstr "Адрес:"
 
 #: app/templates/business.html:20
-msgid "Work time:"
+msgid "Working time:"
 msgstr "Время работы:"
 
 #: app/templates/business.html:25
