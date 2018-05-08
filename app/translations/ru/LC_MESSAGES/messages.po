@@ -262,8 +262,8 @@ msgid "Change profile"
 msgstr "Изменить профиль"
 
 #: app/templates/reset_password_email.html:4
-msgid "Dear %(username)"
-msgstr "Уважаемый(ая) %(username)s"
+msgid "Dear %(username)s,"
+msgstr "Уважаемый(ая) %(username)s,"
 
 #: app/templates/reset_password_email.html:6
 msgid "To change your password please follow this link:"
