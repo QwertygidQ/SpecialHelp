@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.5.3\n"
 
 #: app/email.py:14
-msgid "[PROECTOS] Reset password"
+msgid "[PROECTOS] Password reset"
 msgstr ""
 
 #: app/forms.py:14 app/forms.py:18 app/forms.py:22

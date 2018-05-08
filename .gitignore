@@ -7,6 +7,7 @@ db_repository/
 venv/
 *.db
 app/translations/ru/LC_MESSAGES/messages.mo
+app/translations/en/LC_MESSAGES/messages.mo
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
