@@ -117,4 +117,5 @@ uploads/*
 
 # private connection settings
 db_config.yml
+mail_config.yml
 
