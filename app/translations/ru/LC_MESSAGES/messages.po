@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-08 21:31+0300\n"
+"POT-Creation-Date: 2018-05-08 22:26+0300\n"
 "PO-Revision-Date: 2018-04-24 00:02+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
+
+#: app/email.py:14
+msgid "[PROECTOS] Reset password"
+msgstr "[PROECTOS] Сброс пароля"
 
 #: app/forms.py:14 app/forms.py:18 app/forms.py:22
 msgid "This field is required"
@@ -255,7 +259,9 @@ msgstr "Ваш комментарий отправлен!"
 msgid ""
 "%(link_and_babel_for_signin)s or %(link_and_babel_for_registration)s to "
 "post a comment!"
-msgstr "%(link_and_babel_for_signin)s или %(link_and_babel_for_registration)s, чтобы комментировать!"
+msgstr ""
+"%(link_and_babel_for_signin)s или %(link_and_babel_for_registration)s, "
+"чтобы комментировать!"
 
 #: app/templates/business.html:77
 msgid "Sign in to"
