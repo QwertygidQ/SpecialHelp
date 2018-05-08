@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import DataRequired, InputRequired, Email, EqualTo, ValidationError, Length, Optional
 from sqlalchemy import func
 from .models import User
-from flask_babel import lazy_gettext
+from flask_babelex import lazy_gettext
 
 
 # ======================= Customized validators =======================

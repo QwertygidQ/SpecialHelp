@@ -8,8 +8,7 @@ from . import image_upload
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
-from flask_babel import _ as gettext
-from flask_babel import lazy_gettext
+from flask_babelex import gettext
 from sqlalchemy import func
 import datetime
 
