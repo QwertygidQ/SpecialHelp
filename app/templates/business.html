@@ -73,7 +73,7 @@
 {% else %}
     <p>
         {% autoescape false %}
-        {{ _('%(link_and_babel_for_signin)s or %(link_and_babel_for_registration)s to write comment!',
+        {{ _('%(link_and_babel_for_signin)s or %(link_and_babel_for_registration)s to post a comment!',
             link_and_babel_for_signin='<a href="{{ url_for(\'signin\') }}">' + _('Sign in') + '</a>',
             link_and_babel_for_registration='<a href="{{ url_for(\'signup\') }}">' + _('Register') + '</a>'
             ) }}
