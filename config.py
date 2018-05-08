@@ -1,4 +1,5 @@
 import os
+import sys
 import random
 import yaml
 
@@ -23,7 +24,6 @@ if SECRET_KEY == '-g0(m1l!@ew2pj8unyrf*s37pnkr&(+u0-^0_twic8v@5l6u3h' and not de
 
 
 if not os.path.isfile('db_config.yml'):
-    import sys
     print('You definitely need \'db_config.yml\'')
     sys.exit(-1)
 
@@ -44,5 +44,12 @@ LANGUAGES = ['en', 'ru']
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
 MAIL_USE_SSL = True
-# MAIL_USERNAME = < username >
-# MAIL_PASSWORD = < password >
+
+if not os.path.isfile('mail_config.yml'):
+    print('You definitely need \'mail_config.yml\'')
+    sys.exit(-1)
+
+with open('mail_config.yml') as mail_config:
+    yml = yaml.load(mail_config.read())
+    MAIL_USERNAME = yml['username']
+    MAIL_PASSWORD = yml['password']
