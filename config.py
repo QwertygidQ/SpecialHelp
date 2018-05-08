@@ -24,7 +24,7 @@ if SECRET_KEY == '-g0(m1l!@ew2pj8unyrf*s37pnkr&(+u0-^0_twic8v@5l6u3h' and not de
 
 if not os.path.isfile('db_config.yml'):
     import sys
-    print('You definitely need `db_config.yml`')
+    print('You definitely need \'db_config.yml\'')
     sys.exit(-1)
 
 uri = '{backend}://{username}:{passwd}@{server}:{port}/{dbname}'
