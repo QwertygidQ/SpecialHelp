@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Изменение настроек профиля</h1>
+<h1>{{ _('Change profile settings') }}</h1>
 
 <form class="ui stackable two column grid form" enctype="multipart/form-data" method="post">
     {{ pictureform.hidden_tag() }}
@@ -11,7 +11,7 @@
             <img src="{{ url_for('uploads', filename=user.image.filename) if user.image is not none else '../static/images/default.png' }}" />
         </div>
     </div>
-    
+
     <div class="column">
         <div class="field">
             {{ pictureform.picture() }}
@@ -25,7 +25,7 @@
 
 <form class="ui one column grid form" method="post">
     {{ userform.hidden_tag() }}
-    
+
     <div class="column">
         <div class="ui stackable two column grid">
             <div class="column">
@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="column">
         {{ userform.user_update_submit(class_="ui button") }}
     </div>
@@ -73,7 +73,7 @@
 
 <form class="ui one column grid form" method="post">
     {{ profileform.hidden_tag() }}
-    
+
     <div class="column">
         <div class="ui stackable two column grid">
             <div class="column">
@@ -99,7 +99,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="column">
         {{ profileform.profile_update_submit(class_="ui button") }}
     </div>

@@ -24,7 +24,7 @@ if SECRET_KEY == '-g0(m1l!@ew2pj8unyrf*s37pnkr&(+u0-^0_twic8v@5l6u3h' and not de
 
 if not os.path.isfile('db_config.yml'):
     import sys
-    print('You definitely need `db_config.yml`')
+    print('You definitely need \'db_config.yml\'')
     sys.exit(-1)
 
 uri = '{backend}://{username}:{passwd}@{server}:{port}/{dbname}'
@@ -38,6 +38,8 @@ basedir = os.path.abspath(os.path.dirname(__name__))
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
 ALLOWED_IMG_FORMATS = ['jpg', 'jpeg', 'png']
 ALLOWED_IMG_SIZE = 500 * 1024
+
+LANGUAGES = ['en', 'ru']
 
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465

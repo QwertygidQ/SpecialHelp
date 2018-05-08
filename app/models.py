@@ -24,6 +24,8 @@ class User(db.Model, UserMixin):
 
     image = db.relationship('Photo', uselist=False, back_populates='user')
 
+    locale = db.Column(db.String(5), default='NONE') # e.g. 'en-gb' or 'ru'
+
     def __repr__(self):
         return '<User {}; {}>'.format(self.username, self.email)
 

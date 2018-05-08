@@ -1,0 +1,299 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2018 Proectos
+# This file is distributed under the same license as the Proectos project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-04-24 00:23+0300\n"
+"PO-Revision-Date: 2018-04-24 00:02+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: app/forms.py:14 app/forms.py:18 app/forms.py:22
+msgid "This field is required"
+msgstr "Это поле обязательно"
+
+#: app/forms.py:27
+#, python-format
+msgid "Password length must be between %(min)s and %(max)s characters"
+msgstr "Длина пароля должна быть между %(min)s и %(max)s символами"
+
+#: app/forms.py:29 app/forms.py:44
+#, python-format
+msgid "Password length must be at least %(min)s characters"
+msgstr "Пароль не может быть короче %(min)s символов"
+
+#: app/forms.py:31
+#, python-format
+msgid "Password cannot be longer than %(max)s characters"
+msgstr "Пароль не может быть длиннее %(max)s символов"
+
+#: app/forms.py:39
+msgid "Invalid email address"
+msgstr "Неверный email"
+
+#: app/forms.py:49
+msgid "Passwords must match"
+msgstr "Пароли должны совпадать"
+
+#: app/forms.py:53
+msgid "This email is already taken"
+msgstr "Такой email уже зарегистрирован"
+
+#: app/forms.py:64
+msgid "This username is already taken"
+msgstr "Этот псевдоним уже занят"
+
+#: app/forms.py:97 app/forms.py:111 app/forms.py:194
+msgid "Email"
+msgstr "Email"
+
+#: app/forms.py:102 app/forms.py:122
+msgid "Password"
+msgstr "Пароль"
+
+#: app/forms.py:106
+msgid "Remember me"
+msgstr "Запомнить меня"
+
+#: app/forms.py:107 app/templates/base.html:25 app/views.py:53
+msgid "Sign in"
+msgstr "Войти"
+
+#: app/forms.py:117
+msgid "Username"
+msgstr "Псевдоним"
+
+#: app/forms.py:127
+msgid "Repeat password"
+msgstr "Повторите пароль"
+
+#: app/forms.py:133 app/templates/base.html:26
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: app/forms.py:137
+msgid "Picture"
+msgstr "Фотография"
+
+#: app/forms.py:141
+msgid "Upload new picture"
+msgstr "Загрузить новую фотографию"
+
+#: app/forms.py:145
+msgid "New email"
+msgstr "Новый email"
+
+#: app/forms.py:151
+msgid "New username"
+msgstr "Новый псевдоним"
+
+#: app/forms.py:156 app/forms.py:204
+#: app/templates/reset_password_confirmed.html:4 app/views.py:190
+msgid "New password"
+msgstr "Новый пароль"
+
+#: app/forms.py:161 app/forms.py:210
+msgid "Repeat new password"
+msgstr "Повторите пароль"
+
+#: app/forms.py:167 app/forms.py:185
+msgid "Current password"
+msgstr "Текущий пароль"
+
+#: app/forms.py:172 app/forms.py:190
+msgid "Update information"
+msgstr "Обновить информацию"
+
+#: app/forms.py:176 app/templates/profile.html:15
+msgid "About me"
+msgstr "Обо мне"
+
+#: app/forms.py:180 app/templates/profile.html:24
+msgid "Contacts"
+msgstr "Контакты"
+
+#: app/forms.py:200 app/templates/reset_password.html:4 app/views.py:170
+msgid "Reset password"
+msgstr "Сбросить пароль"
+
+#: app/forms.py:216
+msgid "Update password"
+msgstr "Обновить пароль"
+
+#: app/forms.py:222
+msgid "Comment"
+msgstr "Комментарий"
+
+#: app/forms.py:227
+msgid "Post comment"
+msgstr "Отправить комментарий"
+
+#: app/templates/base.html:20 app/views.py:33
+msgid "Main page"
+msgstr "Главная страница"
+
+#: app/views.py:50
+msgid "Invalid email or password"
+msgstr "Неправильный email или пароль"
+
+#: app/templates/signup.html:4 app/views.py:70
+msgid "Registration"
+msgstr "Зарегистрироваться"
+
+#: app/templates/profile.html:4 app/views.py:90
+#, python-format
+msgid "%(username)s's profile"
+msgstr "Профиль пользователя %(username)s"
+
+#: app/views.py:105 app/views.py:127 app/views.py:141
+msgid "Profile saved"
+msgstr "Профиль сохранен"
+
+#: app/views.py:108
+msgid "Invalid file format"
+msgstr "Неверный формат файла"
+
+#: app/views.py:110
+msgid "Invalid filename"
+msgstr "Неверное имя файла"
+
+#: app/views.py:112
+msgid "File is too large"
+msgstr "Слишком большой файл"
+
+#: app/views.py:130 app/views.py:144
+msgid "Invalid current password"
+msgstr "Неправильный текущий пароль"
+
+#: app/templates/edit_profile.html:4 app/views.py:147
+msgid "Change profile settings"
+msgstr "Изменить настройки профиля"
+
+#: app/views.py:163
+msgid "Message with a password reset link has been sent to your email"
+msgstr "Письмо со ссылкой для сброса пароля было отправлено на Вашу почту"
+
+#: app/views.py:167
+msgid "User with this email does not exist"
+msgstr "Не существует пользователя с таким email"
+
+#: app/views.py:186
+msgid "Your password has been changed"
+msgstr "Пароль был изменен"
+
+#: app/views.py:214
+msgid "Your comment has been posted"
+msgstr "Ваш комментарий был отправлен"
+
+#: app/views.py:240
+#, python-format
+msgid "Businesses for tag %(tag)s"
+msgstr "Организации по тегу %(tag)s"
+
+#: app/templates/base.html:22
+msgid "Profile"
+msgstr "Профиль"
+
+#: app/templates/base.html:23
+msgid "Log out"
+msgstr "Выйти"
+
+#: app/templates/base.html:35
+msgid "New notifications"
+msgstr "Новые уведомления"
+
+#: app/templates/base.html:37
+msgid "New notification"
+msgstr "Новое уведомление"
+
+#: app/templates/business.html:15
+msgid "Address:"
+msgstr "Адрес:"
+
+#: app/templates/business.html:20
+msgid "Work time:"
+msgstr "Время работы:"
+
+#: app/templates/business.html:25
+msgid "Contacts:"
+msgstr "Контакты:"
+
+#: app/templates/business.html:32
+msgid "Tags:"
+msgstr "Теги:"
+
+#: app/templates/business.html:39
+msgid "Rating:"
+msgstr "Оценка:"
+
+#: app/templates/business.html:46
+msgid "Description"
+msgstr "Описание"
+
+#: app/templates/business.html:69
+msgid "Your comment has been posted!"
+msgstr "Ваш комментарий отправлен!"
+
+#: app/templates/business.html:83
+msgid "Comments"
+msgstr "Комментарии"
+
+#: app/templates/index.html:4
+msgid "Welcome!"
+msgstr "Добро пожаловать!"
+
+#: app/templates/profile.html:19 app/templates/profile.html:28
+msgid "Nothing here yet..."
+msgstr "Здесь пока ничего нет..."
+
+#: app/templates/profile.html:35
+msgid "Change profile"
+msgstr "Изменить профиль"
+
+#: app/templates/reset_password_email.html:4
+msgid "Dear %(username)s,"
+msgstr "Уважаемый(ая) %(username)s,"
+
+#: app/templates/reset_password_email.html:6
+msgid "To change your password please follow this link:"
+msgstr "Для сброса пароля пройдите по ссылке:"
+
+#: app/templates/reset_password_email.html:9
+msgid "If you did not request a password reset, just ignore this message."
+msgstr "Если вы не запрашивали сброс пароля, просто проигнорируйте это письмо."
+
+#: app/templates/reset_password_email.html:11
+msgid "This email was automatically generated. Please do not reply."
+msgstr "Это письмо было автоматически сгенерировано. Не отвечайте на него, пожалуйста."
+
+#: app/templates/reset_password_email.html:13
+msgid "Yours,"
+msgstr "С уважением,"
+
+#: app/templates/reset_password_email.html:14
+msgid "Proectos team"
+msgstr "Команда Proectos"
+
+#: app/templates/signin.html:4
+msgid "Sign in"
+msgstr "Войти"
+
+#: app/templates/signin.html:21
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: app/forms.py:220
+msgid "Rating"
+msgstr "Оценка"
+

@@ -1,12 +1,12 @@
 .idea/
 */__pycache__
 __pycache__
-migrations
 db_repository/
 *.db
 *.so
 venv/
 *.db
+app/translations/ru/LC_MESSAGES/messages.mo
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
