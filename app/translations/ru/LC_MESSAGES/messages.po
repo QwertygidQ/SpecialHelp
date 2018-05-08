@@ -148,7 +148,7 @@ msgid "Invalid email or password"
 msgstr "Неправильный email или пароль"
 
 #: app/templates/signup.html:4 app/views.py:70
-msgid "Register"
+msgid "Registration"
 msgstr "Зарегистрироваться"
 
 #: app/templates/profile.html:4 app/views.py:90

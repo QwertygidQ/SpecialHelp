@@ -51,7 +51,7 @@ def signin():
             flash(gettext('Invalid email or password'))
 
     return render_template('signin.html',
-                           title=gettext('Login'),
+                           title=gettext('Sign in'),
                            form=form)
 
 
@@ -110,7 +110,7 @@ def edit_profile():
         elif return_code == image_upload.INVALID_FILENAME:
             flash(gettext('Invalid filename'))
         elif return_code == image_upload.INVALID_SIZE:
-            flash(gettext('Too big file'))
+            flash(gettext('File is too large'))
 
     elif userform.user_update_submit.data and userform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
@@ -161,11 +161,11 @@ def reset_password():
         user = User.query.filter(func.lower(User.email) == form.email.data.lower()).first()
         if user is not None:
             email.send_reset_password_email(user)
-            flash(gettext('Mail with link to reset your password has been sent to Your email'))
+            flash(gettext('Message with a password reset link has been sent to your email'))
 
             return redirect(url_for('signin'))
         else:
-            flash(gettext('There is no user with this email'))
+            flash(gettext('User with this email does not exist'))
 
     return render_template('reset_password.html',
                            title=gettext('Reset password'),
@@ -219,7 +219,7 @@ def business_page(business_link):
 
                 business.recalculate_rating()
 
-                flash(gettext('Your comment has been sent'))
+                flash(gettext('Your comment has been posted'))
 
                 return redirect(url_for('business_page', business_link=business_link))
 

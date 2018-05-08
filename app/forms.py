@@ -50,7 +50,7 @@ def msg_password_EqualTo(field):
 
 
 def unique_email():
-    message = lazy_gettext('This email is already registered. Try login or choose another one.')
+    message = lazy_gettext('This email is already taken')
 
     def _unique_email(_, field):
         user = User.query.filter(func.lower(User.email) == field.data.lower()).first()
@@ -61,7 +61,7 @@ def unique_email():
 
 
 def unique_username():
-    message = lazy_gettext('This username is already taken. Try to choose another one')
+    message = lazy_gettext('This username is already taken')
 
     def _unique_username(_, field):
         user = User.query.filter_by(username=field.data).first()
@@ -104,7 +104,7 @@ class SignInForm(FlaskForm):
         msg_password_Length()
     ])
     remember = BooleanField(lazy_gettext('Remember me'))
-    submit = SubmitField(lazy_gettext('Login'))
+    submit = SubmitField(lazy_gettext('Sign in'))
 
 
 class SignUpForm(FlaskForm):
