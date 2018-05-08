@@ -48,22 +48,24 @@
 </div>
 
 {% if has_not_commented %}
-    <form class="ui bottom-padded form" method="post">
-        {{ form.hidden_tag() }}
+    <div class="ui segment">
+        <form class="ui bottom-padded form" method="post">
+            {{ form.hidden_tag() }}
 
-        <div class="field">
-            {{ form.rating.label }}
-            <div class="input-allowed ui large star rating" data-rating="{{ form.rating.data }}" data-max-rating="5"></div>
-            {{ error_macro.print_errors(form.rating) }}
-        </div>
-        <div class="field">
-            {{ form.comment.label }}
-            {{ form.comment() }}
-            {{ error_macro.print_errors(form.comment) }}
-        </div>
+            <div class="field">
+                {{ form.rating.label }}
+                <div class="input-allowed ui large star rating" data-rating="{{ form.rating.data }}" data-max-rating="5"></div>
+                {{ error_macro.print_errors(form.rating) }}
+            </div>
+            <div class="field">
+                {{ form.comment.label }}
+                {{ form.comment() }}
+                {{ error_macro.print_errors(form.comment) }}
+            </div>
 
-        {{ form.submit(class_="ui button") }}
-    </form>
+            {{ form.submit(class_="ui button") }}
+        </form>
+    </div>
 {% elif current_user.is_authenticated %} {# Authenticated user has already commented on this business #}
     <p>
         {{ _('Your comment has been posted!') }}

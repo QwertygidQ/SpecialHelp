@@ -217,7 +217,7 @@ class NewPasswordForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    rating = HiddenField('Оценка', default='4')
+    rating = HiddenField(lazy_gettext('Rating'), default='4')
 
     comment = StrippedTextAreaField(lazy_gettext('Comment'), validators=[
         msg_DataRequired(),

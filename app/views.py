@@ -245,7 +245,7 @@ def tag_list_page(tag_name):
         pages, items = get_info_for_tag_and_validate(tag_name, page)
 
         return render_template('tag_list.html',
-                               title=gettext('Businesses for tag %(tag)s', tag_name),
+                               title=gettext('Businesses for tag %(tag)s', tag=tag_name),
                                businesses=items,
                                pages_count=pages,
                                tag_name=tag_name)

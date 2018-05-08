@@ -293,6 +293,7 @@ msgstr "Войти"
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
-#: app/templates/tag_list.html:4
-msgid "Businesses for %(tag) tag"
-msgstr "Организации по тегу %(tag)s"
+#: app/forms.py:220
+msgid "Rating"
+msgstr "Оценка"
+
