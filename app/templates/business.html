@@ -73,10 +73,10 @@
 {% else %}
     <p>
         {% autoescape false %}
-            _('%(link_and_babel_for_signin) or %(link_and_babel_for_registration) to write comment!',
-              link_and_babel_for_signin='''<a href="{{ url_for('signin') }}">''' + _('Sign in') + '''</a>''',
-              link_and_babel_for_registration='''<a href="{{ url_for('signup') }}">''' + _('Register') + '''</a>'''
-            )
+        {{ _('%(link_and_babel_for_signin)s or %(link_and_babel_for_registration)s to write comment!',
+            link_and_babel_for_signin='<a href="{{ url_for(\'signin\') }}">' + _('Sign in') + '</a>',
+            link_and_babel_for_registration='<a href="{{ url_for(\'signup\') }}">' + _('Register') + '</a>'
+            ) }}
         {% endautoescape %}
     </p>
 {% endif %}
