@@ -181,7 +181,7 @@ msgid "Change profile settings"
 msgstr "Изменить настройки профиля"
 
 #: app/views.py:163
-msgid "Message with a link to reset your password has been sent to your email"
+msgid "Message with a password reset link has been sent to your email"
 msgstr "Письмо со ссылкой для сброса пароля было отправлено на Вашу почту"
 
 #: app/views.py:167
