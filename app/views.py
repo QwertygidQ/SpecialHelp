@@ -5,7 +5,7 @@ from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
 from .helpers import unauthenticated_required, get_next_page, get_info_for_tag_and_validate
 from . import image_upload
 
-from flask import render_template, redirect, url_for, flash, request, abort
+from flask import render_template, redirect, url_for, flash, request, abort, session
 from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_babelex import gettext
@@ -17,6 +17,9 @@ import datetime
 def get_locale():
     if hasattr(current_user, 'locale') and current_user.locale != 'NONE':
         return current_user.locale
+    elif 'locale' in session and session['locale'] in app.config['LANGUAGES']:
+        return session['locale']
+
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
@@ -255,3 +258,18 @@ def tag_list_page(tag_name):
 @app.route('/uploads/<path:filename>')
 def uploads(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/locale')
+def change_locale():
+    new_locale = request.args.get('lang')
+    if new_locale is None or new_locale not in app.config['LANGUAGES']:
+        return redirect(get_next_page())
+
+    if current_user.is_authenticated:
+        current_user.locale = new_locale
+        db.session.commit()
+
+    session['locale'] = new_locale
+
+    return redirect(get_next_page())
