@@ -74,8 +74,8 @@
     <p>
         {% autoescape false %}
         {{ _('%(link_and_babel_for_signin)s or %(link_and_babel_for_registration)s to post a comment!',
-            link_and_babel_for_signin='<a href="{}">'.format(url_for('signin')) + _('Sign in to') + '</a>',
-            link_and_babel_for_registration='<a href="{}">'.format(url_for('signup')) + _('Register to') + '</a>'
+            link_and_babel_for_signin='<a href="{}">'.format(url_for('signin', next=request.path)) + _('Sign in to') + '</a>',
+            link_and_babel_for_registration='<a href="{}">'.format(url_for('signup', next=request.path)) + _('Register to') + '</a>'
             ) }}
         {% endautoescape %}
     </p>
