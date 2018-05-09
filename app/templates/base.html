@@ -20,15 +20,15 @@
 				<a class="item" href="{{ url_for('index') }}">{{ _('Main page') }}</a>
 				{% if current_user.is_authenticated %}
 					<a class="item" href="{{ url_for('profile', username=current_user.username) }}">{{ _('Profile') }}</a>
-					<a class="item" href="{{ url_for('signout', next=request.full_path) }}">{{ _('Log out') }}</a>
+					<a class="item" href="{{ url_for('signout', next=request.path) }}">{{ _('Log out') }}</a>
 				{% else %}
-					<a class="item" href="{{ url_for('signin', next=request.full_path) }}">{{ _('Sign in') }}</a>
+					<a class="item" href="{{ url_for('signin', next=request.path) }}">{{ _('Sign in') }}</a>
 					<a class="item" href="{{ url_for('signup') }}">{{ _('Register') }}</a>
 				{% endif %}
                 
                 <div class="right menu">
-                    <a class="item" href="{{ url_for('change_locale', lang='ru', next=request.full_path) }}"><i class="ru flag" style="margin-right: 0;"></i></a>
-                    <a class="item" href="{{ url_for('change_locale', lang='en', next=request.full_path) }}"><i class="gb flag" style="margin-right: 0;"></i></a>
+                    <a class="item" href="{{ url_for('change_locale', lang='ru', next=request.path) }}"><i class="ru flag" style="margin-right: 0;"></i></a>
+                    <a class="item" href="{{ url_for('change_locale', lang='en', next=request.path) }}"><i class="gb flag" style="margin-right: 0;"></i></a>
                 </div>
 			</div>
 
