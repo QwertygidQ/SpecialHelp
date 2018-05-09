@@ -23,7 +23,7 @@
 					<a class="item" href="{{ url_for('signout', next=request.path) }}">{{ _('Log out') }}</a>
 				{% else %}
 					<a class="item" href="{{ url_for('signin', next=request.path) }}">{{ _('Sign in') }}</a>
-					<a class="item" href="{{ url_for('signup') }}">{{ _('Register') }}</a>
+					<a class="item" href="{{ url_for('signup', next=request.path) }}">{{ _('Register') }}</a>
 				{% endif %}
                 
                 <div class="right menu">

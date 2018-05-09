@@ -56,8 +56,8 @@ def signin():
                            title=gettext('Sign in'),
                            form=form)
 
-
 @app.route('/signup', methods=['GET', 'POST'])
+@unauthenticated_required
 def signup():
     form = SignUpForm()
     if form.validate_on_submit():
@@ -67,7 +67,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('signin'))
+        return redirect(url_for('signin', next=get_next_page()))
 
     return render_template('signup.html',
                            title=gettext('Registration'),
