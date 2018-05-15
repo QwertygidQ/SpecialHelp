@@ -13,17 +13,17 @@
     <div class="ui column">
         <div class="ui segment">
             <strong>{{ _('Address:') }}</strong><br>
-            {{ business.address }}
+            <p class="user-input">{{ business.address }}</p>
         </div>
 
         <div class="ui segment">
             <strong>{{ _('Working time:') }}</strong><br>
-            {{ business.time }}
+            <p class="user-input">{{ business.time }}</p>
         </div>
 
         <div class="ui segment">
             <strong>{{ _('Contacts:') }}</strong><br>
-            {{ business.contacts }}
+            <p class="user-input">{{ business.contacts }}</p>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
 
 <div class="ui segment">
     <strong>{{ _('Description') }}</strong><br>
-    {{ business.desc }}
+    <p class="user-input">{{ business.desc }}</p>
 </div>
 
 {% if has_not_commented %}
