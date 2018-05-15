@@ -8,9 +8,22 @@
         <link rel="stylesheet" href="../static/css/text_break.css"/>
 
         <!-- Should use downloaded libs instead of CDNs, temporary solution -->
+
+		<!-- JQuery CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+
+        <!-- Semantic UI CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+        <!-- Leaflet CDN -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+
+        <!-- JS variable/function initialization -->
+        {% block init %}{% endblock %}
+
+        <!-- Initialization -->
         <script src="../static/js/semantic_rating_init.js"></script>
     </head>
 
@@ -25,7 +38,7 @@
 					<a class="item" href="{{ url_for('signin', next=request.path) }}">{{ _('Sign in') }}</a>
 					<a class="item" href="{{ url_for('signup', next=request.path) }}">{{ _('Register') }}</a>
 				{% endif %}
-                
+
                 <div class="right menu">
                     <a class="item" href="{{ url_for('change_locale', lang='ru', next=request.path) }}"><i class="ru flag" style="margin-right: 0;"></i></a>
                     <a class="item" href="{{ url_for('change_locale', lang='en', next=request.path) }}"><i class="gb flag" style="margin-right: 0;"></i></a>
