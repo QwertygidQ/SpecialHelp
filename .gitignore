@@ -120,3 +120,8 @@ uploads/*
 db_config.yml
 mail_config.yml
 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
