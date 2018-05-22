@@ -5,8 +5,8 @@ import yaml
 
 rand = random.SystemRandom()
 
-host = 'localhost'
-port = 8080
+host = '0.0.0.0'
+port = 80
 debug = True
 
 
