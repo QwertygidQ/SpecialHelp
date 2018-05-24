@@ -28,17 +28,17 @@ msgstr ""
 
 #: app/forms.py:27
 #, python-format
-msgid "Password length must be between %(min)s and %(max)s characters"
+msgid "Field length must be between %(min)s and %(max)s characters"
 msgstr ""
 
 #: app/forms.py:29 app/forms.py:44
 #, python-format
-msgid "Password length must be at least %(min)s characters"
+msgid "Field length must be at least %(min)s characters"
 msgstr ""
 
 #: app/forms.py:31
 #, python-format
-msgid "Password cannot be longer than %(max)s characters"
+msgid "Field cannot be longer than %(max)s characters"
 msgstr ""
 
 #: app/forms.py:39
