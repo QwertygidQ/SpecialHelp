@@ -36,79 +36,77 @@
         </div>
 
         <div class="col-md-8 mb-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                {{ _('Address:') }}
-                            </div>
-
-                            <div class="card-body">
-                                <p class="user-input">{{ business.address }}</p>
-                            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ _('Address:') }}
                         </div>
-                    </div>
 
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                {{ _('Tags:') }}
-                            </div>
-
-                            <div class="card-body">
-                                {% for tag in business.tags %}
-                                    <a
-                                        href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
-                                        class="card-link">{{ tag.name }}</a>
-                                {% endfor %}
-                            </div>
+                        <div class="card-body">
+                            <p class="user-input">{{ business.address }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                {{ _('Working time:') }}
-                            </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ _('Tags:') }}
+                        </div>
 
-                            <div class="card-body">
-                                <p class="user-input">{{ business.time }}</p>
-                            </div>
+                        <div class="card-body">
+                            {% for tag in business.tags %}
+                                <a
+                                    href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
+                                    class="card-link">{{ tag.name }}</a>
+                            {% endfor %}
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                {{ _('Rating:') }}
-                            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ _('Working time:') }}
+                        </div>
 
-                            <div class="card-body">
-                                <input
-                                    type="hidden"
-                                    class="rating"
-                                    value="{{ business.rating }}"
-                                    data-filled="fa fa-2x fa-star checked"
-                                    data-empty="fa fa-2x fa-star"
-                                    data-readonly/>
-                            </div>
+                        <div class="card-body">
+                            <p class="user-input">{{ business.time }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                {{ _('Contacts:') }}
-                            </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ _('Rating:') }}
+                        </div>
 
-                            <div class="card-body">
-                                <p class="user-input">{{ business.contacts }}</p>
-                            </div>
+                        <div class="card-body">
+                            <input
+                                type="hidden"
+                                class="rating"
+                                value="{{ business.rating }}"
+                                data-filled="fa fa-2x fa-star checked"
+                                data-empty="fa fa-2x fa-star"
+                                data-readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ _('Contacts:') }}
+                        </div>
+
+                        <div class="card-body">
+                            <p class="user-input">{{ business.contacts }}</p>
                         </div>
                     </div>
                 </div>
