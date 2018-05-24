@@ -113,38 +113,48 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="card mb-3">
-    <div class="card-header">
-        {{ _('Description') }}
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ _('Description') }}
+                </div>
+
+                <div class="card-body">
+                    <p class="user-input">{{ business.desc }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card-body">
-        <p class="user-input">{{ business.desc }}</p>
+    <div class="row mx-0">
+        <div id="business_map" style="width: 100%; height: 300px;"></div>
     </div>
 </div>
 
-<div id="business_map" style="width: 100%; height: 300px;"></div>
+<hr>
 
 {% if has_not_commented %}
-    <div class="ui segment">
-        <form class="ui bottom-padded form" method="post">
-            {{ form.hidden_tag() }}
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="post">
+                {{ form.csrf_token() }}
 
-            <div class="field">
-                {{ form.rating.label }}
-                <div class="input-allowed ui large star rating" data-rating="{{ form.rating.data }}" data-max-rating="5"></div>
-                {{ error_macro.print_errors(form.rating) }}
-            </div>
-            <div class="field">
-                {{ form.comment.label }}
-                {{ form.comment() }}
-                {{ error_macro.print_errors(form.comment) }}
-            </div>
+                <div class="form-group">
+                    {{ form.rating.label(style="display: block;") }}
+                    {{ form.rating(class_="rating", data_filled = "fa fa-2x fa-star checked", data_empty = "fa fa-2x fa-star") }}
+                    {{ error_macro.print_errors(form.rating) }}
+                </div>
+                <div class="form-group">
+                    {{ form.comment.label }}
+                    {{ form.comment(class_="form-control") }}
+                    {{ error_macro.print_errors(form.comment) }}
+                </div>
 
-            {{ form.submit(class_="ui button") }}
-        </form>
+                {{ form.submit(class_="btn btn-primary") }}
+            </form>
+        </div>
     </div>
 {% elif current_user.is_authenticated %} {# Authenticated user has already commented on this business #}
     <p>
