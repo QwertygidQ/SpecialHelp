@@ -14,8 +14,8 @@
 
 <!-- Initialization -->
 <link rel="stylesheet" href="../static/css/stars.css">
+<link rel="stylesheet" href="../static/css/image.css">
 <link rel="stylesheet" href="../static/css/circular.css">
-<link rel="stylesheet" href="../static/css/map.css">
 
 <script>
     let coords = [{{ business.latitude }}, {{ business.longitude }}];
@@ -31,7 +31,7 @@
     <div class="col-md-4 my-3">
         <img
             src="{{ url_for('uploads', filename=business.image.filename) if business.image is not none else '../static/images/default.png' }}"
-            class="circular img-fluid"/>
+            class="circular img-fluid large mx-auto d-block"/>
     </div>
 
     <div class="col-md-8 mb-3">
@@ -175,12 +175,12 @@
     <div class="card mb-3">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-md-2">
                     <img
                         src="{{ url_for('uploads', filename=comment.author.image.filename) if comment.author.image is not none else '../static/images/default.png' }}"
-                        class="circular img-fluid"/>
+                        class="circular img-fluid small mx-auto d-block"/>
                 </div>
-                <div class="col-sm-10">
+                <div class="col-md-10">
                     <h2><a href="{{ url_for('profile', username=comment.author.username) }}">{{ comment.author.username }}</a></h2>
                     <input
                         type="hidden"

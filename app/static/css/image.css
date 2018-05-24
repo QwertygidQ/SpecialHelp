@@ -1,0 +1,9 @@
+img.large {
+    width: 350px;
+    height: auto;
+}
+
+img.small {
+    width: 150px;
+    height: auto;
+}
