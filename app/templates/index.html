@@ -2,20 +2,22 @@
 
 {% block content %}
 <h1>{{ _('Welcome!') }}</h1>
-<div class="ui pagination menu">
-    {% for i in range(1, pages_count + 1) %}
-        <a class="item" href="{{ url_for('index', page=i) }}">{{ i }}</a>
-    {% endfor %}
-</div>
+<nav>
+    <ul class="pagination">
+        {% for i in range(1, pages_count + 1) %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('index', page=i) }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
 
-<div class="ui divided attached list">
+<ul class="list-group">
     {% for b in businesses %}
-        <div class="item">
+        <li class="list-group-item">
             <a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a>
             <p>{{ b.address }}</p>
-        </div>
+        </li>
     {% endfor %}
-</div>
-
-<div class="ui bottom-padded"></div>
+</ul>
 {% endblock %}
