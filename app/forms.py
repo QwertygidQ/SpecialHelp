@@ -24,11 +24,11 @@ def msg_InputRequired():  # for use with everything else (password fields, etc.)
 
 def msg_Length(min=-1, max=-1):
     if min >= 1 and max >= 1:
-        message = lazy_gettext('Password length must be between %(min)s and %(max)s characters', min=min, max=max)
+        message = lazy_gettext('Field length must be between %(min)s and %(max)s characters', min=min, max=max)
     elif min >= 1:
-        message = lazy_gettext('Password length must be at least %(min)s characters', min=min)
+        message = lazy_gettext('Field length must be at least %(min)s characters', min=min)
     elif max >= 1:
-        message = lazy_gettext('Password cannot be longer than %(max)s characters', max=max)
+        message = lazy_gettext('Field cannot be longer than %(max)s characters', max=max)
     else:
         message = None  # an error condition anyway (assertion fails in __init__ of Length)
 

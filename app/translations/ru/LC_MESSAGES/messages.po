@@ -29,18 +29,18 @@ msgstr "Это поле обязательно"
 
 #: app/forms.py:27
 #, python-format
-msgid "Password length must be between %(min)s and %(max)s characters"
-msgstr "Длина пароля должна быть между %(min)s и %(max)s символами"
+msgid "Field length must be between %(min)s and %(max)s characters"
+msgstr "Длина поля должна быть между %(min)s и %(max)s символами"
 
 #: app/forms.py:29 app/forms.py:44
 #, python-format
-msgid "Password length must be at least %(min)s characters"
-msgstr "Пароль не может быть короче %(min)s символов"
+msgid "Field length must be at least %(min)s characters"
+msgstr "Поле не может быть короче %(min)s символов"
 
 #: app/forms.py:31
 #, python-format
-msgid "Password cannot be longer than %(max)s characters"
-msgstr "Пароль не может быть длиннее %(max)s символов"
+msgid "Field cannot be longer than %(max)s characters"
+msgstr "Поле не может быть длиннее %(max)s символов"
 
 #: app/forms.py:39
 msgid "Invalid email address"
