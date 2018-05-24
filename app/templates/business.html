@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block init %}
+<!-- Bootstrap Rating CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.5.0/bootstrap-rating.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.5.0/bootstrap-rating.min.js"></script>
+
 <!-- Leaflet CDN -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 
-<link rel="stylesheet" href="../static/css/map.css" />
+<link rel="stylesheet" href="../static/css/map.css">
 
 <script>
     let coords = [{{ business.latitude }}, {{ business.longitude }}];
@@ -16,6 +20,89 @@
 
 {% block content %}
 <h1>{{ business.name }}</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm my-3">
+            <img
+                src="{{ url_for('uploads', filename=business.image.filename) if business.image is not none else '../static/images/default.png' }}"
+                style="border-radius: 50%"
+                class="img-fluid"/>
+        </div>
+
+        <div class="col-sm my-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ _('Address:') }}
+                </div>
+
+                <div class="card-body">
+                    <p class="user-input">{{ business.address }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ _('Working time:') }}
+                </div>
+
+                <div class="card-body">
+                    <p class="user-input">{{ business.time }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ _('Contacts:') }}
+                </div>
+
+                <div class="card-body">
+                    <p class="user-input">{{ business.contacts }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm my-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ _('Tags:') }}
+                </div>
+
+                <div class="card-body">
+                    {% for tag in business.tags %}
+                        <a
+                            href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
+                            class="card-link">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ _('Rating:') }}
+                </div>
+
+                <div class="card-body">
+                    <div class="input-disallowed ui large star rating" data-rating="{{ business.rating }}" data-max-rating="5"></div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ _('Tags:') }}
+                </div>
+
+                <div class="card-body">
+                    {% for tag in business.tags %}
+                        <a
+                            href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
+                            class="card-link">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="ui stackable three column grid">
     <div class="ui column">
