@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Initialization -->
+<link rel="stylesheet" href="../static/css/stars.css">
 <link rel="stylesheet" href="../static/css/map.css">
 
 <script>
@@ -23,129 +28,103 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm my-3">
+        <div class="col-md-4 my-3">
             <img
                 src="{{ url_for('uploads', filename=business.image.filename) if business.image is not none else '../static/images/default.png' }}"
                 style="border-radius: 50%"
                 class="img-fluid"/>
         </div>
 
-        <div class="col-sm my-3">
-            <div class="card mb-3">
-                <div class="card-header">
-                    {{ _('Address:') }}
+        <div class="col-md-8 mb-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ _('Address:') }}
+                            </div>
+
+                            <div class="card-body">
+                                <p class="user-input">{{ business.address }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ _('Tags:') }}
+                            </div>
+
+                            <div class="card-body">
+                                {% for tag in business.tags %}
+                                    <a
+                                        href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
+                                        class="card-link">{{ tag.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <p class="user-input">{{ business.address }}</p>
-                </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ _('Working time:') }}
+                            </div>
 
-            <div class="card mb-3">
-                <div class="card-header">
-                    {{ _('Working time:') }}
-                </div>
+                            <div class="card-body">
+                                <p class="user-input">{{ business.time }}</p>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="card-body">
-                    <p class="user-input">{{ business.time }}</p>
-                </div>
-            </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ _('Rating:') }}
+                            </div>
 
-            <div class="card mb-3">
-                <div class="card-header">
-                    {{ _('Contacts:') }}
-                </div>
-
-                <div class="card-body">
-                    <p class="user-input">{{ business.contacts }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm my-3">
-            <div class="card mb-3">
-                <div class="card-header">
-                    {{ _('Tags:') }}
-                </div>
-
-                <div class="card-body">
-                    {% for tag in business.tags %}
-                        <a
-                            href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
-                            class="card-link">{{ tag.name }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="card mb-3">
-                <div class="card-header">
-                    {{ _('Rating:') }}
+                            <div class="card-body">
+                                <input
+                                    type="hidden"
+                                    class="rating"
+                                    value="{{ business.rating }}"
+                                    data-filled="fa fa-2x fa-star checked"
+                                    data-empty="fa fa-2x fa-star"
+                                    data-readonly/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <div class="input-disallowed ui large star rating" data-rating="{{ business.rating }}" data-max-rating="5"></div>
-                </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ _('Contacts:') }}
+                            </div>
 
-            <div class="card mb-3">
-                <div class="card-header">
-                    {{ _('Tags:') }}
-                </div>
-
-                <div class="card-body">
-                    {% for tag in business.tags %}
-                        <a
-                            href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
-                            class="card-link">{{ tag.name }}</a>
-                    {% endfor %}
+                            <div class="card-body">
+                                <p class="user-input">{{ business.contacts }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="ui stackable three column grid">
-    <div class="ui column">
-        <div class="ui medium bordered circular image">
-            <img src="{{ url_for('uploads', filename=business.image.filename) if business.image is not none else '../static/images/default.png' }}"/>
-        </div>
+<div class="card mb-3">
+    <div class="card-header">
+        {{ _('Description') }}
     </div>
 
-    <div class="ui column">
-        <div class="ui segment">
-            <strong>{{ _('Address:') }}</strong><br>
-            <p class="user-input">{{ business.address }}</p>
-        </div>
-
-        <div class="ui segment">
-            <strong>{{ _('Working time:') }}</strong><br>
-            <p class="user-input">{{ business.time }}</p>
-        </div>
-
-        <div class="ui segment">
-            <strong>{{ _('Contacts:') }}</strong><br>
-            <p class="user-input">{{ business.contacts }}</p>
-        </div>
+    <div class="card-body">
+        <p class="user-input">{{ business.desc }}</p>
     </div>
-
-    <div class="ui column">
-        <div class="ui segment">
-            <strong>{{ _('Tags:') }}</strong><br>
-            {% for tag in business.tags %}
-                <a href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}">{{ tag.name }}</a>&nbsp;
-            {% endfor %}
-        </div>
-
-        <div class="ui segment">
-            <strong>{{ _('Rating:') }}</strong><br>
-            <div class="input-disallowed ui large star rating" data-rating="{{ business.rating }}" data-max-rating="5"></div>
-        </div>
-    </div>
-</div>
-
-<div class="ui segment">
-    <strong>{{ _('Description') }}</strong><br>
-    <p class="user-input">{{ business.desc }}</p>
 </div>
 
 <div id="business_map" style="width: 100%; height: 300px;"></div>
