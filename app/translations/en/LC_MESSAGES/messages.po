@@ -217,12 +217,16 @@ msgstr ""
 msgid "Log out"
 msgstr ""
 
-#: app/templates/base.html:35
-msgid "New notifications"
+# app/templates/message_macro.html:4
+msgid "Notification"
 msgstr ""
 
-#: app/templates/base.html:37
-msgid "New notification"
+# app/templates/message_macro.html:7
+msgid "Error"
+msgstr ""
+
+# app/templates/message_macro.html:10
+msgid "Message"
 msgstr ""
 
 #: app/templates/business.html:15
@@ -312,4 +316,3 @@ msgstr ""
 #: app/templates/signin.html:21
 msgid "Forgot password?"
 msgstr ""
-

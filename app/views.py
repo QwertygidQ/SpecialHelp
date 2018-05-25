@@ -50,7 +50,7 @@ def signin():
             login_user(user, form.remember.data)
             return redirect(get_next_page())
         else:
-            flash(gettext('Invalid email or password'))
+            flash(gettext('Invalid email or password'), 'error')
 
     return render_template('signin.html',
                            title=gettext('Sign in'),
@@ -105,14 +105,14 @@ def edit_profile():
         return_code = image_upload.save_photo(pictureform.picture.data,
                                               current_user)  # do we need a password check here??
         if return_code == image_upload.SUCCESS:
-            flash(gettext('Profile saved'))
+            flash(gettext('Profile saved'), 'message')
             return redirect(url_for('profile', username=current_user.username))
         elif return_code == image_upload.INVALID_FORMAT:
-            flash(gettext('Invalid file format'))
+            flash(gettext('Invalid file format'), 'error')
         elif return_code == image_upload.INVALID_FILENAME:
-            flash(gettext('Invalid filename'))
+            flash(gettext('Invalid filename'), 'error')
         elif return_code == image_upload.INVALID_SIZE:
-            flash(gettext('File is too large'))
+            flash(gettext('File is too large'), 'error')
 
     elif userform.user_update_submit.data and userform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
@@ -127,10 +127,10 @@ def edit_profile():
 
             db.session.commit()
 
-            flash(gettext('Profile saved'))
+            flash(gettext('Profile saved'), 'message')
             return redirect(url_for('profile', username=current_user.username))
         else:
-            flash(gettext('Invalid current password'))
+            flash(gettext('Invalid current password'), 'error')
     elif profileform.profile_update_submit.data and profileform.validate_on_submit():
         if current_user.check_password(userform.current_password.data):
             if profileform.about.data != '':
@@ -141,10 +141,10 @@ def edit_profile():
 
             db.session.commit()
 
-            flash(gettext('Profile saved'))
+            flash(gettext('Profile saved'), 'message')
             return redirect(url_for('profile', username=current_user.username))
         else:
-            flash(gettext('Invalid current password'))
+            flash(gettext('Invalid current password'), 'error')
 
     return render_template('edit_profile.html',
                            title=gettext('Change profile settings'),
@@ -163,11 +163,11 @@ def reset_password():
         user = User.query.filter(func.lower(User.email) == form.email.data.lower()).first()
         if user is not None:
             email.send_reset_password_email(user)
-            flash(gettext('Message with a password reset link has been sent to your email'))
+            flash(gettext('Message with a password reset link has been sent to your email'), 'message')
 
             return redirect(url_for('signin'))
         else:
-            flash(gettext('User with this email does not exist'))
+            flash(gettext('User with this email does not exist'), 'error')
 
     return render_template('reset_password.html',
                            title=gettext('Reset password'),
@@ -186,7 +186,7 @@ def reset_password_confirmed(token):
     if form.validate_on_submit():
         User.query.get(user).set_password(form.password.data)
         db.session.commit()
-        flash(gettext('Your password has been changed'))
+        flash(gettext('Your password has been changed'), 'message')
         return redirect(url_for('signin'))
 
     return render_template('reset_password_confirmed.html',
@@ -221,7 +221,7 @@ def business_page(business_link):
 
                 business.recalculate_rating()
 
-                flash(gettext('Your comment has been posted'))
+                flash(gettext('Your comment has been posted'), 'message')
 
                 return redirect(url_for('business_page', business_link=business_link))
 

@@ -1,4 +1,5 @@
 {% import "error_macro.html" as error_macro %}
+{% import "message_macro.html" as message_macro %}
 
 <!DOCTYPE html>
 <html>
@@ -99,6 +100,16 @@
                 </div>
             </div>
         </nav>
+
+        <div class="container mt-3">
+            {% with flashes = get_flashed_messages(with_categories=true) %}
+                {% if flashes %}
+                    {% for category, message in flashes %}
+                        {{ message_macro.show_message(category, message) }}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
         <div class="container mt-3">
             {% block content %}{% endblock %}
