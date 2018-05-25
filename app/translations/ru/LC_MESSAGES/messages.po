@@ -218,13 +218,17 @@ msgstr "Профиль"
 msgid "Log out"
 msgstr "Выйти"
 
-#: app/templates/base.html:35
-msgid "New notifications"
-msgstr "Новые уведомления"
+# app/templates/message_macro.html:4
+msgid "Notification"
+msgstr "Уведомление"
 
-#: app/templates/base.html:37
-msgid "New notification"
-msgstr "Новое уведомление"
+# app/templates/message_macro.html:7
+msgid "Error"
+msgstr "Ошибка"
+
+# app/templates/message_macro.html:10
+msgid "Message"
+msgstr "Сообщение"
 
 #: app/templates/business.html:15
 msgid "Address:"
@@ -317,4 +321,3 @@ msgstr "Команда Proectos"
 #: app/templates/signin.html:21
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
-
