@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-08 22:26+0300\n"
-"PO-Revision-Date: 2018-05-08 22:21+0300\n"
+"POT-Creation-Date: 2018-05-26 15:08+0300\n"
+"PO-Revision-Date: 2018-05-26 15:08+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Field length must be between %(min)s and %(max)s characters"
 msgstr ""
 
-#: app/forms.py:29 app/forms.py:44
+#: app/forms.py:29
 #, python-format
 msgid "Field length must be at least %(min)s characters"
 msgstr ""
@@ -43,6 +43,11 @@ msgstr ""
 
 #: app/forms.py:39
 msgid "Invalid email address"
+msgstr ""
+
+#: app/forms.py:44
+#, python-format
+msgid "Password length must be at least %(min)s characters"
 msgstr ""
 
 #: app/forms.py:49
@@ -69,8 +74,8 @@ msgstr ""
 msgid "Remember me"
 msgstr ""
 
-#: app/forms.py:107 app/templates/base.html:25 app/templates/signin.html:4
-#: app/views.py:54
+#: app/forms.py:107 app/templates/base.html:76 app/templates/signin.html:4
+#: app/views.py:56
 msgid "Sign in"
 msgstr ""
 
@@ -82,7 +87,7 @@ msgstr ""
 msgid "Repeat password"
 msgstr ""
 
-#: app/forms.py:133 app/templates/base.html:26
+#: app/forms.py:133 app/templates/base.html:82
 msgid "Register"
 msgstr ""
 
@@ -103,7 +108,7 @@ msgid "New username"
 msgstr ""
 
 #: app/forms.py:156 app/forms.py:204
-#: app/templates/reset_password_confirmed.html:4 app/views.py:191
+#: app/templates/reset_password_confirmed.html:4 app/views.py:193
 msgid "New password"
 msgstr ""
 
@@ -119,15 +124,15 @@ msgstr ""
 msgid "Update information"
 msgstr ""
 
-#: app/forms.py:176 app/templates/profile.html:15
+#: app/forms.py:176 app/templates/profile.html:22
 msgid "About me"
 msgstr ""
 
-#: app/forms.py:180 app/templates/profile.html:24
+#: app/forms.py:180 app/templates/profile.html:35
 msgid "Contacts"
 msgstr ""
 
-#: app/forms.py:200 app/templates/reset_password.html:4 app/views.py:171
+#: app/forms.py:200 app/templates/reset_password.html:4 app/views.py:173
 msgid "Reset password"
 msgstr ""
 
@@ -147,132 +152,128 @@ msgstr ""
 msgid "Post comment"
 msgstr ""
 
-#: app/templates/base.html:20 app/views.py:34
+#: app/templates/base.html:56 app/views.py:36
 msgid "Main page"
 msgstr ""
 
-#: app/views.py:51
+#: app/views.py:53
 msgid "Invalid email or password"
 msgstr ""
 
-#: app/templates/signup.html:4 app/views.py:71
+#: app/templates/signup.html:4 app/views.py:73
 msgid "Registration"
 msgstr ""
 
-#: app/templates/profile.html:4 app/views.py:91
+#: app/templates/profile.html:10 app/views.py:93
 #, python-format
 msgid "%(username)s's profile"
 msgstr ""
 
-#: app/views.py:106 app/views.py:128 app/views.py:142
+#: app/views.py:108 app/views.py:130 app/views.py:144
 msgid "Profile saved"
 msgstr ""
 
-#: app/views.py:109
+#: app/views.py:111
 msgid "Invalid file format"
 msgstr ""
 
-#: app/views.py:111
+#: app/views.py:113
 msgid "Invalid filename"
 msgstr ""
 
-#: app/views.py:113
+#: app/views.py:115
 msgid "File is too large"
 msgstr ""
 
-#: app/views.py:131 app/views.py:145
+#: app/views.py:133 app/views.py:147
 msgid "Invalid current password"
 msgstr ""
 
-#: app/templates/edit_profile.html:4 app/views.py:148
+#: app/templates/edit_profile.html:10 app/views.py:150
 msgid "Change profile settings"
 msgstr ""
 
-#: app/views.py:164
+#: app/views.py:166
 msgid "Message with a password reset link has been sent to your email"
 msgstr ""
 
-#: app/views.py:168
+#: app/views.py:170
 msgid "User with this email does not exist"
 msgstr ""
 
-#: app/views.py:187
+#: app/views.py:189
 msgid "Your password has been changed"
 msgstr ""
 
-#: app/views.py:222
+#: app/views.py:224
 msgid "Your comment has been posted"
 msgstr ""
 
-#: app/templates/tag_list.html:4 app/views.py:248
+#: app/templates/tag_list.html:4 app/views.py:250
 #, python-format
 msgid "Businesses for tag %(tag)s"
 msgstr ""
 
-#: app/templates/base.html:22
+#: app/templates/404.html:11
+msgid "404 Not Found"
+msgstr ""
+
+#: app/templates/404.html:13
+msgid "Unfortunately, we were not able to find the page you requested."
+msgstr ""
+
+#: app/templates/base.html:63
 msgid "Profile"
 msgstr ""
 
-#: app/templates/base.html:23
+#: app/templates/base.html:69
 msgid "Log out"
 msgstr ""
 
-# app/templates/message_macro.html:4
-msgid "Notification"
-msgstr ""
-
-# app/templates/message_macro.html:7
-msgid "Error"
-msgstr ""
-
-# app/templates/message_macro.html:10
-msgid "Message"
-msgstr ""
-
-#: app/templates/business.html:15
+#: app/templates/business.html:42
 msgid "Address:"
 msgstr ""
 
-#: app/templates/business.html:20
-msgid "Work time:"
-msgstr ""
-
-#: app/templates/business.html:25
-msgid "Contacts:"
-msgstr ""
-
-#: app/templates/business.html:32
+#: app/templates/business.html:54
 msgid "Tags:"
 msgstr ""
 
-#: app/templates/business.html:39
+#: app/templates/business.html:72
+msgid "Working time:"
+msgstr ""
+
+#: app/templates/business.html:84
 msgid "Rating:"
 msgstr ""
 
-#: app/templates/business.html:46
+#: app/templates/business.html:104
+msgid "Contacts:"
+msgstr ""
+
+#: app/templates/business.html:120
 msgid "Description"
 msgstr ""
 
-#: app/templates/business.html:71
+#: app/templates/business.html:157
 msgid "Your comment has been posted!"
 msgstr ""
 
-#: app/templates/business.html:76
+#: app/templates/business.html:162
 #, python-format
 msgid ""
 "%(link_and_babel_for_signin)s or %(link_and_babel_for_registration)s to "
 "post a comment!"
 msgstr ""
 
-#: app/templates/business.html:77
+#: app/templates/business.html:163
 msgid "Sign in to"
-msgstr "Sign in"
+msgstr ""
 
-#: app/templates/business.html:78
+#: app/templates/business.html:164
 msgid "Register to"
-msgstr "Register"
+msgstr ""
 
-#: app/templates/business.html:85
+#: app/templates/business.html:171
 msgid "Comments"
 msgstr ""
 
@@ -280,11 +281,23 @@ msgstr ""
 msgid "Welcome!"
 msgstr ""
 
-#: app/templates/profile.html:19 app/templates/profile.html:28
+#: app/templates/message_macro.html:4
+msgid "Notification"
+msgstr ""
+
+#: app/templates/message_macro.html:7
+msgid "Error"
+msgstr ""
+
+#: app/templates/message_macro.html:10
+msgid "Message"
+msgstr ""
+
+#: app/templates/profile.html:28 app/templates/profile.html:41
 msgid "Nothing here yet..."
 msgstr ""
 
-#: app/templates/profile.html:35
+#: app/templates/profile.html:51
 msgid "Change profile"
 msgstr ""
 

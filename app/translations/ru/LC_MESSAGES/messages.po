@@ -210,6 +210,14 @@ msgstr "Ваш комментарий был отправлен"
 msgid "Businesses for tag %(tag)s"
 msgstr "Организации по тегу %(tag)s"
 
+#: app/templates/404.html:11
+msgid "404 Not Found"
+msgstr "404 Not Found"
+
+#: app/templates/404.html:13
+msgid "Unfortunately, we were not able to find the page you requested."
+msgstr "К сожалению, нам не удалось найти страницу, которую Вы запросили."
+
 #: app/templates/base.html:22
 msgid "Profile"
 msgstr "Профиль"
