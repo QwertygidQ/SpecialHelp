@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_babelex import Babel
+from flask_babelex import Babel, gettext
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -16,6 +16,7 @@ babel = Babel(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'signin'
+login_manager.login_message = gettext('Please log in to access this page.')
 
 mail = Mail(app)
 
