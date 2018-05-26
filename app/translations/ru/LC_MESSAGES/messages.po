@@ -46,6 +46,11 @@ msgstr "Поле не может быть длиннее %(max)s символо�
 msgid "Invalid email address"
 msgstr "Неверный email"
 
+#: app/forms.py:44
+#, python-format
+msgid "Password length must be at least %(min)s characters"
+msgstr "Длина пароля должна быть как минимум %(min)s символов"
+
 #: app/forms.py:49
 msgid "Passwords must match"
 msgstr "Пароли должны совпадать"
@@ -226,37 +231,25 @@ msgstr "Профиль"
 msgid "Log out"
 msgstr "Выйти"
 
-# app/templates/message_macro.html:4
-msgid "Notification"
-msgstr "Уведомление"
-
-# app/templates/message_macro.html:7
-msgid "Error"
-msgstr "Ошибка"
-
-# app/templates/message_macro.html:10
-msgid "Message"
-msgstr "Сообщение"
-
 #: app/templates/business.html:15
 msgid "Address:"
 msgstr "Адрес:"
-
-#: app/templates/business.html:20
-msgid "Working time:"
-msgstr "Время работы:"
-
-#: app/templates/business.html:25
-msgid "Contacts:"
-msgstr "Контакты:"
 
 #: app/templates/business.html:32
 msgid "Tags:"
 msgstr "Теги:"
 
+#: app/templates/business.html:20
+msgid "Working time:"
+msgstr "Время работы:"
+
 #: app/templates/business.html:39
 msgid "Rating:"
 msgstr "Оценка:"
+
+#: app/templates/business.html:25
+msgid "Contacts:"
+msgstr "Контакты:"
 
 #: app/templates/business.html:46
 msgid "Description"
@@ -290,6 +283,18 @@ msgstr "Комментарии"
 #: app/templates/index.html:4
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
+
+# app/templates/message_macro.html:4
+msgid "Notification"
+msgstr "Уведомление"
+
+# app/templates/message_macro.html:7
+msgid "Error"
+msgstr "Ошибка"
+
+# app/templates/message_macro.html:10
+msgid "Message"
+msgstr "Сообщение"
 
 #: app/templates/profile.html:19 app/templates/profile.html:28
 msgid "Nothing here yet..."
