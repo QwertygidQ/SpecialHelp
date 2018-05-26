@@ -271,11 +271,11 @@ msgstr ""
 
 #: app/templates/business.html:163
 msgid "Sign in to"
-msgstr ""
+msgstr "Sign in"
 
 #: app/templates/business.html:164
 msgid "Register to"
-msgstr ""
+msgstr "Register"
 
 #: app/templates/business.html:171
 msgid "Comments"
@@ -333,4 +333,3 @@ msgstr ""
 #: app/templates/signin.html:21
 msgid "Forgot password?"
 msgstr ""
-
