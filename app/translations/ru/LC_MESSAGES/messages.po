@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-08 22:26+0300\n"
+"POT-Creation-Date: 2018-05-26 15:34+0300\n"
 "PO-Revision-Date: 2018-04-24 00:02+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
+
+#: app/__init__.py:19
+msgid "Please log in to access this page."
+msgstr "Пожалуйста войдите, чтобы просмотреть эту страницу."
 
 #: app/email.py:14
 msgid "[PROECTOS] Password reset"
@@ -32,7 +36,7 @@ msgstr "Это поле обязательно"
 msgid "Field length must be between %(min)s and %(max)s characters"
 msgstr "Длина поля должна быть между %(min)s и %(max)s символами"
 
-#: app/forms.py:29 app/forms.py:44
+#: app/forms.py:29
 #, python-format
 msgid "Field length must be at least %(min)s characters"
 msgstr "Поле не может быть короче %(min)s символов"
@@ -45,6 +49,11 @@ msgstr "Поле не может быть длиннее %(max)s символо�
 #: app/forms.py:39
 msgid "Invalid email address"
 msgstr "Неверный email"
+
+#: app/forms.py:44
+#, python-format
+msgid "Password length must be at least %(min)s characters"
+msgstr "Длина пароля должна быть как минимум %(min)s символов"
 
 #: app/forms.py:49
 msgid "Passwords must match"
@@ -70,8 +79,8 @@ msgstr "Пароль"
 msgid "Remember me"
 msgstr "Запомнить меня"
 
-#: app/forms.py:107 app/templates/base.html:25 app/templates/signin.html:4
-#: app/views.py:54
+#: app/forms.py:107 app/templates/base.html:76 app/templates/signin.html:4
+#: app/views.py:56
 msgid "Sign in"
 msgstr "Войти"
 
@@ -83,7 +92,7 @@ msgstr "Псевдоним"
 msgid "Repeat password"
 msgstr "Повторите пароль"
 
-#: app/forms.py:133 app/templates/base.html:26
+#: app/forms.py:133 app/templates/base.html:82
 msgid "Register"
 msgstr "Зарегистрироваться"
 
@@ -104,7 +113,7 @@ msgid "New username"
 msgstr "Новый псевдоним"
 
 #: app/forms.py:156 app/forms.py:204
-#: app/templates/reset_password_confirmed.html:4 app/views.py:191
+#: app/templates/reset_password_confirmed.html:4 app/views.py:193
 msgid "New password"
 msgstr "Новый пароль"
 
@@ -120,15 +129,15 @@ msgstr "Текущий пароль"
 msgid "Update information"
 msgstr "Обновить информацию"
 
-#: app/forms.py:176 app/templates/profile.html:15
+#: app/forms.py:176 app/templates/profile.html:22
 msgid "About me"
 msgstr "Обо мне"
 
-#: app/forms.py:180 app/templates/profile.html:24
+#: app/forms.py:180 app/templates/profile.html:35
 msgid "Contacts"
 msgstr "Контакты"
 
-#: app/forms.py:200 app/templates/reset_password.html:4 app/views.py:171
+#: app/forms.py:200 app/templates/reset_password.html:4 app/views.py:173
 msgid "Reset password"
 msgstr "Сбросить пароль"
 
@@ -148,117 +157,113 @@ msgstr "Комментарий"
 msgid "Post comment"
 msgstr "Отправить комментарий"
 
-#: app/templates/base.html:20 app/views.py:34
+#: app/templates/base.html:56 app/views.py:36
 msgid "Main page"
 msgstr "Главная страница"
 
-#: app/views.py:51
+#: app/views.py:53
 msgid "Invalid email or password"
 msgstr "Неправильный email или пароль"
 
-#: app/templates/signup.html:4 app/views.py:71
+#: app/templates/signup.html:4 app/views.py:73
 msgid "Registration"
 msgstr "Зарегистрироваться"
 
-#: app/templates/profile.html:4 app/views.py:91
+#: app/templates/profile.html:10 app/views.py:93
 #, python-format
 msgid "%(username)s's profile"
 msgstr "Профиль пользователя %(username)s"
 
-#: app/views.py:106 app/views.py:128 app/views.py:142
+#: app/views.py:108 app/views.py:130 app/views.py:144
 msgid "Profile saved"
 msgstr "Профиль сохранен"
 
-#: app/views.py:109
+#: app/views.py:111
 msgid "Invalid file format"
 msgstr "Неверный формат файла"
 
-#: app/views.py:111
+#: app/views.py:113
 msgid "Invalid filename"
 msgstr "Неверное имя файла"
 
-#: app/views.py:113
+#: app/views.py:115
 msgid "File is too large"
 msgstr "Слишком большой файл"
 
-#: app/views.py:131 app/views.py:145
+#: app/views.py:133 app/views.py:147
 msgid "Invalid current password"
 msgstr "Неправильный текущий пароль"
 
-#: app/templates/edit_profile.html:4 app/views.py:148
+#: app/templates/edit_profile.html:10 app/views.py:150
 msgid "Change profile settings"
 msgstr "Изменить настройки профиля"
 
-#: app/views.py:164
+#: app/views.py:166
 msgid "Message with a password reset link has been sent to your email"
 msgstr "Письмо со ссылкой для сброса пароля было отправлено на Вашу почту"
 
-#: app/views.py:168
+#: app/views.py:170
 msgid "User with this email does not exist"
 msgstr "Не существует пользователя с таким email"
 
-#: app/views.py:187
+#: app/views.py:189
 msgid "Your password has been changed"
 msgstr "Пароль был изменен"
 
-#: app/views.py:222
+#: app/views.py:224
 msgid "Your comment has been posted"
 msgstr "Ваш комментарий был отправлен"
 
-#: app/templates/tag_list.html:4 app/views.py:248
+#: app/templates/tag_list.html:4 app/views.py:250
 #, python-format
 msgid "Businesses for tag %(tag)s"
 msgstr "Организации по тегу %(tag)s"
 
-#: app/templates/base.html:22
+#: app/templates/404.html:11
+msgid "404 Not Found"
+msgstr "404 Not Found"
+
+#: app/templates/404.html:13
+msgid "Unfortunately, we were not able to find the page you requested."
+msgstr "К сожалению, нам не удалось найти страницу, которую Вы запросили."
+
+#: app/templates/base.html:63
 msgid "Profile"
 msgstr "Профиль"
 
-#: app/templates/base.html:23
+#: app/templates/base.html:69
 msgid "Log out"
 msgstr "Выйти"
 
-# app/templates/message_macro.html:4
-msgid "Notification"
-msgstr "Уведомление"
-
-# app/templates/message_macro.html:7
-msgid "Error"
-msgstr "Ошибка"
-
-# app/templates/message_macro.html:10
-msgid "Message"
-msgstr "Сообщение"
-
-#: app/templates/business.html:15
+#: app/templates/business.html:42
 msgid "Address:"
 msgstr "Адрес:"
 
-#: app/templates/business.html:20
-msgid "Working time:"
-msgstr "Время работы:"
-
-#: app/templates/business.html:25
-msgid "Contacts:"
-msgstr "Контакты:"
-
-#: app/templates/business.html:32
+#: app/templates/business.html:54
 msgid "Tags:"
 msgstr "Теги:"
 
-#: app/templates/business.html:39
+#: app/templates/business.html:72
+msgid "Working time:"
+msgstr "Время работы:"
+
+#: app/templates/business.html:84
 msgid "Rating:"
 msgstr "Оценка:"
 
-#: app/templates/business.html:46
+#: app/templates/business.html:104
+msgid "Contacts:"
+msgstr "Контакты:"
+
+#: app/templates/business.html:120
 msgid "Description"
 msgstr "Описание"
 
-#: app/templates/business.html:71
+#: app/templates/business.html:157
 msgid "Your comment has been posted!"
 msgstr "Ваш комментарий отправлен!"
 
-#: app/templates/business.html:76
+#: app/templates/business.html:162
 #, python-format
 msgid ""
 "%(link_and_babel_for_signin)s or %(link_and_babel_for_registration)s to "
@@ -267,15 +272,15 @@ msgstr ""
 "%(link_and_babel_for_signin)s или %(link_and_babel_for_registration)s, "
 "чтобы комментировать!"
 
-#: app/templates/business.html:77
+#: app/templates/business.html:163
 msgid "Sign in to"
 msgstr "Войдите"
 
-#: app/templates/business.html:78
+#: app/templates/business.html:164
 msgid "Register to"
 msgstr "Зарегистрируйтесь"
 
-#: app/templates/business.html:85
+#: app/templates/business.html:171
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -283,11 +288,23 @@ msgstr "Комментарии"
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
-#: app/templates/profile.html:19 app/templates/profile.html:28
+#: app/templates/message_macro.html:4
+msgid "Notification"
+msgstr "Уведомление"
+
+#: app/templates/message_macro.html:7
+msgid "Error"
+msgstr "Ошибка"
+
+#: app/templates/message_macro.html:10
+msgid "Message"
+msgstr "Сообщение"
+
+#: app/templates/profile.html:28 app/templates/profile.html:41
 msgid "Nothing here yet..."
 msgstr "Здесь пока ничего нет..."
 
-#: app/templates/profile.html:35
+#: app/templates/profile.html:51
 msgid "Change profile"
 msgstr "Изменить профиль"
 

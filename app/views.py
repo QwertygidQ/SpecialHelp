@@ -273,3 +273,8 @@ def change_locale():
     session['locale'] = new_locale
 
     return redirect(get_next_page())
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
