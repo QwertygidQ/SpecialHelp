@@ -4,10 +4,21 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_babelex import Babel
+from flask_babelex import Babel, lazy_gettext
+
+from flask.json import JSONEncoder
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        from speaklater import is_lazy_string
+        if is_lazy_string(obj):
+            return str(obj)
+        return super(CustomJSONEncoder, self).default(obj)
+
+app.json_encoder = CustomJSONEncoder
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -16,6 +27,7 @@ babel = Babel(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'signin'
+login_manager.login_message = lazy_gettext('Please log in to access this page.')
 
 mail = Mail(app)
 

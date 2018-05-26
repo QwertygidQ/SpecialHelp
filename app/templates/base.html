@@ -1,70 +1,126 @@
 {% import "error_macro.html" as error_macro %}
+{% import "message_macro.html" as message_macro %}
 
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
         <title>{{ title }}</title>
-        <meta charset="UTF-8">
 
-        <!-- Should use downloaded libs instead of CDNs, temporary solution -->
+        <!-- JQuery CDN -->
+        <script
+		    src="http://code.jquery.com/jquery-3.3.1.min.js"
+		    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		    crossorigin="anonymous"></script>
 
-		<!-- JQuery CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Popper.js CDN -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
 
-        <!-- Semantic UI CDN -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+        <!-- Bootstrap CDN/Initialization -->
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
 
-        <!-- Leaflet CDN -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
-        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+        <!-- Flag Icon CSS CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css">
+
+        <!-- Initialization -->
+        <link rel="stylesheet" href="../static/css/text_break.css">
 
         <!-- JS variable/function initialization -->
         {% block init %}{% endblock %}
-
-        <!-- Initialization -->
-        <link rel="stylesheet" href="../static/css/text_break.css"/>
-        <script src="../static/js/semantic_rating_init.js"></script>
     </head>
 
     <body>
-        <div class="ui container">
-			<div class="ui stackable menu">
-				<a class="item" href="{{ url_for('index') }}">{{ _('Main page') }}</a>
-				{% if current_user.is_authenticated %}
-					<a class="item" href="{{ url_for('profile', username=current_user.username) }}">{{ _('Profile') }}</a>
-					<a class="item" href="{{ url_for('signout', next=request.path) }}">{{ _('Log out') }}</a>
-				{% else %}
-					<a class="item" href="{{ url_for('signin', next=request.path) }}">{{ _('Sign in') }}</a>
-					<a class="item" href="{{ url_for('signup', next=request.path) }}">{{ _('Register') }}</a>
-				{% endif %}
+        <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('index') }}">Proectos</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <div class="right menu">
-                    <a class="item" href="{{ url_for('change_locale', lang='ru', next=request.path) }}"><i class="ru flag" style="margin-right: 0;"></i></a>
-                    <a class="item" href="{{ url_for('change_locale', lang='en', next=request.path) }}"><i class="gb flag" style="margin-right: 0;"></i></a>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('index') }}">
+                                {{ _('Main page') }}</a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link"
+                                    href="{{ url_for('profile', username=current_user.username) }}">
+                                    {{ _('Profile') }}</a>
+                            </li>
+                            <li>
+                                <a
+                                    class="nav-link"
+                                    href="{{ url_for('signout', next=request.path) }}">
+                                    {{ _('Log out') }}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link"
+                                    href="{{ url_for('signin', next=request.path) }}">
+                                    {{ _('Sign in') }}</a>
+                            </li>
+                            <li>
+                                <a
+                                    class="nav-link"
+                                    href="{{ url_for('signup', next=request.path) }}">
+                                    {{ _('Register') }}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <a
+                        class="btn btn-primary"
+                        style="background: transparent;"
+                        href="{{ url_for('change_locale', lang='ru', next=request.path) }}">
+                        <span class="flag-icon flag-icon-ru"></span>
+                    </a>
+
+                    <a
+                        class="btn btn-primary"
+                        style="background: transparent;"
+                        href="{{ url_for('change_locale', lang='en', next=request.path) }}">
+                        <span class="flag-icon flag-icon-gb"></span>
+                    </a>
                 </div>
-			</div>
+            </div>
+        </nav>
 
-			{% with flashes = get_flashed_messages() %}
-				{% if flashes %}
-					<div class="ui info message">
-						<div class="header">
-							{% if flashes|length > 1 %}
-								{{ _('New notifications') }}
-							{% else %}
-								{{ _('New notification') }}
-							{% endif %}
-						</div>
-						<ul class="list">
-							{% for f in flashes %}
-								<li>{{ f }}</li>
-							{% endfor %}
-						</ul>
-					</div>
-				{% endif %}
-			{% endwith %}
+        <div class="container mt-3">
+            {% with flashes = get_flashed_messages(with_categories=true) %}
+                {% if flashes %}
+                    {% for category, message in flashes %}
+                        {{ message_macro.show_message(category, message) }}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
-			{% block content %}{% endblock %}
-		</div>
+        <div class="container mt-3">
+            {% block content %}{% endblock %}
+        </div>
+
+        <footer class="mt-3">
+            <div class="container">
+                <p class="text-center text-muted">
+                    Proectos by Proectos team, © 2018
+                </p>
+            </div>
+        </footer>
     </body>
 </html>
