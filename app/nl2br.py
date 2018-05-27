@@ -5,7 +5,7 @@ from jinja2 import evalcontextfilter, Markup, escape
 _paragraph_re = re.compile('\r\n|\r|\n')
 
 
-@app.template_filter
+@app.template_filter()
 @evalcontextfilter
 def nl2br(eval_ctx, value):
     lines = _paragraph_re.split(escape(value))

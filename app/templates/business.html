@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="card-body">
-                        <p class="user-input">{{ business.address }}</p>
+                        <p class="user-input">{{ business.address | nl2br }}</p>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="card-body">
-                        <p class="user-input">{{ business.time }}</p>
+                        <p class="user-input">{{ business.time | nl2br }}</p>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="card-body">
-                        <p class="user-input">{{ business.contacts }}</p>
+                        <p class="user-input">{{ business.contacts | nl2br }}</p>
                     </div>
                 </div>
             </div>
@@ -121,7 +121,7 @@
             </div>
 
             <div class="card-body">
-                <p class="user-input">{{ business.desc }}</p>
+                <p class="user-input">{{ business.desc | nl2br }}</p>
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@
                         data-filled="fa fa-2x fa-star checked"
                         data-empty="fa fa-2x fa-star"
                         data-readonly/>
-                    <p class="user-input">{{ comment.text }}</p>
+                    <p class="user-input">{{ comment.text | nl2br }}</p>
                 </div>
             </div>
         </div>
