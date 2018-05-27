@@ -88,7 +88,7 @@ $(document).ready(function() {
         }
     }
 
-    $('#filter_apply').submit(function(ev) {
+    $('#filter_form').on('submit', function(ev) {
         ev.preventDefault();
 
         let sort_type = $('#sort_by option:selected').text().trim();
