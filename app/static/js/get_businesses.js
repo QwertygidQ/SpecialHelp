@@ -41,13 +41,15 @@ function show_message(category, message) {
         <button type="button" class="close" data-dismiss="alert">
             <span>&times;</span>
         </button>` +
-        {{ message }} +
+        get_translation(message) +
     `</div>`;
     $('#msg_div').append(html);
 }
 
 $(document).ready(function() {
     let geolocation = {};
+
+    show_message('error', '[PROECTOS] Password reset');
 
     if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(success, error);

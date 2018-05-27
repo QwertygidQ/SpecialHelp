@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block init %}
+<!-- Initialization -->
+<script src="../static/js/get_businesses.js"></script>
+{% endblock %}
+
 {% block content %}
 <h1>{{ _('Welcome!') }}</h1>
 <nav>
