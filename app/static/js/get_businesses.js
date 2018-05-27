@@ -12,7 +12,12 @@ function get_translation(str) {
         'ru': {
             'Notification': 'Уведомление',
             'Error': 'Ошибка',
-            'Message': 'Сообщение'
+            'Message': 'Сообщение',
+            'Your browser does not support geolocation.': 'Ваш браузер не поддерживает геолокацию.',
+            'Please allow geolocation.': 'Пожалуйста, разрешите геолокацию.',
+            'Your position is unavailable.': 'Ваша позиция недоступна.',
+            'Geolocation request timed out.': 'Геолокационный запрос занял слишком много времени.',
+            'Unknown geolocation error.': 'Неизвестная ошибка геолокации.'
         }
     }
 
@@ -58,10 +63,8 @@ $(document).ready(function() {
 
     if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(success, error);
-    else {
-        geolocation['status'] = 'error';
-        geolocation['error_type'] = 'GEOLOCATION_UNSUPPORTED';
-    }
+    else
+        show_message('error', 'Your browser does not support geolocation.');
 
     function success(position) {
         geolocation['status'] = 'ok';
@@ -69,20 +72,18 @@ $(document).ready(function() {
     }
 
     function error(error) {
-        geolocation['status'] = 'error';
-
         switch(error.code) {
             case error.PERMISSION_DENIED:
-                geolocation['error_type'] = 'PERMISSION_DENIED';
+                show_message('error', 'Please allow geolocation.');
                 break;
             case error.POSITION_UNAVAILABLE:
-                geolocation['error_type'] = 'POSITION_UNAVAILABLE';
+                show_message('error', 'Your position is unavailable.');
                 break;
             case error.TIMEOUT:
-                geolocation['error_type'] = 'TIMEOUT';
+                show_message('error', 'Geolocation request timed out.');
                 break;
             default:
-                geolocation['error_type'] = 'UNKNOWN_ERROR';
+                show_message('error', 'Unknown geolocation error.');
                 break;
         }
     }
@@ -92,8 +93,8 @@ $(document).ready(function() {
     });
 
     $('#filter_apply').click(function() {
-        let sort_type = $('.ui.dropdown').dropdown('get value').trim();
-        let radius = $('#radius_input').val().trim();
+        let sort_type = $('#sort_by option:selected').text().trim();
+        let radius = $('#radius').val().trim();
 
         $.ajax({
             url: url,
