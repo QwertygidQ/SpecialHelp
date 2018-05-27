@@ -5,7 +5,7 @@ from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
 from .helpers import unauthenticated_required, get_next_page, get_info_for_tag_and_validate
 from . import image_upload
 
-from flask import render_template, redirect, url_for, flash, request, abort, session, jsonify
+from flask import render_template, redirect, url_for, flash, request, abort, session, jsonify, make_response
 from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_babelex import gettext
@@ -32,10 +32,12 @@ def index():
     try:
         pages, items = get_info_for_tag_and_validate(page=pagination_page)
 
-        return render_template('index.html',
+        resp = make_response(render_template('index.html',
                                title=gettext('Main page'),
                                pages_count=pages,
-                               businesses=items)
+                               businesses=items))
+        resp.set_cookie('locale', get_locale())
+        return resp
     except ValueError:
         abort(400)
 
@@ -273,18 +275,6 @@ def change_locale():
     session['locale'] = new_locale
 
     return redirect(get_next_page())
-
-@app.route('/translate', methods=['POST'])
-def translate():
-    if not request.json or 'string' not in request.json:
-        return jsonify({
-            'status': 'error',
-            'error_type': 'No JSON'
-        });
-
-    return jsonify({
-        'string': gettext(request.json['string'])
-    });
 
 @app.errorhandler(404)
 def page_not_found(e):

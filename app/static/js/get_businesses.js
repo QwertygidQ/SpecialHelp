@@ -1,20 +1,27 @@
+function get_cookie(name) {
+    let value = '; ' + document.cookie;
+    let parts = value.split('; ' + name + '=');
+    if (parts.length == 2)
+        return parts.pop().split(';').shift();
+    else
+        console.log(name + ' is not defined in the cookie!');
+}
+
 function get_translation(str) {
-    let result = str;
+    const translations = {
+        'ru': {
+            'Notification': 'Уведомление',
+            'Error': 'Ошибка',
+            'Message': 'Сообщение'
+        }
+    }
 
-    $.ajax({
-        url: '/translate',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            string: str
-        }),
-        dataType: 'json',
-        timeout: 30000
-    }).done(function(data) {
-        result = data['string'];
-    });
-
-    return result;
+    let locale = get_cookie('locale');
+    let lang_translations = translations[locale];
+    if (!lang_translations || !lang_translations[str])
+        return str;
+    else
+        return lang_translations[str];
 }
 
 function show_message(category, message) {
@@ -48,8 +55,6 @@ function show_message(category, message) {
 
 $(document).ready(function() {
     let geolocation = {};
-
-    show_message('error', '[PROECTOS] Password reset');
 
     if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(success, error);
