@@ -88,11 +88,9 @@ $(document).ready(function() {
         }
     }
 
-    $('#radius_input').focusout(function() {
-        // TODO: finish writing this function
-    });
+    $('#filter_apply').submit(function(ev) {
+        ev.preventDefault();
 
-    $('#filter_apply').click(function() {
         let sort_type = $('#sort_by option:selected').text().trim();
         let radius = $('#radius').val().trim();
 
