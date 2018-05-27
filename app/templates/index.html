@@ -13,19 +13,34 @@
 </nav>
 
 <div>
-    <div class="form-group">
-        <label>Sort by</label>
-        <select class="form-control">
-            <option selected>Closest to me</option>
-            <option>Last added</option>
-            <option>First added</option>
-        </select>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Sort by</label>
+                <select id="sort_by" class="form-control">
+                    <option selected>Closest to me</option>
+                    <option>Last added</option>
+                    <option>First added</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Radius</label>
+                <div class="input-group">
+                    <input id="radius" class="form-control" type="number" min="1" max="100" value="1"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            km
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Radius</label>
-        <input class="form-control" type="number" min="1" max="100" value="1"/>
-    </div>
+    <button id="filter_submit" class="btn btn-primary mb-3">Apply filters</button>
 </div>
 
 <ul class="list-group">
