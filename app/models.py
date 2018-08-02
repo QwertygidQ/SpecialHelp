@@ -120,7 +120,7 @@ class Business(db.Model):  # company/event
         rad_delta_lat = math.radians(self.latitude - usr_deg_lat) # delta phi
         rad_delta_lon = math.radians(self.longitude - usr_deg_lon) # delta lambda
 
-        a = math.sin(rad_delta_lat / 2) ** 2 + math.cos(rad_lat_usr) * math.cos(rad_lat_dest) * math.sin(rad_delta_lon / 2) **2
+        a = math.sin(rad_delta_lat / 2) ** 2 + math.cos(rad_lat_usr) * math.cos(rad_lat_dest) * math.sin(rad_delta_lon / 2) ** 2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         d = R * c
 
