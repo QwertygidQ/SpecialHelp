@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from time import time
 import jwt
 import os
+import math
 from PIL import Image, ImageOps
 
 ROLE_USER = 0
@@ -106,6 +107,24 @@ class Business(db.Model):  # company/event
             self.rating = int(sum(comment.rating for comment in self.comments) / len(self.comments.all()) + .5)
 
         db.session.commit()
+
+    # Reference: https://www.movable-type.co.uk/scripts/latlong.html
+    def calculate_dist_to_user(self, user_coords):
+        R = 6371e3
+
+        usr_deg_lat, usr_deg_lon = user_coords
+
+        rad_lat_usr = math.radians(usr_deg_lat) # phi1
+        rad_lat_dest = math.radians(self.latitude) # phi2
+
+        rad_delta_lat = math.radians(self.latitude - usr_deg_lat) # delta phi
+        rad_delta_lon = math.radians(self.longitude - usr_deg_lon) # delta lambda
+
+        a = math.sin(rad_delta_lat / 2) ** 2 + math.cos(rad_lat_usr) * math.cos(rad_lat_dest) * math.sin(rad_delta_lon / 2) **2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        d = R * c
+
+        return d
 
     def __repr__(self):
         return '<Business {}>'.format(self.name)
