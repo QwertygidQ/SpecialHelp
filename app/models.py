@@ -112,13 +112,13 @@ class Business(db.Model):  # company/event
     def calculate_dist_to_user(self, user_coords):
         R = 6371e3
 
-        usr_deg_lat, usr_deg_lon = user_coords
+        deg_lat_usr, deg_lon_usr = user_coords
 
-        rad_lat_usr = math.radians(usr_deg_lat) # phi1
+        rad_lat_usr = math.radians(deg_lat_usr) # phi1
         rad_lat_dest = math.radians(self.latitude) # phi2
 
-        rad_delta_lat = math.radians(self.latitude - usr_deg_lat) # delta phi
-        rad_delta_lon = math.radians(self.longitude - usr_deg_lon) # delta lambda
+        rad_delta_lat = math.radians(self.latitude - deg_lat_usr) # delta phi
+        rad_delta_lon = math.radians(self.longitude - deg_lon_usr) # delta lambda
 
         a = math.sin(rad_delta_lat / 2) ** 2 + math.cos(rad_lat_usr) * math.cos(rad_lat_dest) * math.sin(rad_delta_lon / 2) ** 2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
