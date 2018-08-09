@@ -299,15 +299,18 @@ def get_businesses():
         coords = (lat, lon)
         max_dist = request.json['max_dist']
 
+        MAX_DIST_CAP = 50000 # meters
+        if max_dist > MAX_DIST_CAP:
+            return err_json
+
         if type(lat) != float or type(lon) != float or type(max_dist) != int:
             return err_json
 
-        businesses = (
-                     Business.query
-                     .filter(Business.calculate_dist_to_user(coords) <= max_dist)
-                     .order_by(Business.calculate_dist_to_user(coords)) # TODO: add pagination
-                     .all()
-                     )
+        def location_query(user_coords, max_dist):
+            dist = Business.calculate_dist_to_user(user_coords)
+            return Business.query.filter(dist <= max_dist).order_by(dist) # TODO: add pagination
+
+        businesses = location_query(coords, max_dist).all()
 
         print(businesses) # TODO: add functionality
 
