@@ -6,7 +6,7 @@ from .helpers import unauthenticated_required, get_next_page, get_info_for_tag_a
 from . import image_upload
 
 from flask import render_template, redirect, url_for, flash, request, abort, session
-from flask import send_from_directory
+from flask import send_from_directory, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_babelex import gettext
 from sqlalchemy import func
@@ -273,6 +273,45 @@ def change_locale():
     session['locale'] = new_locale
 
     return redirect(get_next_page())
+
+@app.route('/get_businesses', methods=['POST'])
+def get_businesses():
+    err_json = jsonify({'status': 'error', 'desc': 'Got invalid data from the client.'})
+
+    if not request.json or not all(param in request.json for param in ['type', 'page', 'reverse']):
+        return err_json
+
+    sort_type = request.json['type']
+    if sort_type not in ['location', 'alphabet', 'date']:
+        return err_json
+
+    page = request.json['page']
+    reverse = request.json['reverse']
+    if type(page) != int or type(reverse) != bool:
+        return err_json
+
+    if sort_type == 'location':
+        if not all(param in request.json for param in ['lat', 'lon', 'max_dist']):
+            return err_json
+
+        lat = request.json['lat']
+        lon = request.json['lon']
+        coords = (lat, lon)
+        max_dist = request.json['max_dist']
+
+        if type(lat) != float or type(lon) != float or type(max_dist) != int:
+            return err_json
+
+        businesses = (
+                     Business.query
+                     .filter(Business.calculate_dist_to_user(coords) <= max_dist)
+                     .order_by(Business.calculate_dist_to_user(coords)) # TODO: add pagination
+                     .all()
+                     )
+
+        print(businesses) # TODO: add functionality
+
+    return jsonify({'status': 'ok'})
 
 
 @app.errorhandler(404)

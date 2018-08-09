@@ -1,5 +1,7 @@
 from app import db, bcrypt, login_manager, app
 from flask_login import UserMixin
+from sqlalchemy import func
+from sqlalchemy.ext.hybrid import hybrid_method
 from time import time
 import jwt
 import os
@@ -109,6 +111,8 @@ class Business(db.Model):  # company/event
         db.session.commit()
 
     # Reference: https://www.movable-type.co.uk/scripts/latlong.html
+    # This function is for normal usage with Business instances
+    @hybrid_method
     def calculate_dist_to_user(self, user_coords):
         R = 6371e3
 
@@ -120,8 +124,33 @@ class Business(db.Model):  # company/event
         rad_delta_lat = math.radians(self.latitude - deg_lat_usr) # delta phi
         rad_delta_lon = math.radians(self.longitude - deg_lon_usr) # delta lambda
 
-        a = math.sin(rad_delta_lat / 2) ** 2 + math.cos(rad_lat_usr) * math.cos(rad_lat_dest) * math.sin(rad_delta_lon / 2) ** 2
+        a = (
+            math.sin(rad_delta_lat / 2) ** 2 + math.cos(rad_lat_usr) *
+            math.cos(rad_lat_dest) * math.sin(rad_delta_lon / 2) ** 2
+            )
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        d = R * c
+
+        return d
+
+    # This function is for SQLAlchemy queries
+    @calculate_dist_to_user.expression
+    def calculate_dist_to_user(cls, user_coords):
+        R = 6371e3
+
+        deg_lat_usr, deg_lon_usr = user_coords
+
+        rad_lat_usr = func.radians(deg_lat_usr) # phi1
+        rad_lat_dest = func.radians(cls.latitude) # phi2
+
+        rad_delta_lat = func.radians(cls.latitude - deg_lat_usr) # delta phi
+        rad_delta_lon = func.radians(cls.longitude - deg_lon_usr) # delta lambda
+
+        a = (
+            func.pow(func.sin(rad_delta_lat / 2), 2) + func.cos(rad_lat_usr) *
+            func.cos(rad_lat_dest) * func.pow(func.sin(rad_delta_lon / 2), 2)
+            )
+        c = 2 * func.atan2(func.sqrt(a), func.sqrt(1 - a))
         d = R * c
 
         return d
