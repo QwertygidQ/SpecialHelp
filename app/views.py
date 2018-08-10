@@ -306,11 +306,16 @@ def get_businesses():
         if type(lat) != float or type(lon) != float or type(max_dist) != int:
             return err_json
 
-        def location_query(user_coords, max_dist):
+        def location_query(user_coords, max_dist, reverse):
             dist = Business.calculate_dist_to_user(user_coords)
-            return Business.query.filter(dist <= max_dist).order_by(dist)
+            query = Business.query.filter(dist <= max_dist)
 
-        businesses = location_query(coords, max_dist).paginate(page, 10, False).items
+            if reverse:
+                return query.order_by(dist.desc())
+
+            return query.order_by(dist)
+
+        businesses = location_query(coords, max_dist, reverse).paginate(page, 10, False).items
 
         if not businesses:
             abort(404)
