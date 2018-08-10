@@ -312,15 +312,21 @@ def get_businesses():
 
             if reverse:
                 return query.order_by(dist.desc())
-
             return query.order_by(dist)
 
-        businesses = location_query(coords, max_dist, reverse).paginate(page, 10, False).items
+        query = location_query(coords, max_dist, reverse)
+    elif sort_type == 'alphabet':
+        if reverse:
+            query = Business.query.order_by(Business.name.desc())
+        else:
+            query = Business.query.order_by(Business.name)
+    else: # TODO: add date sorting
+        return err_json
 
-        if not businesses:
-            abort(404)
-
-        print(businesses) # TODO: add functionality
+    businesses = query.paginate(page, 10, False).items
+    if not businesses:
+        abort(404)
+    print(businesses) # TODO: add functionality
 
     return jsonify({'status': 'ok'})
 
