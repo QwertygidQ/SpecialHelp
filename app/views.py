@@ -308,9 +308,12 @@ def get_businesses():
 
         def location_query(user_coords, max_dist):
             dist = Business.calculate_dist_to_user(user_coords)
-            return Business.query.filter(dist <= max_dist).order_by(dist) # TODO: add pagination
+            return Business.query.filter(dist <= max_dist).order_by(dist)
 
-        businesses = location_query(coords, max_dist).all()
+        businesses = location_query(coords, max_dist).paginate(page, 10, False).items
+
+        if not businesses:
+            abort(404)
 
         print(businesses) # TODO: add functionality
 
