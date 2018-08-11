@@ -282,7 +282,7 @@ def get_businesses():
         return err_json
 
     sort_type = request.json['type']
-    if sort_type not in ['location', 'alphabet', 'date']:
+    if sort_type not in ['location', 'alphabet', 'date', 'rating']:
         return err_json
 
     page = request.json['page']
@@ -299,11 +299,14 @@ def get_businesses():
         coords = (lat, lon)
         max_dist = request.json['max_dist']
 
-        MAX_DIST_CAP = 50000 # meters
-        if max_dist > MAX_DIST_CAP:
+        if type(lat) != float or type(lon) != float or type(max_dist) != int:
             return err_json
 
-        if type(lat) != float or type(lon) != float or type(max_dist) != int:
+        if not -90.0 <= lat <= 90.0 or not -180.0 <= lon <= 180.0: # TODO: properly check float ranges?
+            return err_json
+
+        MAX_DIST_CAP = 50000 # meters
+        if not 0 <= max_dist <= MAX_DIST_CAP:
             return err_json
 
         def location_query(user_coords, max_dist, reverse):
@@ -320,6 +323,21 @@ def get_businesses():
             query = Business.query.order_by(Business.name.desc())
         else:
             query = Business.query.order_by(Business.name)
+    elif sort_type == 'rating':
+        if 'min_rating' not in request.json:
+            return err_json
+
+        min_rating = request.json['min_rating']
+        if type(min_rating) != int or not 0 <= min_rating <= 5:
+            return err_json
+
+        query = Business.query.filter(Business.rating >= min_rating)
+
+        if reverse:
+            query = query.order_by(Business.rating)
+        else:
+            query = query.order_by(Business.rating.desc()) # we want to normally show the highest rating first
+
     else: # TODO: add date sorting
         return err_json
 
