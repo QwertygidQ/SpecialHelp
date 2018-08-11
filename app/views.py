@@ -281,7 +281,7 @@ def get_businesses():
         return err_json
 
     sort_type = request.json['type']
-    if sort_type not in ['location', 'alphabet', 'date', 'rating']:
+    if sort_type not in ['location', 'alphabet', 'rating', 'date']:
         return err_json
 
     page = request.json['page']
@@ -336,8 +336,12 @@ def get_businesses():
             query = query.order_by(Business.rating)
         else:
             query = query.order_by(Business.rating.desc()) # we want to normally show the highest rating first
-
-    else: # TODO: add date sorting
+    elif sort_type == 'date':
+        if reverse:
+            query = Business.query.order_by(Business.date_created)
+        else:
+            query = Business.query.order_by(Business.date_created.desc()) # we want to normally show the latest added businesses
+    else:
         return err_json
 
     businesses = query.paginate(page, 10, False).items
