@@ -214,8 +214,7 @@ def business_page(business_link):
                     abort(400)
 
                 text = form.comment.data
-                comment = Comment(rating=rating, text=text, business=business, author=current_user,
-                                  date_created=datetime.datetime.utcnow())
+                comment = Comment(rating=rating, text=text, business=business, author=current_user)
                 db.session.add(comment)
                 db.session.commit()
 

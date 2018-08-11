@@ -22,7 +22,7 @@
                 {{ _('About me') }}
             </div>
             <div class="card-body">
-                {% if user.about is not none %}
+                {% if user.about is not none and user.about != '' %}
                     <p class="user-input">{{ user.about | nl2br }}</p>
                 {% else %}
                     <i>{{ _('Nothing here yet...') }}</i>
@@ -35,7 +35,7 @@
                 {{ _('Contacts') }}
             </div>
             <div class="card-body">
-                {% if user.contacts is not none %}
+                {% if user.contacts is not none and user.about != '' %}
                     <p class="user-input">{{ user.contacts | nl2br }}</p>
                 {% else %}
                     <i>{{ _('Nothing here yet...') }}</i>

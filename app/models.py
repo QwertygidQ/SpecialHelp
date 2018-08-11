@@ -6,6 +6,7 @@ from time import time
 import jwt
 import os
 import math
+import datetime
 from PIL import Image, ImageOps
 
 ROLE_USER = 0
@@ -14,20 +15,20 @@ ROLE_ADMIN = 1
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(50), index=True, unique=True)
-    email = db.Column(db.String(254), index=True, unique=True)
-    password_hash = db.Column(db.String(60))
+    username = db.Column(db.String(50), index=True, unique=True, nullable=False)
+    email = db.Column(db.String(254), index=True, unique=True, nullable=False)
+    password_hash = db.Column(db.String(60), nullable=False)
 
     contacts = db.Column(db.String(200))
     about = db.Column(db.String(500))
 
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
 
-    role = db.Column(db.SmallInteger, default=ROLE_USER)
+    role = db.Column(db.SmallInteger, default=ROLE_USER, nullable=False)
 
     image = db.relationship('Photo', uselist=False, back_populates='user')
 
-    locale = db.Column(db.String(5), default='NONE') # e.g. 'en-gb' or 'ru'
+    locale = db.Column(db.String(5), default='NONE', nullable=False) # e.g. 'en-gb' or 'ru'
 
     def __repr__(self):
         return '<User {}; {}>'.format(self.username, self.email)
@@ -67,7 +68,7 @@ business_tag_table = db.Table('business-tag',
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(50), index=True, unique=True)
+    name = db.Column(db.String(50), index=True, unique=True, nullable=False)
 
     def __repr__(self):
         return '<Tag {}>'.format(self.name)
@@ -76,9 +77,9 @@ class Tag(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    rating = db.Column(db.SmallInteger)
-    text = db.Column(db.String(1000))
-    date_created = db.Column(db.DateTime)
+    rating = db.Column(db.SmallInteger, nullable=False)
+    text = db.Column(db.String(1000), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False)
 
     business_id = db.Column(db.Integer, db.ForeignKey('business.id'))
 
@@ -98,6 +99,7 @@ class Business(db.Model):  # company/event
     tags = db.relationship('Tag', secondary=business_tag_table, backref='businesses', lazy='dynamic')
     rating = db.Column(db.SmallInteger, default=0)
     desc = db.Column(db.String(5000))
+    date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     comments = db.relationship('Comment', backref='business', lazy='dynamic', order_by='desc(Comment.date_created)')
 
     image = db.relationship('Photo', uselist=False, back_populates='business')
@@ -161,7 +163,7 @@ class Business(db.Model):  # company/event
 
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    filename = db.Column(db.String(64), unique=True)
+    filename = db.Column(db.String(64), unique=True, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', back_populates='image')

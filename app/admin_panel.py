@@ -7,7 +7,7 @@ from flask_admin.contrib.sqlamodel import ModelView
 from flask_login import current_user
 from flask import abort
 from wtforms import TextAreaField, FileField
-from . import image_upload, app
+from . import image_upload, app, db
 from .models import ROLE_ADMIN, ROLE_USER
 
 log = logging.getLogger("flask-admin.sqla")
@@ -35,7 +35,7 @@ class AdminPanelModelView(ModelView):
 
 
 class BusinessCreationView(AdminPanelModelView):
-    form_excluded_columns = 'rating'
+    form_excluded_columns = ['rating', 'date_created']
 
     form_overrides = dict(
         address=TextAreaField,
@@ -43,6 +43,15 @@ class BusinessCreationView(AdminPanelModelView):
         contacts=TextAreaField,
         desc=TextAreaField
     )
+
+    def delete_model(self, model):
+        if model.__class__.__name__ != 'Business':
+            raise ValueError('Tried to delete ' + model.__class__.__name__ + ' in BusinessCreationView, somehow')
+
+        for comment in model.comments:
+            db.session.delete(comment)
+        db.session.commit()
+        super(BusinessCreationView, self).delete_model(model)
 
 
 class UserCreationView(AdminPanelModelView):
@@ -69,7 +78,8 @@ class CommentCreationView(AdminPanelModelView):
 
         model_business = model.business
         super(CommentCreationView, self).delete_model(model)
-        model_business.recalculate_rating()
+        if model_business:
+            model_business.recalculate_rating()
 
 
 class PhotoCreationView(AdminPanelModelView):
