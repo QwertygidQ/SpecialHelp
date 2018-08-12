@@ -344,12 +344,27 @@ def get_businesses():
     else:
         return err_json
 
-    businesses = query.paginate(page, 10, False).items
+    pagination = query.paginate(page, 10, False)
+    businesses = pagination.items
     if not businesses:
         abort(404)
-    print(businesses) # TODO: add functionality
 
-    return jsonify({'status': 'ok'})
+    return_dict = {
+        'status': 'ok',
+        'num_pages': pagination.pages,
+        'businesses': [{
+                'img': business.image.filename if business.image else None,
+                'name': business.name,
+                'link': business.link,
+                'address': business.address,
+                'tags': [tag.name for tag in business.tags],
+                'rating': business.rating,
+                'desc': business.desc if business.desc else ''
+            } for business in businesses
+        ]
+    }
+
+    return jsonify(return_dict)
 
 
 @app.errorhandler(404)

@@ -94,10 +94,10 @@ class Business(db.Model):  # company/event
     address = db.Column(db.String(300), nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
-    time = db.Column(db.String(200))  # should change for searching???
+    time = db.Column(db.String(200))
     contacts = db.Column(db.String(200))
     tags = db.relationship('Tag', secondary=business_tag_table, backref='businesses', lazy='dynamic')
-    rating = db.Column(db.SmallInteger, default=0)
+    rating = db.Column(db.SmallInteger, default=0, nullable=False)
     desc = db.Column(db.String(5000))
     date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     comments = db.relationship('Comment', backref='business', lazy='dynamic', order_by='desc(Comment.date_created)')
