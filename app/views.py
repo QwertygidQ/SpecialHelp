@@ -359,7 +359,7 @@ def get_businesses():
                 'address': business.address,
                 'tags': [tag.name for tag in business.tags],
                 'rating': business.rating,
-                'desc': business.desc if business.desc else ''
+                'desc': business.desc if business.desc else None
             } for business in businesses
         ]
     }
