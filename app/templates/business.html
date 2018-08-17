@@ -58,7 +58,7 @@
                         {% for tag in business.tags %}
                             <a
                                 href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
-                                class="card-link">{{ tag.name }}</a>
+                                class="badge badge-pill badge-secondary">{{ tag.name }}</a>
                         {% endfor %}
                     </div>
                 </div>

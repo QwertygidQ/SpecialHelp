@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 
+{% block init %}
+<!-- Bootstrap Rating CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.5.0/bootstrap-rating.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.5.0/bootstrap-rating.min.js"></script>
+
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Initialization -->
+<link rel="stylesheet" href="../static/css/stars.css">
+<link rel="stylesheet" href="../static/css/circular.css">
+<link rel="stylesheet" href="../static/css/image.css">
+<link rel="stylesheet" href="../static/css/smaller-text.css">
+{% endblock %}
+
 {% block content %}
 <h1>{{ _('Welcome!') }}</h1>
 <nav>
@@ -12,12 +27,35 @@
     </ul>
 </nav>
 
-<ul class="list-group">
-    {% for b in businesses %}
-        <li class="list-group-item">
-            <a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a>
-            <p>{{ b.address }}</p>
-        </li>
-    {% endfor %}
-</ul>
+{% for b in businesses %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img
+                        src="{{ url_for('uploads', filename=b.image.filename) if b.image is not none else '../static/images/default.png' }}"
+                        class="circular img-fluid small mx-auto d-block"/>
+                </div>
+                <div class="col-md-10">
+                    <h2><a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a></h2>
+                    <input
+                        type="hidden"
+                        class="rating"
+                        value="{{ b.rating }}"
+                        data-filled="fa fa-2x fa-star checked"
+                        data-empty="fa fa-2x fa-star"
+                        data-readonly/>
+                    <div class="mt-2">
+                        {% for tag in b.tags %}
+                            <a
+                                href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
+                                class="badge badge-pill badge-secondary">{{ tag.name }}</a>
+                        {% endfor %}
+                        <p class="user-input smaller-text">{{ b.address | nl2br }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
 {% endblock %}
