@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="../static/css/circular.css">
 <link rel="stylesheet" href="../static/css/image.css">
 <link rel="stylesheet" href="../static/css/smaller-text.css">
+
+<script src="../static/js/sorting.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -25,7 +27,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>{{ _('Sorting type') }}</label>
-                    <select class="custom-select">
+                    <select id="sort_type_dropdown" class="custom-select">
                         <option value="location" selected>{{ _('Location') }}</option>
                         <option value="rating">{{ _('Rating') }}</option>
                         <option value="alphabet">{{ _('Alphabet') }}</option>
@@ -34,20 +36,21 @@
                 </div>
             </div>
 
-            <div class="col-md-4" hidden> <!-- One of the options - TODO: remove hidden with JS code; add ids -->
+            <div id="distance_div" class="col-md-4"> <!-- One of the options - TODO: remove hidden with JS code; add ids -->
                 <label>{{ _('Maximum distance') }}</label>
                 <div class="input-group">
-                    <input class="form-control" type="number" value="0" min="0" max="50000" step="1">
+                    <input id="distance_input" class="form-control" type="number" value="0" min="0" max="50000" step="1">
                     <div class="input-group-append">
                         <span class="input-group-text">{{ _('m') }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4" hidden> <!-- One of the options - TODO: remove hidden with JS code; add ids -->
+            <div id="rating_div" class="col-md-4"> <!-- One of the options - TODO: remove hidden with JS code; add ids -->
                 <label>{{ _('Minimum rating') }}</label>
                 <br>
                 <input
+                    id="rating_input"
                     type="hidden"
                     class="rating"
                     value="0"
