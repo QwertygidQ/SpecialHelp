@@ -1,3 +1,27 @@
+let geolocation = {};
+
+function geolocation_success(position) {
+    geolocation.status = "ok";
+    geolocation.position = position;
+}
+
+function geolocation_failure(error) {
+    geolocation.status = "error";
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            geolocation.desc = "Please allow geolocation on this website.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            geolocation.desc = "User location is unavailable. Please try again later.";
+            break;
+        case error.TIMEOUT:
+            geolocation.desc = "Timed out on a geolocation request. Please try again later.";
+            break;
+        default:
+            geolocation.desc = "Unknown error. Please try again later.";
+    }
+}
+
 function hide_options() {
     $("#distance_div").hide();
     $("#rating_div").hide();
@@ -22,6 +46,14 @@ function error_message(message) {
 }
 
 $(document).ready(function() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_failure);
+    }
+    else {
+        geolocation.status = "error";
+        geolocation.desc = "Your browser does not support geolocation. Please update it or use a different browser."
+    }
+
     hide_options();
 
     $("#sort_type_dropdown").val("location");
@@ -60,9 +92,22 @@ $(document).ready(function() {
             reverse: reverse
         };
         if (type === "location") {
-            // TODO: set lat and lon properly
-            json.lat = 0.0;
-            json.lon = 0.0;
+            if (geolocation.status === "error") {
+                if (geolocation.desc)
+                    error_message(geolocation.desc);
+                else
+                    error_message("Unknown geolocation error. Please try again later.");
+
+                return;
+            }
+            else if (geolocation.status !== "ok") {
+                error_message("Unknown geolocation error. Please try again later.");
+                return;
+            }
+
+            json.lat = geolocation.position.coords.latitude;
+            json.lon = geolocation.position.coords.longitude;
+
             let str_max_dist = $("#distance_input").val();
             let max_dist = parseInt(str_max_dist);
             if (str_max_dist.indexOf(".") != -1 || isNaN(max_dist) ||
@@ -93,22 +138,19 @@ $(document).ready(function() {
                 if (data.desc)
                     error_message(data.desc);
                 else
-                    error_message("Unknown error.");
+                    error_message("Unknown error. Please try again later.");
             }
-            else if (data.status !== "ok") {
-                error_message("Unknown error.");
-            }
+            else if (data.status !== "ok")
+                error_message("Unknown error. Please try again later.");
             else {
                 // TODO: properly draw stuff
                 console.log(data);
             }
         }).fail(function (jqXHR, status, errorThrown) {
-            if (status === "timeout") {
+            if (status === "timeout")
                 error_message("Timed out on your request. Please try again later.");
-            }
-            else {
+            else
                 error_message("Failed to fetch data from the server. Please try again later.");
-            }
         });
     });
 });

@@ -275,7 +275,7 @@ def change_locale():
 
 @app.route('/get_businesses', methods=['POST'])
 def get_businesses():
-    err_json = jsonify({'status': 'error', 'desc': 'Got invalid data from the client.'})
+    err_json = jsonify({'status': 'error', 'desc': 'Server got invalid data from the client.'})
 
     if not request.json or not all(param in request.json for param in ['type', 'page', 'reverse']):
         return err_json
