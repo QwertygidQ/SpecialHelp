@@ -347,7 +347,7 @@ def get_businesses():
     pagination = query.paginate(page, 10, False)
     businesses = pagination.items
     if not businesses:
-        abort(404)
+        return jsonify({'status': 'error', 'desc': 'No such organisations exist.'})
 
     return_dict = {
         'status': 'ok',
