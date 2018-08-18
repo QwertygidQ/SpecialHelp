@@ -298,7 +298,7 @@ def get_businesses():
         coords = (lat, lon)
         max_dist = request.json['max_dist']
 
-        if type(lat) != float or type(lon) != float or type(max_dist) != int:
+        if type(lat) not in [int, float] or type(lon) not in [int, float] or type(max_dist) != int:
             return err_json
 
         if not -90.0 <= lat <= 90.0 or not -180.0 <= lon <= 180.0: # TODO: properly check float ranges?

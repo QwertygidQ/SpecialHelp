@@ -101,7 +101,7 @@
             </div>
         </nav>
 
-        <div class="container mt-3">
+        <div id="message_div" class="container mt-3">
             {% with flashes = get_flashed_messages(with_categories=true) %}
                 {% if flashes %}
                     {% for category, message in flashes %}
