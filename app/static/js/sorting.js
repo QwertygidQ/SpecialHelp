@@ -18,8 +18,16 @@ function geolocation_failure(error) {
             geolocation.desc = "Timed out on a geolocation request. Please try again later.";
             break;
         default:
-            geolocation.desc = "Unknown error. Please try again later.";
+            geolocation.desc = "Unknown geolocation error. Please try again later.";
     }
+}
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_failure);
+}
+else {
+    geolocation.status = "error";
+    geolocation.desc = "Your browser does not support geolocation. Please update it or use a different browser."
 }
 
 function hide_options() {
@@ -46,14 +54,6 @@ function error_message(message) {
 }
 
 $(document).ready(function() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_failure);
-    }
-    else {
-        geolocation.status = "error";
-        geolocation.desc = "Your browser does not support geolocation. Please update it or use a different browser."
-    }
-
     hide_options();
 
     $("#sort_type_dropdown").val("location");
@@ -92,7 +92,11 @@ $(document).ready(function() {
             reverse: reverse
         };
         if (type === "location") {
-            if (geolocation.status === "error") {
+            if ($.isEmptyObject(geolocation)) {
+                error_message("There is no geolocation data available yet. Try again in a moment.");
+                return;
+            }
+            else if (geolocation.status === "error") {
                 if (geolocation.desc)
                     error_message(geolocation.desc);
                 else
