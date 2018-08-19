@@ -18,46 +18,5 @@
 {% block content %}
 <h1>{{ _('Businesses for tag %(tag)s', tag=tag_name) }}</h1>
 
-<nav>
-    <ul class="pagination">
-        {% for i in range(1, pages_count + 1) %}
-            <li class="page-item">
-                <a class="page-link" href="{{ url_for('tag_list_page', tag_name=tag_name, page=i) }}">{{ i }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</nav>
-
-{% for b in businesses %}
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-2">
-                    <img
-                        src="{{ url_for('uploads', filename=b.image.filename) if b.image is not none else '../static/images/default.png' }}"
-                        class="circular img-fluid small mx-auto d-block"/>
-                </div>
-                <div class="col-md-10">
-                    <h2><a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a></h2>
-                    <input
-                        type="hidden"
-                        class="rating"
-                        value="{{ b.rating }}"
-                        data-filled="fa fa-2x fa-star checked"
-                        data-empty="fa fa-2x fa-star"
-                        data-readonly/>
-                    <div class="mt-2">
-                        {% for tag in b.tags %}
-                            <a
-                                href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
-                                class="badge badge-pill badge-secondary">{{ tag.name }}</a>
-                        {% endfor %}
-                        <p class="user-input smaller-text">{{ b.address | nl2br }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endfor %}
-
+{% include "business_list.html" %}
 {% endblock %}

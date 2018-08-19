@@ -249,6 +249,7 @@ def tag_list_page(tag_name):
         return render_template('tag_list.html',
                                title=gettext('Businesses for tag %(tag)s', tag=tag_name),
                                businesses=items,
+                               page=int(page),
                                pages_count=pages,
                                tag_name=tag_name)
     except ValueError:

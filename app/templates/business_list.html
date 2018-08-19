@@ -1,0 +1,93 @@
+<div class="card my-3">
+    <div class="card-body">
+        <h3 class="card-title">{{ _('Organisation sorting') }}</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>{{ _('Sorting type') }}</label>
+                    <select id="sort_type_dropdown" class="custom-select">
+                        <option value="location" selected>{{ _('Location') }}</option>
+                        <option value="rating">{{ _('Rating') }}</option>
+                        <option value="alphabet">{{ _('Alphabet') }}</option>
+                        <option value="date">{{ _('Date Added') }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="distance_div" class="col-md-4">
+                <label>{{ _('Maximum distance') }}</label>
+                <div class="input-group">
+                    <input id="distance_input" class="form-control" type="number" value="0" min="0" max="50000" step="1">
+                    <div class="input-group-append">
+                        <span class="input-group-text">{{ _('m') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rating_div" class="col-md-4">
+                <label>{{ _('Minimum rating') }}</label>
+                <br>
+                <input
+                    id="rating_input"
+                    type="hidden"
+                    class="rating"
+                    value="0"
+                    data-filled="fa fa-2x fa-star checked"
+                    data-empty="fa fa-2x fa-star">
+            </div>
+        </div>
+        <div class="form-check">
+            <input id="reverse_checkbox" class="form-check-input" type="checkbox">
+            <label class="form-check-label" for="reverse_checkbox">{{ _('Reverse order') }}</label>
+        </div>
+        <button id="sort_apply_button" type="button" class="btn btn-primary mt-3">{{ _('Apply') }}</button>
+    </div>
+</div>
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('index', page=1) }}">&laquo;</a>
+        </li>
+        {% for i in range(page - 2, page + 3) %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('index', page=i) }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('index', page=pages_count) }}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+
+{% for b in businesses %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img
+                        src="{{ url_for('uploads', filename=b.image.filename) if b.image is not none else '../static/images/default.png' }}"
+                        class="circular img-fluid small mx-auto d-block"/>
+                </div>
+                <div class="col-md-10">
+                    <h2><a href="{{ url_for('business_page', business_link=b.link) }}">{{ b.name }}</a></h2>
+                    <input
+                        type="hidden"
+                        class="rating"
+                        value="{{ b.rating }}"
+                        data-filled="fa fa-2x fa-star checked"
+                        data-empty="fa fa-2x fa-star"
+                        data-readonly/>
+                    <div class="mt-2">
+                        {% for tag in b.tags %}
+                            <a
+                                href="{{ url_for('tag_list_page', tag_name=tag.name, page=1) }}"
+                                class="badge badge-pill badge-secondary">{{ tag.name }}</a>
+                        {% endfor %}
+                        <p class="user-input smaller-text">{{ b.address | nl2br }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
