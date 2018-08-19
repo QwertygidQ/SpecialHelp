@@ -37,7 +37,7 @@ function hide_options() {
 
 function reset_options() {
     $("#distance_input").val("0");
-    $("#rating_input").rating("rate", "");
+    $("#rating_input").rating("rate", "0");
 }
 
 function error_message(message) {
@@ -71,16 +71,8 @@ function send_ajax(json) {
         else if (data.status !== "ok")
             error_message("Unknown error. Please try again later.");
         else {
-            /*
-            'businesses': [{
-                    'img': business.image.filename if business.image else None,
-                    'name': business.name,
-                    'link': business.link,
-                    'address': business.address,
-                    'tags': [tag.name for tag in business.tags],
-                    'rating': business.rating */
             if (!data.num_pages || !data.businesses || data.businesses.length < 1) {
-                error_message("Got invalid data from the server.")
+                error_message("Got invalid data from the server.");
                 return;
             }
 
@@ -88,7 +80,8 @@ function send_ajax(json) {
                 draw_navigation(json.page, data.num_pages);
             else
                 error_message("Page is out of range.");
-            // TODO: draw the rest
+
+            draw_businesses(data.businesses);
         }
     }).fail(function (jqXHR, status, errorThrown) {
         if (status === "timeout")
@@ -144,6 +137,58 @@ function draw_navigation(page, max_pages) {
 
     $("#pagination_ul").empty();
     $(dom).appendTo("#pagination_ul");
+}
+
+function draw_businesses(businesses) {
+    $("#businesses_div").empty();
+
+    for (i = 0; i < businesses.length; ++i) {
+        let business = businesses[i];
+
+        if ([business.img, business.name, business.link, business.address,
+            business.tags, business.rating].includes(undefined))
+        {
+            error_message("Got invalid data from the server.");
+            return;
+        }
+
+        let dom =
+            "<div class=\"card mb-3\">" +
+                "<div class=\"card-body\">" +
+                    "<div class=\"row\">" +
+                        "<div class=\"col-md-2\">" +
+                            "<img " +
+                                "src=\"" + business.img + "\"" +
+                                "class=\"circular img-fluid small mx-auto d-block\"/>" +
+                        "</div>"+
+                        "<div class=\"col-md-10\">" +
+                            "<h2><a href=/b/" + business.link + ">" + business.name + "</a></h2>" +
+                            "<input " +
+                                "type= \"hidden\"" +
+                                "class=\"rating\"" +
+                                "value=\"" + business.rating + "\"" +
+                                "data-filled=\"fa fa-2x fa-star checked\"" +
+                                "data-empty=\"fa fa-2x fa-star\"" +
+                                "data-readonly/>" +
+                            "<div class=\"mt-2\">";
+
+        $.each(business.tags, function(index, tag) {
+            dom +=
+                "<a " +
+                    "href=\"/t/" + tag + "?page=1\"" +
+                    "class=\"badge badge-pill badge-secondary mr-1\">" + tag + "</a>";
+        });
+
+        dom += "<p class=\"user-input smaller-text\">" + business.address + "</p>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>"
+
+        $(dom).appendTo("#businesses_div");
+        $("input").rating();
+    }
 }
 
 $(document).ready(function() {

@@ -355,7 +355,7 @@ def get_businesses():
         'status': 'ok',
         'num_pages': pagination.pages,
         'businesses': [{
-                'img': business.image.filename if business.image else None,
+                'img': '/uploads/' + business.image.filename if business.image else '/static/images/default.png',
                 'name': business.name,
                 'link': business.link,
                 'address': business.address,
