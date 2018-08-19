@@ -34,6 +34,7 @@ def index():
 
         return render_template('index.html',
                                title=gettext('Main page'),
+                               page=int(pagination_page),
                                pages_count=pages,
                                businesses=items)
     except ValueError:
