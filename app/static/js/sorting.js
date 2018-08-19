@@ -53,7 +53,7 @@ function error_message(message) {
     msg.fadeIn().appendTo("#message_div");
 }
 
-function draw_businesses(json) {
+function send_ajax(json) {
     $.ajax({
         url: "/get_businesses",
         type: "POST",
@@ -71,7 +71,24 @@ function draw_businesses(json) {
         else if (data.status !== "ok")
             error_message("Unknown error. Please try again later.");
         else {
-            
+            /*
+            'businesses': [{
+                    'img': business.image.filename if business.image else None,
+                    'name': business.name,
+                    'link': business.link,
+                    'address': business.address,
+                    'tags': [tag.name for tag in business.tags],
+                    'rating': business.rating */
+            if (!data.num_pages || !data.businesses || data.businesses.length < 1) {
+                error_message("Got invalid data from the server.")
+                return;
+            }
+
+            if (json.page >= 1 && json.page <= data.num_pages)
+                draw_navigation(json.page, data.num_pages);
+            else
+                error_message("Page is out of range.");
+            // TODO: draw the rest
         }
     }).fail(function (jqXHR, status, errorThrown) {
         if (status === "timeout")
@@ -81,7 +98,61 @@ function draw_businesses(json) {
     });
 }
 
+function draw_navigation(page, max_pages) {
+    let min_page = 1, max_page = 1;
+    let back_enabled = true, forward_enabled = true;
+
+    if (max_pages < 5) {
+        min_page = 1;
+        max_page = max_pages;
+    }
+    else if (page - 2 < 1) {
+        min_page = 1;
+        max_page = 5;
+    }
+    else if (page + 2 > max_pages) {
+        min_page = max_pages - 5 + 1;
+        max_page = max_pages;
+    }
+    else {
+        min_page = page - 2;
+        max_page = page + 2;
+    }
+
+    let dom = "";
+
+    if (min_page > 1) {
+        dom +=
+            "<li class=\"page-item\">" +
+                "<a class=\"page-link\" href=\"#\">&laquo;</a>" +
+            "</li>";
+    }
+
+    for (page = min_page; page <= max_page; ++page) {
+        dom +=
+            "<li class=\"page-item\">" +
+                "<a class=\"page-link\" href=\"#\">" + page + "</a>" +
+            "</li>"
+    }
+
+    if (max_page < max_pages) {
+        dom +=
+            "<li class=\"page-item\">" +
+                "<a class=\"page-link\" href=\"#\">&raquo;</a>" +
+            "</li>";
+    }
+
+    $("#pagination_ul").empty();
+    $(dom).appendTo("#pagination_ul");
+}
+
 $(document).ready(function() {
+    send_ajax({
+        type: "date",
+        page: 1,
+        reverse: false
+    });
+
     hide_options();
 
     $("#sort_type_dropdown").val("location");
@@ -158,6 +229,6 @@ $(document).ready(function() {
             json.min_rating = min_rating;
         }
 
-        draw_businesses(json);
+        send_ajax(json);
     });
 });
