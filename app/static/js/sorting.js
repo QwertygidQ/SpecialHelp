@@ -53,6 +53,34 @@ function error_message(message) {
     msg.fadeIn().appendTo("#message_div");
 }
 
+function draw_businesses(json) {
+    $.ajax({
+        url: "/get_businesses",
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify(json),
+        timeout: 15000
+    }).done(function(data){
+        if (data.status === "error") {
+            if (data.desc)
+                error_message(data.desc);
+            else
+                error_message("Unknown error. Please try again later.");
+        }
+        else if (data.status !== "ok")
+            error_message("Unknown error. Please try again later.");
+        else {
+            
+        }
+    }).fail(function (jqXHR, status, errorThrown) {
+        if (status === "timeout")
+            error_message("Timed out on your request. Please try again later.");
+        else
+            error_message("Failed to fetch data from the server. Please try again later.");
+    });
+}
+
 $(document).ready(function() {
     hide_options();
 
@@ -130,31 +158,6 @@ $(document).ready(function() {
             json.min_rating = min_rating;
         }
 
-        $.ajax({
-            url: "/get_businesses",
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(json),
-            timeout: 15000
-        }).done(function(data){
-            if (data.status === "error") {
-                if (data.desc)
-                    error_message(data.desc);
-                else
-                    error_message("Unknown error. Please try again later.");
-            }
-            else if (data.status !== "ok")
-                error_message("Unknown error. Please try again later.");
-            else {
-                // TODO: properly draw stuff
-                console.log(data);
-            }
-        }).fail(function (jqXHR, status, errorThrown) {
-            if (status === "timeout")
-                error_message("Timed out on your request. Please try again later.");
-            else
-                error_message("Failed to fetch data from the server. Please try again later.");
-        });
+        draw_businesses(json);
     });
 });
