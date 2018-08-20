@@ -1,4 +1,6 @@
 let geolocation = {};
+let last_json = {};
+let last_data = {};
 
 function geolocation_success(position) {
     geolocation.status = "ok";
@@ -80,6 +82,9 @@ function send_ajax(json) {
                 error_message("Page is out of range.");
 
             draw_businesses(data.businesses);
+
+            last_json = json;
+            last_data = data;
         }
     }).fail(function(jqXHR, status, errorThrown) {
         if (status === "timeout")
@@ -113,22 +118,22 @@ function draw_navigation(page, max_pages) {
 
     if (min_page > 1) {
         dom +=
-            "<li class=\"page-item\">" +
-            "<a class=\"page-link\" href=\"#\">&laquo;</a>" +
+            "<li id=\"pag_beginning\" class=\"page-item page-link\">" +
+            "&laquo;"+
             "</li>";
     }
 
     for (page = min_page; page <= max_page; ++page) {
         dom +=
-            "<li class=\"page-item\">" +
-            "<a class=\"page-link\" href=\"#\">" + page + "</a>" +
+            "<li id=\"" + page + "\" class=\"page-item page-link\">" +
+            page +
             "</li>"
     }
 
     if (max_page < max_pages) {
         dom +=
-            "<li class=\"page-item\">" +
-            "<a class=\"page-link\" href=\"#\">&raquo;</a>" +
+            "<li id=\"pag_end\" class=\"page-item page-link\">" +
+            "&raquo;" +
             "</li>";
     }
 
@@ -265,6 +270,24 @@ $(document).ready(function() {
                 return;
             }
             json.min_rating = min_rating;
+        }
+
+        send_ajax(json);
+    });
+
+    $("#pagination_ul").on("click", "li", function () {
+        let id = $(this).attr("id");
+        let json = last_json;
+        if (id === "pag_beginning")
+            json.page = 1;
+        else if (id === "pag_end")
+            json.page = last_data.num_pages;
+        else {
+            json.page = parseInt(id);
+            if (json.page === undefined) {
+                error_message("Invalid page.")
+                return;
+            }
         }
 
         send_ajax(json);
