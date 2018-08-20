@@ -1,5 +1,5 @@
 from . import app, db, email, babel
-from .models import User, Business, Comment
+from .models import User, Business, Comment, Tag
 from .forms import SignInForm, SignUpForm, UserUpdateForm, ProfileUpdateForm, \
     PasswordResetForm, NewPasswordForm, CommentForm, UserPictureUpdateForm
 from .helpers import unauthenticated_required, get_next_page, get_info_for_tag_and_validate
@@ -224,7 +224,7 @@ def business_page(business_link):
 
 @app.route('/t/<tag_name>')
 def tag_list_page(tag_name):
-    if tag_name is None:
+    if tag_name is None or Tag.query.filter_by(name=tag_name).count() == 0:
         abort(404)
 
     return render_template('tag_list.html',
