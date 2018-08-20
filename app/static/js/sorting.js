@@ -177,7 +177,7 @@ function draw_businesses(businesses) {
         $.each(business.tags, function(index, tag) {
             dom +=
                 "<a " +
-                "href=\"/t/" + tag + "?page=1\"" +
+                "href=\"/t/" + tag + "\"" +
                 "class=\"badge badge-pill badge-secondary mr-1\">" + tag + "</a>";
         });
 

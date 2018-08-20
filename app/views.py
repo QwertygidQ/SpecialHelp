@@ -227,21 +227,9 @@ def tag_list_page(tag_name):
     if tag_name is None:
         abort(404)
 
-    page = request.args.get('page')
-    if page is None:
-        return redirect(url_for('tag_list_page', tag_name=tag_name, page='1'))
-
-    try:
-        pages, items = get_info_for_tag_and_validate(tag_name, page)
-
-        return render_template('tag_list.html',
-                               title=gettext('Businesses for tag %(tag)s', tag=tag_name),
-                               businesses=items,
-                               page=int(page),
-                               pages_count=pages,
-                               tag_name=tag_name)
-    except ValueError:
-        abort(400)
+    return render_template('tag_list.html',
+                           title=gettext('Businesses for tag %(tag)s', tag=tag_name),
+                           tag=tag_name)
 
 
 @app.route('/uploads/<path:filename>')
