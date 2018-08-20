@@ -284,7 +284,7 @@ $(document).ready(function() {
             json.page = last_data.num_pages;
         else {
             json.page = parseInt(id);
-            if (json.page === undefined) {
+            if (isNaN(json.page)) {
                 error_message("Invalid page.")
                 return;
             }
