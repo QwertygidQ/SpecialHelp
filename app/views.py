@@ -267,13 +267,13 @@ def get_businesses():
     if type(page) != int or type(reverse) != bool:
         return err_json
 
+    query = Business.query
+
     if 'tag' in request.json:
         tag = request.json['tag']
         if type(tag) != str:
             return err_json
-        query = Business.query.filter(Business.tags.any(name=tag))
-    else:
-        query = Business.query
+        query = query.filter(Business.tags.any(name=tag))
 
     if sort_type == 'location':
         if not all(param in request.json for param in ['lat', 'lon', 'max_dist']):
@@ -294,7 +294,7 @@ def get_businesses():
         if not 0 <= max_dist <= MAX_DIST_CAP:
             return err_json
 
-        def location_query(user_coords, max_dist, reverse):
+        def location_query(user_coords, max_dist, reverse, query):
             dist = Business.calculate_dist_to_user(user_coords)
             query = query.filter(dist <= max_dist)
 
@@ -302,7 +302,7 @@ def get_businesses():
                 return query.order_by(dist.desc())
             return query.order_by(dist)
 
-        query = location_query(coords, max_dist, reverse)
+        query = location_query(coords, max_dist, reverse, query)
     elif sort_type == 'alphabet':
         if reverse:
             query = query.order_by(Business.name.desc())
