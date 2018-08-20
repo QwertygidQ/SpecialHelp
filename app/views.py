@@ -267,6 +267,14 @@ def get_businesses():
     if type(page) != int or type(reverse) != bool:
         return err_json
 
+    if 'tag' in request.json:
+        tag = request.json['tag']
+        if type(tag) != str:
+            return err_json
+        query = Business.query.filter(Business.tags.any(name=tag))
+    else:
+        query = Business.query
+
     if sort_type == 'location':
         if not all(param in request.json for param in ['lat', 'lon', 'max_dist']):
             return err_json
@@ -288,7 +296,7 @@ def get_businesses():
 
         def location_query(user_coords, max_dist, reverse):
             dist = Business.calculate_dist_to_user(user_coords)
-            query = Business.query.filter(dist <= max_dist)
+            query = query.filter(dist <= max_dist)
 
             if reverse:
                 return query.order_by(dist.desc())
@@ -297,9 +305,9 @@ def get_businesses():
         query = location_query(coords, max_dist, reverse)
     elif sort_type == 'alphabet':
         if reverse:
-            query = Business.query.order_by(Business.name.desc())
+            query = query.order_by(Business.name.desc())
         else:
-            query = Business.query.order_by(Business.name)
+            query = query.order_by(Business.name)
     elif sort_type == 'rating':
         if 'min_rating' not in request.json:
             return err_json
@@ -308,7 +316,7 @@ def get_businesses():
         if type(min_rating) != int or not 0 <= min_rating <= 5:
             return err_json
 
-        query = Business.query.filter(Business.rating >= min_rating)
+        query = query.filter(Business.rating >= min_rating)
 
         if reverse:
             query = query.order_by(Business.rating)
@@ -316,9 +324,9 @@ def get_businesses():
             query = query.order_by(Business.rating.desc()) # we want to normally show the highest rating first
     elif sort_type == 'date':
         if reverse:
-            query = Business.query.order_by(Business.date_created)
+            query = query.order_by(Business.date_created)
         else:
-            query = Business.query.order_by(Business.date_created.desc()) # we want to normally show the latest added businesses
+            query = query.order_by(Business.date_created.desc()) # we want to normally show the latest added businesses
     else:
         return err_json
 

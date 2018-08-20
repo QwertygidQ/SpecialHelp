@@ -55,6 +55,9 @@ function error_message(message) {
 }
 
 function send_ajax(json) {
+    if (typeof tag !== "undefined")
+        json.tag = tag;
+
     $.ajax({
         url: "/get_businesses",
         type: "POST",
