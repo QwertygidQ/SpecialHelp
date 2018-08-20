@@ -25,20 +25,8 @@ def get_locale():
 
 @app.route('/')
 def index():
-    pagination_page = request.args.get('page')
-    if pagination_page is None:
-        return redirect(url_for('index', page='1'))
-
-    try:
-        pages, items = get_info_for_tag_and_validate(page=pagination_page)
-
-        return render_template('index.html',
-                               title=gettext('Main page'),
-                               page=int(pagination_page),
-                               pages_count=pages,
-                               businesses=items)
-    except ValueError:
-        abort(400)
+    return render_template('index.html',
+                           title=gettext('Main page'))
 
 
 @app.route('/signin', methods=['GET', 'POST'])

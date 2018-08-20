@@ -76,6 +76,10 @@ function send_ajax(json) {
                 return;
             }
 
+            console.log(json.page);
+            console.log(data.num_pages);
+            console.log("-----------------------");
+
             if (json.page >= 1 && json.page <= data.num_pages)
                 draw_navigation(json.page, data.num_pages);
             else
