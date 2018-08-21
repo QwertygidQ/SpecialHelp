@@ -11,16 +11,16 @@ function geolocation_failure(error) {
     geolocation.status = "error";
     switch (error.code) {
         case error.PERMISSION_DENIED:
-            geolocation.desc = "Please allow geolocation on this website.";
+            geolocation.desc = please_allow_geolocation;
             break;
         case error.POSITION_UNAVAILABLE:
-            geolocation.desc = "User location is unavailable. Please try again later.";
+            geolocation.desc = user_location_unavailable;
             break;
         case error.TIMEOUT:
-            geolocation.desc = "Timed out on a geolocation request. Please try again later.";
+            geolocation.desc = timed_out_geolocation;
             break;
         default:
-            geolocation.desc = "Unknown geolocation error. Please try again later.";
+            geolocation.desc = unknown_geolocation_error;
     }
 }
 
@@ -28,7 +28,7 @@ if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_failure);
 } else {
     geolocation.status = "error";
-    geolocation.desc = "Your browser does not support geolocation. Please update it or use a different browser."
+    geolocation.desc = browser_no_geolocation;
 }
 
 function hide_options() {
@@ -70,19 +70,19 @@ function send_ajax(json) {
             if (data.desc)
                 error_message(data.desc);
             else
-                error_message("Unknown error. Please try again later.");
+                error_message(unknown_error);
         } else if (data.status !== "ok")
-            error_message("Unknown error. Please try again later.");
+            error_message(unknown_error);
         else {
             if (!data.num_pages || !data.businesses || data.businesses.length < 1) {
-                error_message("Got invalid data from the server.");
+                error_message(invalid_server_data);
                 return;
             }
 
             if (json.page >= 1 && json.page <= data.num_pages)
                 draw_navigation(json.page, data.num_pages);
             else
-                error_message("Page is out of range.");
+                error_message(page_out_of_range);
 
             draw_businesses(data.businesses);
 
@@ -91,9 +91,9 @@ function send_ajax(json) {
         }
     }).fail(function(jqXHR, status, errorThrown) {
         if (status === "timeout")
-            error_message("Timed out on your request. Please try again later.");
+            error_message(timed_out_request);
         else
-            error_message("Failed to fetch data from the server. Please try again later.");
+            error_message(failed_data_fetch);
     });
 }
 
@@ -153,7 +153,7 @@ function draw_businesses(businesses) {
         if ([business.img, business.name, business.link, business.address,
                 business.tags, business.rating
             ].includes(undefined)) {
-            error_message("Got invalid data from the server.");
+            error_message(invalid_server_data);
             return;
         }
 
@@ -220,17 +220,16 @@ $(document).ready(function() {
         }
     });
 
-    // TODO: translate error messages
     $("#sort_apply_button").click(function() {
         let type = $("#sort_type_dropdown").val();
         if (!["location", "alphabet", "rating", "date"].includes(type)) {
-            error_message("Invalid sort type.")
+            error_message(invalid_sort_type);
             return;
         }
 
         let reverse = $("#reverse_checkbox").is(':checked');
         if (typeof(reverse) !== "boolean") {
-            error_message("Invalid reverse checkbox value.")
+            error_message(invalid_checkbox_value);
             return;
         }
 
@@ -241,17 +240,17 @@ $(document).ready(function() {
         };
         if (type === "location") {
             if ($.isEmptyObject(geolocation)) {
-                error_message("There is no geolocation data available yet. Try again in a moment.");
+                error_message(no_geolocation_data);
                 return;
             } else if (geolocation.status === "error") {
                 if (geolocation.desc)
                     error_message(geolocation.desc);
                 else
-                    error_message("Unknown geolocation error. Please try again later.");
+                    error_message(unknown_geolocation_error);
 
                 return;
             } else if (geolocation.status !== "ok") {
-                error_message("Unknown geolocation error. Please try again later.");
+                error_message(unknown_geolocation_error);
                 return;
             }
 
@@ -262,14 +261,14 @@ $(document).ready(function() {
             let max_dist = parseInt(str_max_dist);
             if (str_max_dist.indexOf(".") != -1 || isNaN(max_dist) ||
                 max_dist < 0 || max_dist > 50000) {
-                error_message("Invalid maximum distance value.");
+                error_message(invalid_max_dist_value);
                 return;
             }
             json.max_dist = max_dist;
         } else if (type === "rating") {
             let min_rating = parseInt($("#rating_input").val());
             if (isNaN(min_rating) || min_rating < 0 || min_rating > 5) {
-                error_message("Invalid minumum rating value.");
+                error_message(invalid_min_rating_value);
                 return;
             }
             json.min_rating = min_rating;
@@ -288,7 +287,7 @@ $(document).ready(function() {
         else {
             json.page = parseInt(id);
             if (isNaN(json.page) || json.page < 1 || json.page > last_data.num_pages) {
-                error_message("Invalid page.")
+                error_message(invalid_page);
                 return;
             }
         }
