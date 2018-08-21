@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-26 15:34+0300\n"
+"POT-Creation-Date: 2018-08-21 21:06+0300\n"
 "PO-Revision-Date: 2018-04-24 00:02+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: app/__init__.py:19
+#: app/__init__.py:32
 msgid "Please log in to access this page."
 msgstr "Пожалуйста войдите, чтобы просмотреть эту страницу."
 
@@ -80,7 +80,7 @@ msgid "Remember me"
 msgstr "Запомнить меня"
 
 #: app/forms.py:107 app/templates/base.html:76 app/templates/signin.html:4
-#: app/views.py:56
+#: app/views.py:45
 msgid "Sign in"
 msgstr "Войти"
 
@@ -113,7 +113,7 @@ msgid "New username"
 msgstr "Новый псевдоним"
 
 #: app/forms.py:156 app/forms.py:204
-#: app/templates/reset_password_confirmed.html:4 app/views.py:193
+#: app/templates/reset_password_confirmed.html:4 app/views.py:182
 msgid "New password"
 msgstr "Новый пароль"
 
@@ -137,7 +137,7 @@ msgstr "Обо мне"
 msgid "Contacts"
 msgstr "Контакты"
 
-#: app/forms.py:200 app/templates/reset_password.html:4 app/views.py:173
+#: app/forms.py:200 app/templates/reset_password.html:4 app/views.py:162
 msgid "Reset password"
 msgstr "Сбросить пароль"
 
@@ -145,9 +145,9 @@ msgstr "Сбросить пароль"
 msgid "Update password"
 msgstr "Обновить пароль"
 
-#: app/forms.py:220
+#: app/forms.py:220 app/templates/business_list.html:10
 msgid "Rating"
-msgstr "Оценка"
+msgstr "По оценке"
 
 #: app/forms.py:222
 msgid "Comment"
@@ -157,67 +157,75 @@ msgstr "Комментарий"
 msgid "Post comment"
 msgstr "Отправить комментарий"
 
-#: app/templates/base.html:56 app/views.py:36
+#: app/templates/base.html:56 app/views.py:29
 msgid "Main page"
 msgstr "Главная страница"
 
-#: app/views.py:53
+#: app/views.py:42
 msgid "Invalid email or password"
 msgstr "Неправильный email или пароль"
 
-#: app/templates/signup.html:4 app/views.py:73
+#: app/templates/signup.html:4 app/views.py:62
 msgid "Registration"
 msgstr "Зарегистрироваться"
 
-#: app/templates/profile.html:10 app/views.py:93
+#: app/templates/profile.html:10 app/views.py:82
 #, python-format
 msgid "%(username)s's profile"
 msgstr "Профиль пользователя %(username)s"
 
-#: app/views.py:108 app/views.py:130 app/views.py:144
+#: app/views.py:97 app/views.py:119 app/views.py:133
 msgid "Profile saved"
 msgstr "Профиль сохранен"
 
-#: app/views.py:111
+#: app/views.py:100
 msgid "Invalid file format"
 msgstr "Неверный формат файла"
 
-#: app/views.py:113
+#: app/views.py:102
 msgid "Invalid filename"
 msgstr "Неверное имя файла"
 
-#: app/views.py:115
+#: app/views.py:104
 msgid "File is too large"
 msgstr "Слишком большой файл"
 
-#: app/views.py:133 app/views.py:147
+#: app/views.py:122 app/views.py:136
 msgid "Invalid current password"
 msgstr "Неправильный текущий пароль"
 
-#: app/templates/edit_profile.html:10 app/views.py:150
+#: app/templates/edit_profile.html:10 app/views.py:139
 msgid "Change profile settings"
 msgstr "Изменить настройки профиля"
 
-#: app/views.py:166
+#: app/views.py:155
 msgid "Message with a password reset link has been sent to your email"
 msgstr "Письмо со ссылкой для сброса пароля было отправлено на Вашу почту"
 
-#: app/views.py:170
+#: app/views.py:159
 msgid "User with this email does not exist"
 msgstr "Не существует пользователя с таким email"
 
-#: app/views.py:189
+#: app/views.py:178
 msgid "Your password has been changed"
 msgstr "Пароль был изменен"
 
-#: app/views.py:224
+#: app/views.py:212
 msgid "Your comment has been posted"
 msgstr "Ваш комментарий был отправлен"
 
-#: app/templates/tag_list.html:4 app/views.py:250
+#: app/templates/tag_list.html:23 app/views.py:231
 #, python-format
 msgid "Businesses for tag %(tag)s"
 msgstr "Организации по тегу %(tag)s"
+
+#: app/views.py:256
+msgid "Server got invalid data from the client."
+msgstr "Сервер получил неверные данные от клиента."
+
+#: app/views.py:336
+msgid "No such organisations exist."
+msgstr "Таких организаций не существует."
 
 #: app/templates/404.html:11
 msgid "404 Not Found"
@@ -284,17 +292,131 @@ msgstr "Зарегистрируйтесь"
 msgid "Comments"
 msgstr "Комментарии"
 
-#: app/templates/index.html:4
+#: app/templates/business_list.html:3
+msgid "Organisation sorting"
+msgstr "Сортировка организаций"
+
+#: app/templates/business_list.html:7
+msgid "Sorting type"
+msgstr "Тип сортировки"
+
+#: app/templates/business_list.html:9
+msgid "Location"
+msgstr "По местонахождению"
+
+#: app/templates/business_list.html:11
+msgid "Alphabet"
+msgstr "По алфавиту"
+
+#: app/templates/business_list.html:12
+msgid "Date Added"
+msgstr "По дате"
+
+#: app/templates/business_list.html:18
+msgid "Maximum distance"
+msgstr "Максимальное расстояние"
+
+#: app/templates/business_list.html:22
+msgid "m"
+msgstr "м"
+
+#: app/templates/business_list.html:28
+msgid "Minimum rating"
+msgstr "Минимальная оценка"
+
+#: app/templates/business_list.html:41
+msgid "Reverse order"
+msgstr "В обратном порядке"
+
+#: app/templates/business_list.html:43
+msgid "Apply"
+msgstr "Применить"
+
+#: app/templates/dynamic_translations.html:2 app/templates/message_macro.html:7
+msgid "Error"
+msgstr "Ошибка"
+
+#: app/templates/dynamic_translations.html:4
+msgid "Please allow geolocation on this website."
+msgstr "Пожалуйста, разрешите геолокацию на этом сайте."
+
+#: app/templates/dynamic_translations.html:5
+msgid "User location is unavailable. Please try again later."
+msgstr ""
+"Местонахождение пользователя недоступно. Пожалуйста, попробуйте еще раз "
+"позже."
+
+#: app/templates/dynamic_translations.html:6
+msgid "Timed out on a geolocation request. Please try again later."
+msgstr ""
+"Вышло время ожидания геолокационного запроса. Пожалуйста, попробуйте еще "
+"раз позже."
+
+#: app/templates/dynamic_translations.html:7
+msgid "Unknown geolocation error. Please try again later."
+msgstr "Неизвестная ошибка геолокации. Пожалуйста, попробуйте еще раз позже."
+
+#: app/templates/dynamic_translations.html:8
+msgid ""
+"Your browser does not support geolocation. Please update it or use a "
+"different browser."
+msgstr ""
+"Ваш браузер не поддерживает геолокацию. Пожалуйста, обновите его или "
+"воспользуйтесь другим браузером."
+
+#: app/templates/dynamic_translations.html:9
+msgid "There is no geolocation data available yet. Try again in a moment."
+msgstr "Геолокационные данные пока что недоступны. Попробуйте еще раз."
+
+#: app/templates/dynamic_translations.html:11
+msgid "Unknown error. Please try again later."
+msgstr "Неизвестная ошибка. Пожалуйста, попробуйте еще раз позже."
+
+#: app/templates/dynamic_translations.html:12
+msgid "Got invalid data from the server."
+msgstr "Клиент получил неверные данные от сервера."
+
+#: app/templates/dynamic_translations.html:13
+msgid "Page is out of range."
+msgstr "Страница находится вне допустимого диапазона."
+
+#: app/templates/dynamic_translations.html:14
+msgid "Timed out on your request. Please try again later."
+msgstr "Вышло время ожидания Вашего запроса. Пожалуйста, попробуйте еще раз позже."
+
+#: app/templates/dynamic_translations.html:15
+msgid "Failed to fetch data from the server. Please try again later."
+msgstr ""
+"Не удалось получить данные от сервера. Пожалуйста, попробуйте еще раз "
+"позже."
+
+#: app/templates/dynamic_translations.html:16
+msgid "Invalid sort type."
+msgstr "Неверный тип сортировки."
+
+#: app/templates/dynamic_translations.html:17
+msgid "Invalid reverse checkbox value."
+msgstr "Неверное значение флажка обратного порядка."
+
+#: app/templates/dynamic_translations.html:18
+msgid "Invalid maximum distance value."
+msgstr "Неверное значение максимального расстояния."
+
+#: app/templates/dynamic_translations.html:19
+msgid "Invalid minumum rating value."
+msgstr "Неверное значение минимальной оценки."
+
+#: app/templates/dynamic_translations.html:20
+msgid "Invalid page."
+msgstr "Неверная страница."
+
+#: app/templates/index.html:22
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
 #: app/templates/message_macro.html:4
 msgid "Notification"
 msgstr "Уведомление"
-
-#: app/templates/message_macro.html:7
-msgid "Error"
-msgstr "Ошибка"
 
 #: app/templates/message_macro.html:10
 msgid "Message"

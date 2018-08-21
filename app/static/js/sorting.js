@@ -44,7 +44,7 @@ function reset_options() {
 function error_message(message) {
     const msg = $(
         "<div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">" +
-        "<h4 class=\"alert-heading\">Error</h4>" +
+        "<h4 class=\"alert-heading\">" + error_heading + "</h4>" +
         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">" +
         "<span>&times;</span>" +
         "</button>" +

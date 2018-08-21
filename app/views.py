@@ -253,7 +253,7 @@ def change_locale():
 
 @app.route('/get_businesses', methods=['POST'])
 def get_businesses():
-    err_json = jsonify({'status': 'error', 'desc': 'Server got invalid data from the client.'})
+    err_json = jsonify({'status': 'error', 'desc': gettext('Server got invalid data from the client.')})
 
     if not request.json or not all(param in request.json for param in ['type', 'page', 'reverse']):
         return err_json
@@ -333,7 +333,7 @@ def get_businesses():
     pagination = query.paginate(page, 10, False)
     businesses = pagination.items
     if not businesses:
-        return jsonify({'status': 'error', 'desc': 'No such organisations exist.'})
+        return jsonify({'status': 'error', 'desc': gettext('No such organisations exist.')})
 
     return_dict = {
         'status': 'ok',
