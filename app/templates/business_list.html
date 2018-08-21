@@ -1,25 +1,3 @@
-{% block translations %}
-<script>
-    let please_allow_geolocation = "{{ _('Please allow geolocation on this website.') }}";
-    let user_location_unavailable = "{{ _('User location is unavailable. Please try again later.') }}";
-    let timed_out_geolocation = "{{ _('Timed out on a geolocation request. Please try again later.') }}";
-    let unknown_geolocation_error = "{{ _('Unknown geolocation error. Please try again later.') }}";
-    let browser_no_geolocation = "{{ _('Your browser does not support geolocation. Please update it or use a different browser.') }}";
-    let no_geolocation_data = "{{ _('There is no geolocation data available yet. Try again in a moment.') }}";
-
-    let unknown_error = "{{ _('Unknown error. Please try again later.') }}";
-    let invalid_server_data = "{{ _('Got invalid data from the server.') }}";
-    let page_out_of_range = "{{ _('Page is out of range.') }}";
-    let timed_out_request = "{{ _('Timed out on your request. Please try again later.') }}";
-    let failed_data_fetch = "{{ _('Failed to fetch data from the server. Please try again later.') }}";
-    let invalid_sort_type = "{{ _('Invalid sort type.') }}";
-    let invalid_checkbox_value = "{{ _('Invalid reverse checkbox value.') }}";
-    let invalid_max_dist_value = "{{ _('Invalid maximum distance value.') }}";
-    let invalid_min_rating_value = "{{ _('Invalid minumum rating value.') }}";
-    let invalid_page = "{{ _('Invalid page.') }}";
-</script>
-{% endblock %}
-
 <div class="card my-3">
     <div class="card-body">
         <h3 class="card-title">{{ _('Organisation sorting') }}</h3>
