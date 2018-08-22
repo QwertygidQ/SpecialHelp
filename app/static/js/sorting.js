@@ -58,6 +58,8 @@ function send_ajax(json) {
     if (typeof tag !== "undefined")
         json.tag = tag;
 
+    $(".dimmer").fadeIn("fast");
+
     $.ajax({
         url: "/get_businesses",
         type: "POST",
@@ -94,6 +96,8 @@ function send_ajax(json) {
             error_message(timed_out_request);
         else
             error_message(failed_data_fetch);
+    }).always(function() {
+        $(".dimmer").fadeOut("fast");
     });
 }
 
@@ -227,7 +231,7 @@ $(document).ready(function() {
             return;
         }
 
-        let reverse = $("#reverse_checkbox").is(':checked');
+        let reverse = $("#reverse_checkbox").is(":checked");
         if (typeof(reverse) !== "boolean") {
             error_message(invalid_checkbox_value);
             return;
