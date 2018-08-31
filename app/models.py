@@ -89,7 +89,7 @@ class Comment(db.Model):
 
 class Business(db.Model):  # company/event
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(50), index=True, unique=True, nullable=False)
+    name = db.Column(db.String(80), index=True, unique=True, nullable=False)
     link = db.Column(db.String(50), index=True, unique=True, nullable=False)
     address = db.Column(db.String(300), nullable=False)
     latitude = db.Column(db.Float, nullable=False)
