@@ -8,7 +8,8 @@ from flask_babelex import Babel, lazy_gettext
 
 from flask.json import JSONEncoder
 
-app = Flask(__name__)
+application = Flask(__name__)
+app = application # workaround for AWS EB
 app.config.from_object('config')
 
 class CustomJSONEncoder(JSONEncoder):
