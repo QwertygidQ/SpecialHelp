@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-08-21 21:06+0300\n"
+"POT-Creation-Date: 2018-08-31 23:20+0300\n"
 "PO-Revision-Date: 2018-05-26 15:08+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: app/__init__.py:32
+#: app/__init__.py:35
 msgid "Please log in to access this page."
 msgstr ""
 
@@ -213,9 +213,9 @@ msgstr ""
 msgid "Your comment has been posted"
 msgstr ""
 
-#: app/templates/tag_list.html:23 app/views.py:231
+#: app/views.py:231
 #, python-format
-msgid "Businesses for tag %(tag)s"
+msgid "Organisations for tag %(tag)s"
 msgstr ""
 
 #: app/views.py:256
@@ -399,7 +399,7 @@ msgstr ""
 msgid "Invalid page."
 msgstr ""
 
-#: app/templates/index.html:22
+#: app/templates/index.html:23
 msgid "Welcome!"
 msgstr ""
 
@@ -446,5 +446,10 @@ msgstr ""
 
 #: app/templates/signin.html:21
 msgid "Forgot password?"
+msgstr ""
+
+#: app/templates/tag_list.html:24
+#, python-format
+msgid "Businesses for tag %(tag)s"
 msgstr ""
 

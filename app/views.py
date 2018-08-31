@@ -228,7 +228,7 @@ def tag_list_page(tag_name):
         abort(404)
 
     return render_template('tag_list.html',
-                           title=gettext('Businesses for tag %(tag)s', tag=tag_name),
+                           title=gettext('Organisations for tag %(tag)s', tag=tag_name),
                            tag=tag_name)
 
 

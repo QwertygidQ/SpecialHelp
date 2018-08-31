@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-08-21 21:06+0300\n"
+"POT-Creation-Date: 2018-08-31 23:20+0300\n"
 "PO-Revision-Date: 2018-04-24 00:02+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: app/__init__.py:32
+#: app/__init__.py:35
 msgid "Please log in to access this page."
 msgstr "Пожалуйста войдите, чтобы просмотреть эту страницу."
 
@@ -214,9 +214,9 @@ msgstr "Пароль был изменен"
 msgid "Your comment has been posted"
 msgstr "Ваш комментарий был отправлен"
 
-#: app/templates/tag_list.html:23 app/views.py:231
+#: app/views.py:231
 #, python-format
-msgid "Businesses for tag %(tag)s"
+msgid "Organisations for tag %(tag)s"
 msgstr "Организации по тегу %(tag)s"
 
 #: app/views.py:256
@@ -410,7 +410,7 @@ msgstr "Неверное значение минимальной оценки."
 msgid "Invalid page."
 msgstr "Неверная страница."
 
-#: app/templates/index.html:22
+#: app/templates/index.html:23
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
@@ -460,3 +460,8 @@ msgstr "Команда Proectos"
 #: app/templates/signin.html:21
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
+
+#: app/templates/tag_list.html:24
+#, python-format
+msgid "Businesses for tag %(tag)s"
+msgstr "Организации по тегу %(tag)s"
