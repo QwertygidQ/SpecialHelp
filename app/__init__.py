@@ -43,6 +43,11 @@ if not os.path.isdir(app.config['UPLOAD_FOLDER']):
 
 from . import views, models
 
+for photo in models.Photo.query.all():
+    full_path = os.path.join(app.config['UPLOAD_FOLDER'], photo.filename)
+    if not os.path.exists(full_path):
+        s3.download_file(photo.filename, full_path)
+
 from flask_admin import Admin
 from .admin_panel import AdminPanelIndexView, AdminPanelModelView, BusinessCreationView, \
     UserCreationView, CommentCreationView, PhotoCreationView

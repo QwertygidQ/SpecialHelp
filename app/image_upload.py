@@ -1,4 +1,4 @@
-from . import app, db
+from . import app, db, s3
 from .models import Photo
 import os
 from uuid import uuid4
@@ -36,9 +36,23 @@ def save_photo(picture_data, owner_model):
                 return INVALID_SIZE
             picture_data.seek(0)
 
-            picture_data.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
+            full_filename = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
+            picture_data.save(full_filename)
+            s3.upload_file(full_filename, new_filename)
 
             if owner_model.image is not None:
+                try:
+                    s3.delete_objects(Delete=
+                    {
+                        'Objects':
+                        [
+                            {
+                                'Key': owner_model.image.filename
+                            }
+                        ]
+                    })
+                except:
+                    pass
                 old_picture = os.path.join(app.config['UPLOAD_FOLDER'], owner_model.image.filename)
                 try:
                     os.remove(old_picture)

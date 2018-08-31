@@ -1,4 +1,4 @@
-from app import db, bcrypt, login_manager, app
+from app import db, bcrypt, login_manager, app, s3
 from flask_login import UserMixin
 from sqlalchemy import func
 from sqlalchemy.ext.hybrid import hybrid_method
@@ -178,6 +178,7 @@ class Photo(db.Model):
 
         new_image = ImageOps.fit(image, new_size, Image.ANTIALIAS)
         new_image.save(filename)
+        s3.upload_file(filename, self.filename)
 
     def clear_meta(self):
         ''' https://stackoverflow.com/a/23249933 '''
@@ -191,6 +192,7 @@ class Photo(db.Model):
         image_without_exif.putdata(data)
 
         image_without_exif.save(filename)
+        s3.upload_file(filename, self.filename)
 
     def __repr__(self):
         return '<Photo #{0} at {1:.4}..{1:.4}>'.format(self.id, self.filename)

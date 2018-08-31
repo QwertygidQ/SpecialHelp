@@ -126,3 +126,17 @@ class PhotoCreationView(AdminPanelModelView):
         except FileNotFoundError:
             flash('Failed to remove the image. File not found.')
             log.exception('Failed to remove the image. File not found.')
+
+        try:
+            s3.delete_objects(Delete=
+            {
+                'Objects':
+                [
+                    {
+                        'Key': model.filename
+                    }
+                ]
+            })
+        except:
+            flash('Failed to remove the image from S3.')
+            log.exception('Failed to remove the image from S3.')
