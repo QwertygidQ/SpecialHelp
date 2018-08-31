@@ -8,6 +8,9 @@ from flask_babelex import Babel, lazy_gettext
 
 from flask.json import JSONEncoder
 
+import boto3
+import os
+
 app = Flask(__name__)
 app.config.from_object('config')
 
@@ -32,6 +35,11 @@ login_manager.login_view = 'signin'
 login_manager.login_message = lazy_gettext('Please log in to access this page.')
 
 mail = Mail(app)
+
+s3 = boto3.resource('s3').Bucket(app.config['BUCKET_NAME'])
+
+if not os.path.isdir(app.config['UPLOAD_FOLDER']):
+    os.mkdir(app.config['UPLOAD_FOLDER'])
 
 from . import views, models
 

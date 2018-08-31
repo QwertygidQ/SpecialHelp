@@ -41,6 +41,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 basedir = os.path.abspath(os.path.dirname(__name__))
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
+BUCKET_NAME = 'proectos-photo-s3'
 IMG_FOLDER = os.path.join(basedir, 'static', 'images')
 ALLOWED_IMG_FORMATS = ['jpg', 'jpeg', 'png']
 ALLOWED_IMG_SIZE = 500 * 1024
