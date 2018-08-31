@@ -23,13 +23,18 @@ if SECRET_KEY == '-g0(m1l!@ew2pj8unyrf*s37pnkr&(+u0-^0_twic8v@5l6u3h' and not de
 # SECRET_KEY = get_random_key()
 
 
-if not os.path.isfile('db_config.yml'):
-    print('You definitely need \'db_config.yml\'')
+if not all(param in os.environ for param in ['RDS_DB_NAME', 'RDS_HOSTNAME', 'RDS_PASSWORD', 'RDS_PORT', 'RDS_USERNAME']):
+    print('Could not initialize DB - missing environment properties')
     sys.exit(-1)
 
 uri = '{backend}://{username}:{passwd}@{server}:{port}/{dbname}'
-with open('db_config.yml') as db_config:
-    SQLALCHEMY_DATABASE_URI = uri.format(**yaml.load(db_config.read()))
+SQLALCHEMY_DATABASE_URI = uri.format(
+                            backend='postgresql',
+                            username=os.environ['RDS_USERNAME'],
+                            passwd=os.environ['RDS_PASSWORD'],
+                            server=os.environ['RDS_HOSTNAME'],
+                            port=os.environ['RDS_PORT'],
+                            dbname=os.environ['RDS_DB_NAME'])
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
