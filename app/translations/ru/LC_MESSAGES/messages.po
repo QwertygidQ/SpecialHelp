@@ -24,8 +24,8 @@ msgid "Please log in to access this page."
 msgstr "Пожалуйста войдите, чтобы просмотреть эту страницу."
 
 #: app/email.py:14
-msgid "[PROECTOS] Password reset"
-msgstr "[PROECTOS] Сброс пароля"
+msgid "[SpecialHelp] Password reset"
+msgstr "[SpecialHelp] Сброс пароля"
 
 #: app/forms.py:14 app/forms.py:18 app/forms.py:22
 msgid "This field is required"
@@ -454,8 +454,8 @@ msgid "Yours,"
 msgstr "С уважением,"
 
 #: app/templates/reset_password_email.html:14
-msgid "Proectos team"
-msgstr "Команда Proectos"
+msgid "SpecialHelp team"
+msgstr "Команда SpecialHelp"
 
 #: app/templates/signin.html:21
 msgid "Forgot password?"

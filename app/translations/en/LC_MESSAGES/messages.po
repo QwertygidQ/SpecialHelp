@@ -23,7 +23,7 @@ msgid "Please log in to access this page."
 msgstr ""
 
 #: app/email.py:14
-msgid "[PROECTOS] Password reset"
+msgid "[SpecialHelp] Password reset"
 msgstr ""
 
 #: app/forms.py:14 app/forms.py:18 app/forms.py:22
@@ -441,7 +441,7 @@ msgid "Yours,"
 msgstr ""
 
 #: app/templates/reset_password_email.html:14
-msgid "Proectos team"
+msgid "SpecialHelp team"
 msgstr ""
 
 #: app/templates/signin.html:21
@@ -452,4 +452,3 @@ msgstr ""
 #, python-format
 msgid "Businesses for tag %(tag)s"
 msgstr ""
-
