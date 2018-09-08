@@ -5,6 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_babelex import Babel, lazy_gettext
+from flask_sslify import SSLify
 
 from flask.json import JSONEncoder
 
@@ -12,6 +13,7 @@ import boto3
 import os
 
 app = Flask(__name__)
+sslify = SSLify(app)
 app.config.from_object('config')
 
 class CustomJSONEncoder(JSONEncoder):
