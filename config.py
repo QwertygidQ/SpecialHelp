@@ -7,7 +7,7 @@ rand = random.SystemRandom()
 
 host = '0.0.0.0'
 port = 80
-debug = True
+debug = False
 
 
 def get_random_key(length=50):
