@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-08-31 23:20+0300\n"
+"POT-Creation-Date: 2018-09-08 16:18+0300\n"
 "PO-Revision-Date: 2018-04-24 00:02+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -79,7 +79,7 @@ msgstr "Пароль"
 msgid "Remember me"
 msgstr "Запомнить меня"
 
-#: app/forms.py:107 app/templates/base.html:76 app/templates/signin.html:4
+#: app/forms.py:107 app/templates/base.html:78 app/templates/signin.html:4
 #: app/views.py:45
 msgid "Sign in"
 msgstr "Войти"
@@ -92,7 +92,7 @@ msgstr "Псевдоним"
 msgid "Repeat password"
 msgstr "Повторите пароль"
 
-#: app/forms.py:133 app/templates/base.html:82
+#: app/forms.py:133 app/templates/base.html:84
 msgid "Register"
 msgstr "Зарегистрироваться"
 
@@ -157,7 +157,7 @@ msgstr "Комментарий"
 msgid "Post comment"
 msgstr "Отправить комментарий"
 
-#: app/templates/base.html:56 app/views.py:29
+#: app/templates/base.html:58 app/views.py:29
 msgid "Main page"
 msgstr "Главная страница"
 
@@ -214,7 +214,7 @@ msgstr "Пароль был изменен"
 msgid "Your comment has been posted"
 msgstr "Ваш комментарий был отправлен"
 
-#: app/views.py:231
+#: app/templates/tag_list.html:24 app/views.py:231
 #, python-format
 msgid "Organisations for tag %(tag)s"
 msgstr "Организации по тегу %(tag)s"
@@ -235,11 +235,11 @@ msgstr "404 Not Found"
 msgid "Unfortunately, we were not able to find the page you requested."
 msgstr "К сожалению, нам не удалось найти страницу, которую Вы запросили."
 
-#: app/templates/base.html:63
+#: app/templates/base.html:65
 msgid "Profile"
 msgstr "Профиль"
 
-#: app/templates/base.html:69
+#: app/templates/base.html:71
 msgid "Log out"
 msgstr "Выйти"
 
@@ -461,7 +461,6 @@ msgstr "Команда SpecialHelp"
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
-#: app/templates/tag_list.html:24
-#, python-format
-msgid "Businesses for tag %(tag)s"
-msgstr "Организации по тегу %(tag)s"
+#~ msgid "Businesses for tag %(tag)s"
+#~ msgstr "Организации по тегу %(tag)s"
+
