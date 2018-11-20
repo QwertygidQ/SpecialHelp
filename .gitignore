@@ -126,3 +126,6 @@ mail_config.yml
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# other files
+.vscode/settings.json

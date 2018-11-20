@@ -26,7 +26,7 @@ def get_locale():
 @app.route('/')
 def index():
     return render_template('index.html',
-                           title=gettext('Main page'))
+                           title=gettext('SpecialHelp'))
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -350,6 +350,11 @@ def get_businesses():
     }
 
     return jsonify(return_dict)
+
+
+@app.route('/googlea1d6ec3912408cfa.html')
+def google_stuff():
+    return render_template('googlea1d6ec3912408cfa.html')
 
 
 @app.errorhandler(404)
