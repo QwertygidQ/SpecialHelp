@@ -5,4 +5,3 @@ Some tools for everything
 WARNING!!!! ^^THIS OVERWRITES CURRENT TRANSLATION!!!!
 ./compile_translate.sh    -- compile translation from app/translations so flask_babel can use it
 ./update_translate.sh     -- registers new translations and generate template for them
-
