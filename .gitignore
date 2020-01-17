@@ -129,3 +129,4 @@ mail_config.yml
 
 # other files
 .vscode/settings.json
+db.sqlite

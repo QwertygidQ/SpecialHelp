@@ -11,17 +11,17 @@ def unauthenticated_required(f):
     def wrapper(*args, **kwargs):
         if not current_user.is_authenticated:
             return f(*args, **kwargs)
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
 
     return wrapper
 
 
 def is_safe(url):
-    return url and url_parse(url).netloc == ''
+    return url and url_parse(url).netloc == ""
 
 
-def get_next_page(default='index'):
-    pages = [request.args.get('next'), request.referrer]
+def get_next_page(default="index"):
+    pages = [request.args.get("next"), request.referrer]
     for page in pages:
         if is_safe(page):
             return page
@@ -29,7 +29,7 @@ def get_next_page(default='index'):
     return url_for(default)
 
 
-def get_info_for_tag_and_validate(tag=None, page='1'):
+def get_info_for_tag_and_validate(tag=None, page="1"):
     page = int(page)
     if page < 1:
         abort(404)
@@ -43,8 +43,8 @@ def get_info_for_tag_and_validate(tag=None, page='1'):
 
     pages = math.ceil(len(items) / 10)
     if page * 10 <= len(items):
-        items = items[(page - 1) * 10:page * 10]
+        items = items[(page - 1) * 10 : page * 10]
     else:
-        items = items[(page - 1) * 10:len(items)]
+        items = items[(page - 1) * 10 : len(items)]
 
     return pages, items

@@ -5,7 +5,7 @@ bcrypt==3.1.4
 blinker==1.4
 boto3==1.8.5
 botocore==1.11.5
-cffi==1.11.5
+cffi==1.13.2
 click==6.7
 docutils==0.14
 Flask==0.12.2
@@ -25,14 +25,11 @@ jmespath==0.9.3
 Mako==1.0.7
 MarkupSafe==1.0
 Pillow==5.1.0
-psycopg2==2.7.4
-psycopg2-binary==2.7.4
 pycparser==2.18
 PyJWT==1.6.1
 python-dateutil==2.7.2
 python-editor==1.0.3
 pytz==2018.4
-PyYAML==3.12
 s3transfer==0.1.13
 six==1.11.0
 speaklater==1.3
