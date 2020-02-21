@@ -8,7 +8,7 @@ botocore==1.11.5
 cffi==1.11.5
 click==6.7
 docutils==0.14
-Flask==0.12.2
+Flask==1.0
 Flask-Admin==1.5.1
 Flask-BabelEx==0.9.3
 Flask-Bcrypt==0.7.1
