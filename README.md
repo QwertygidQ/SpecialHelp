@@ -1,6 +1,8 @@
 # SpecialHelp
 [DISCONTINUED PROJECT] - SpecialHelp website main repository
 
+![SpecialHelp Main Page](https://user-images.githubusercontent.com/4065977/75039988-e1676c80-54ca-11ea-8a80-e530192e8a8a.png)
+
 ## Setting up
 ```
 git checkout demo
